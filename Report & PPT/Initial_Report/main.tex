@@ -1,0 +1,151 @@
+\documentclass[12pt,a4paper]{report}
+
+% ---------- Encoding and typography ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,newtxmath} % Times-like font
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+
+% ---------- Page layout ----------
+\usepackage[
+  a4paper,
+  left=1.00in,
+  right=0.85in,
+  top=0.78in,
+  bottom=0.80in,
+  headheight=16pt,
+  headsep=8pt,
+  footskip=28pt
+]{geometry}
+
+% ---------- Headings ----------
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]
+  {\bfseries\fontsize{16}{19}\selectfont}
+  {\thechapter.}{0.55em}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+\titleformat{\section}
+  {\bfseries\fontsize{13}{16}\selectfont}
+  {\thesection.}{0.55em}{}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+\titleformat{\subsection}
+  {\bfseries\fontsize{12}{15}\selectfont}
+  {\thesubsection.}{0.55em}{}
+\titlespacing*{\subsection}{0pt}{14pt}{6pt}
+
+% report class normally starts chapters on a new page; this removes the word "Chapter"
+% and keeps the compact heading used in the sample.
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{0pt}%
+  {\parindent\z@ \raggedright \normalfont
+    \bfseries\fontsize{16}{19}\selectfont
+    \thechapter.\quad\MakeUppercase{#1}\par\nobreak
+    \vskip 20pt}}
+\makeatother
+
+% ---------- Header and footer ----------
+\usepackage{fancyhdr}
+\newcommand{\ReportTitle}{Solar Radiation Prediction Using Machine Learning}
+\newcommand{\DepartmentName}{Department of Computer Applications,MACE}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\small\ReportTitle}
+\fancyfoot[L]{\small\DepartmentName}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.6pt}
+
+% Use identical style also on chapter-opening pages
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[R]{\small\ReportTitle}
+  \fancyfoot[L]{\small\DepartmentName}
+  \fancyfoot[R]{\small\thepage}
+  \renewcommand{\headrulewidth}{0.6pt}
+  \renewcommand{\footrulewidth}{0.6pt}
+}
+
+% ---------- Paragraph formatting ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.75em}
+\usepackage{ragged2e}
+\AtBeginDocument{\justifying}
+
+% ---------- Figures, tables, lists ----------
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{caption}
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  justification=centering,
+  singlelinecheck=true,
+  skip=6pt
+}
+\renewcommand{\figurename}{Fig}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.7em,itemsep=2pt,topsep=4pt}
+
+% ---------- Code listings ----------
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{codebg}{gray}{0.14}
+\definecolor{codetext}{gray}{0.96}
+\lstset{
+  basicstyle=\ttfamily\small\color{codetext},
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codebg},
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  showstringspaces=false,
+  xleftmargin=0.04\textwidth,
+  xrightmargin=0.04\textwidth,
+  aboveskip=8pt,
+  belowskip=4pt
+}
+
+% ---------- Hyperlinks ----------
+\usepackage[hidelinks]{hyperref}
+
+% ---------- Useful report-table command ----------
+\newcommand{\reportrow}[2]{%
+  \textbf{\MakeUppercase{#1}} & #2 \\
+  \hline
+}
+
+\begin{document}
+
+% The supplied sample starts directly with Chapter 1.
+% Uncomment the following lines if a title page and TOC are required.
+% \begin{titlepage}
+%   \centering
+%   \vspace*{3cm}
+%   {\Large\bfseries \ReportTitle\par}
+%   \vspace{2cm}
+%   {\large Project Report\par}
+%   \vfill
+%   {\DepartmentName\par}
+%   \vspace{1cm}
+%   {\today\par}
+% \end{titlepage}
+% \tableofcontents
+% \clearpage
+
+\include{sections/01-introduction}
+\include{sections/02-supporting-literature}
+\include{sections/03-system-analysis}
+
+\end{document}

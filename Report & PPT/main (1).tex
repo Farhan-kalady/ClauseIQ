@@ -1,0 +1,94 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Packages ---
+\usepackage{mathptmx} % Times New Roman font
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=0.55in]{geometry} % Wider margins to guarantee 1 page with 1.5 spacing
+\usepackage{setspace} % For line spacing
+\usepackage{tikz} % For the page border
+\usepackage{eso-pic} % For the background picture (border)
+\usepackage{enumitem} % For list formatting
+\usepackage[colorlinks=true, urlcolor=blue, linkcolor=blue, citecolor=blue]{hyperref} % For clickable links
+\usepackage{xurl} % For URL formatting with better line breaks
+
+% --- Page Border Setup ---
+\AddToShipoutPictureBG{%
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=1pt]
+    ([xshift=0.3in,yshift=-0.3in]current page.north west)
+    rectangle
+    ([xshift=-0.3in,yshift=0.3in]current page.south east);
+\end{tikzpicture}%
+}
+
+% --- Paragraph Formatting ---
+\setlength{\parindent}{0pt} % No paragraph indentation
+\setlength{\parskip}{0pt}   % Reduced space between paragraphs to save vertical space
+
+\begin{document}
+\thispagestyle{empty} % Remove page number
+
+% --- Header Section ---
+\begin{center}
+    \textbf{\fontsize{16pt}{19.2pt}\selectfont ABSTRACT} \\[4pt]
+    \textbf{\fontsize{14pt}{16.8pt}\selectfont ClauseIQ: Machine Learning-Based Contract Clause Classification \& Intelligent Search System}
+\end{center}
+
+% --- Abstract Body ---
+\begin{spacing}{1.5}
+Organizations manage a large volume of legal contracts, such as employment and service agreements, where manual retrieval of specific clauses is time-consuming, error-prone, and difficult to scale. To address this, ClauseIQ is proposed as a Machine Learning-based system that automatically extracts clauses from uploaded contracts, classifies them into predefined legal categories, and enables similarity-based search for efficient clause retrieval.
+
+The system is trained and evaluated using the Contract Understanding Atticus Dataset (CUAD), which contains over 13,000 expert-annotated clauses across 41 legal categories. Clause texts are converted into numerical features using Term Frequency-Inverse Document Frequency (TF-IDF). Four classical machine learning classifiers---Logistic Regression, Support Vector Machine (SVM), Naive Bayes, and Random Forest---are trained and compared using metrics like Accuracy and F1-score, while Cosine Similarity ranks clauses by relevance to user queries. Classical machine learning is preferred over deep learning because it is computationally lightweight, interpretable, and appropriate for the project scope.
+
+To provide a user-friendly interface, a web application is developed with a React.js frontend and a FastAPI backend, utilizing Supabase for database management and PyMuPDF and spaCy for text processing. The resulting system automates clause extraction and classification, reduces manual contract review efforts, and delivers fast, relevance-ranked search results to legal professionals.
+\end{spacing}
+
+% --- Dataset Source ---
+\vspace{6pt}
+\begin{spacing}{1.1}
+\noindent Dataset Source: Contract Understanding Atticus Dataset (CUAD) \\
+\url{https://www.atticusprojectai.org/cuad}
+\end{spacing}
+
+% --- Technology Stack ---
+\vspace{6pt}
+\begin{spacing}{1.1}
+\noindent Technology Stack: \\
+Frontend: React.js \\
+Backend: FastAPI (Python) \\
+ML Algorithms: Logistic Regression, Support Vector Machine (SVM), Naive Bayes, Random Forest \\
+Database: Supabase (PostgreSQL) \\
+Libraries: PyMuPDF, spaCy \\
+Tools: VS Code, Google Colab, Jupyter Notebook, GitHub
+\end{spacing}
+
+% --- References Section ---
+\vspace{8pt}
+\begin{spacing}{1.0}
+\noindent References:
+\begin{enumerate}[label={[\arabic*]}, leftmargin=*, itemsep=0pt, parsep=0pt, topsep=2pt]
+    \item E. Quevedo et al., ``Legal Natural Language Processing From 2015 to 2022: A Comprehensive Systematic Mapping Study of Advances and Applications,'' \textit{IEEE Access}, vol. 12, pp. 145286--145317, 2024. (\url{https://doi.org/10.1109/ACCESS.2023.3333946})
+    \item M. Siino et al., ``Exploring LLMs Applications in Law: A Literature Review on Current Legal NLP Approaches,'' \textit{IEEE Access}, vol. 13, pp. 18253--18276, 2025. (\url{https://ieeexplore.ieee.org/document/10850911/})
+    \item M. Kutbi, ``Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy,'' \textit{IEEE Access}, vol. 11, pp. 117576--117581, 2023. (\url{https://doi.org/10.1109/ACCESS.2023.3325895})
+\end{enumerate}
+\end{spacing}
+
+\vfill % Push the signature block to the bottom of the page
+
+% --- Signatures Section ---
+\begin{spacing}{1.0}
+\noindent
+\begin{minipage}[t]{0.5\textwidth}
+    Submitted by: \\
+    Mohammed Farhan K \\
+    Reg No: MAC25MCA-2042
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+    \raggedleft
+    Project Guide: \\
+    Dr. Sonia Abraham
+\end{minipage}
+\end{spacing}
+
+\end{document}
