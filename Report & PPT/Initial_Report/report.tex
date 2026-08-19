@@ -218,50 +218,50 @@ This initial report is organized into three main chapters. Chapter 1 provides th
 \chapter{SUPPORTING LITERATURE}
 \label{ch:supporting_literature}
 
-\section{Literature Review}
+\section{Paper 1 -- Legal Natural Language Processing From 2015 to 2022: A Comprehensive Systematic Mapping Study of Advances and Applications}
+\label{sec:paper1}
 
-\subsection{Paper 1: LegalReasoner}
-\noindent\textbf{Authors:} Wang X., Zhang X., Hoo V., Shao Z., Zhang X. (2024)\\
-\textbf{Title:} ``LegalReasoner: A Multi-Stage Framework for Legal Judgment Prediction via Large Language Models and Knowledge Integration.''\\
-\textbf{Journal:} \textit{IEEE Access}, vol. 12, pp. 166843--166854.\\
-\textbf{DOI:} \url{https://doi.org/10.1109/ACCESS.2024.3496666}
+Authors: Quevedo Caballero E., Černý T., Rodriguez A., Rivas P., Yero J., Sooksatra K., Taibi D. (2024)\\
+Title: ``Legal Natural Language Processing From 2015 to 2022: A Comprehensive Systematic Mapping Study of Advances and Applications.''\\
+Journal: \textit{IEEE Access}, vol. 12, pp. 145286--145317.\\
+DOI: \url{https://doi.org/10.1109/ACCESS.2024.3414967}
 
 \paragraph{Area of Work:}
-The paper focuses on Legal Judgment Prediction (LJP). LJP is the task of predicting the outcome of legal cases, including applicable law articles, charges, and prison terms, based on the text of the case facts.
+The paper presents a systematic mapping study that maps the literature, research trends, and advances in Legal NLP from 2015 to 2022, providing both quantitative statistics and qualitative categorizations.
 
 \paragraph{Dataset:}
-The framework was evaluated using two prominent datasets: the European Court of Human Rights (ECHR) dataset and the Chinese AI and Law Challenge (CAIL2018) dataset, which is a benchmark dataset for judicial outcome prediction.
+The research utilized a search protocol across four indexers, identifying 536 initial papers and filtering them to select 75 primary publications for in-depth analysis.
 
 \paragraph{Methodology:}
-The authors proposed a multi-stage framework consisting of four main stages: (i) legal knowledge infusion, where a large language model is pre-trained on legal literature using contrastive learning; (ii) case-law retrieval, using a graph neural network to surface relevant precedents and statutes; (iii) multi-hop reasoning over the retrieved material using a transformer architecture; and (iv) judgment synthesis.
+The authors conducted a Systematic Mapping Study (SMS) to categorize primary publications based on research problems, publication venues, tasks, and methodologies, identifying research gaps and establishing a baseline for the field.
 
 \paragraph{Algorithms:}
-The framework utilizes Large Language Models, Contrastive Learning, Graph Neural Networks, Transformer-based Hierarchical Attention, and Generative Adversarial Networks (GANs).
+The review covers various algorithmic paradigms including rule-based architectures, traditional machine learning models, and deep learning or transformer architectures applied to legal tasks.
 
 \paragraph{Results:}
-The model showed a significant improvement over baseline models, achieving an average accuracy increase of 7.8\% on LJP tasks.
+The paper maps the distribution of Legal NLP research, identifying multiclass classification, summarization, and question answering as the primary task domains. It quantitatively highlights key open challenges in the field, including the lack of curated datasets, specialized ontology designs, and accessibility issues.
 
 \paragraph{Advantages:}
-The system integrates domain-specific legal knowledge, improving explainability and prediction accuracy for complex legal outcomes.
+Provides a comprehensive baseline that maps out the evolution of Legal NLP, helping researchers identify active subfields and under-explored areas.
 
 \paragraph{Future Scope:}
-The authors suggest extending the framework to multi-lingual legal systems and incorporating real-time legal updates.
+Recommends establishing standard benchmark datasets for diverse legal tasks, building domain-specific legal ontologies, and investigating privacy-preserving architectures.
 
 \begin{table}[h]
 \centering
 \small
 \begin{tabular}{p{3.5cm}p{11.5cm}}
 \toprule
-\textbf{Parameter} & \textbf{Details} \\
-\midrule
-\textbf{Title} & LegalReasoner: A Multi-Stage Framework for Legal Judgment Prediction \\
-\textbf{Area of Work} & Legal Judgment Prediction (LJP) \\
-\textbf{Dataset} & ECHR and CAIL2018 datasets \\
-\textbf{Methodology} & Four-stage framework: Knowledge Infusion, Case-Law Retrieval, Multi-Hop Reasoning, Synthesis \\
-\textbf{Algorithms} & LLMs, Contrastive Learning, GNN, Hierarchical Attention, GANs \\
-\textbf{Results} & 7.8\% average accuracy improvement over state-of-the-art baselines \\
-\textbf{Advantages} & High accuracy, structured integration of legal knowledge, improved explainability \\
-\textbf{Future Scope} & Support for multi-lingual legal texts, real-time case retrieval, dynamic statute updates \\
+Parameter & Details \\
+\hline
+Title & Legal Natural Language Processing From 2015 to 2022: A Systematic Mapping Study \\
+Area of Work & Systematic mapping of Legal NLP applications and advancements \\
+Dataset & Survey of 536 initial studies, filtering down to 75 primary publications \\
+Methodology & PRISMA-style mapping, descriptive statistics, and research problem categorization \\
+Algorithms & Traditional statistical models, machine learning, and transformer architectures \\
+Results & Mapped core tasks (classification, QA); identified dataset scarcity and ontology gaps \\
+Advantages & Comprehensive overview of the state of the art; highlights research trends \\
+Future Scope & Creation of curated datasets, domain-specific ontologies, and privacy architectures \\
 \bottomrule
 \end{tabular}
 \caption{Summary of Paper 1}
@@ -270,48 +270,50 @@ The authors suggest extending the framework to multi-lingual legal systems and i
 
 \newpage
 
-\subsection{Paper 2: Exploring LLMs Applications in Law}
-\noindent\textbf{Authors:} Siino M., Falco M., Croce D., Rosso P. (2025)\\
-\textbf{Title:} ``Exploring LLMs Applications in Law: A Literature Review on Current Legal NLP Approaches.''\\
-\textbf{Journal:} \textit{IEEE Access}, vol. 13, pp. 18253--18276.\\
-\textbf{DOI:} \url{https://doi.org/10.1109/ACCESS.2025.3533217}
+\section{Paper 2 -- Exploring LLMs Applications in Law: A Literature Review on Current Legal NLP Approaches}
+\label{sec:paper2}
+
+Authors: Siino M., Falco M., Croce D., Rosso P. (2025)\\
+Title: ``Exploring LLMs Applications in Law: A Literature Review on Current Legal NLP Approaches.''\\
+Journal: \textit{IEEE Access}, vol. 13, pp. 18253--18276.\\
+DOI: \url{https://doi.org/10.1109/ACCESS.2025.3533217}
 
 \paragraph{Area of Work:}
-This is a systematic literature review (61 selected publications, 2017–2023) that maps how Transformer/LLM-based NLP has been applied across the legal domain, including legal document analysis, case prediction, legal search, regulatory compliance and contract review.
+This paper is a systematic literature review mapping the recent integration of transformer-based NLP and Large Language Models (LLMs) across legal tasks.
 
 \paragraph{Dataset:}
-The paper reviews 61 key publications published between 2017 and 2023, analyzing benchmarks like CUAD, ContractNLI and other legal NLP corpora.
+The study systematically reviewed 61 selected publications published between 2017 and 2023, analyzing benchmarks like CUAD and ContractNLI.
 
 \paragraph{Methodology:}
-The authors conducted a systematic mapping study to categorize legal NLP research into key application areas, identifying methodological gaps, evaluation protocols, and trends in model sizes and fine-tuning strategies.
+The authors followed a systematic database search and snowballing review process to select relevant articles, categorizing them into application domains and analyzing model configurations and evaluation metrics.
 
 \paragraph{Algorithms:}
-The review covers various transformer-based architectures including BERT, RoBERTa, legal-specific models like Legal-BERT, CaseBERT, T5, and GPT-based generative models.
+The review covers transformer models (BERT, RoBERTa, Legal-BERT, CaseBERT, T5) and generative GPT architectures.
 
 \paragraph{Results:}
-The paper details consistent improvements across legal NLP tasks like document summarization, QA, and clause extraction. Fine-tuning models on domain-specific data (e.g., Legal-BERT) is shown to consistently outperform generic models of comparable size.
+The paper maps the upsurge of LLM research across domains like document analysis, case prediction, and contract review. It confirms that fine-tuning models on domain-specific corpora (e.g., Legal-BERT) consistently yields better results than generic baselines, while identifying gaps in model hallucination, privacy, and computational costs.
 
 \paragraph{Advantages:}
-The review provides a structured overview of legal NLP, highlighting open challenges in model hallucinations, privacy, and computational costs.
+Provides a structured overview of modern transformer/LLM applications in law, highlighting the limits of generative AI in high-liability fields.
 
 \paragraph{Future Scope:}
-The authors highlight the need for research into domain-specific prompt engineering, mitigating hallucinations, integrating privacy-preserving architectures (like federated learning), and developing hybrid models that combine LLMs with symbolic legal reasoning.
+Focuses on prompt engineering techniques, federated learning for privacy preservation, and hybrid architectures combining LLMs with symbolic reasoning.
 
 \begin{table}[h]
 \centering
 \small
 \begin{tabular}{p{3.5cm}p{11.5cm}}
 \toprule
-\textbf{Parameter} & \textbf{Details} \\
-\midrule
-\textbf{Title} & Exploring LLMs Applications in Law: A Literature Review \\
-\textbf{Area of Work} & Systematic review of Legal NLP and Transformer-based models \\
-\textbf{Dataset} & Survey of 61 core publications (utilizing CUAD, ContractNLI, etc.) \\
-\textbf{Methodology} & PRISMA-style systematic review, taxonomy development, and gap analysis \\
-\textbf{Algorithms} & BERT, RoBERTa, Legal-BERT, CaseBERT, T5, GPT-based LLMs \\
-\textbf{Results} & Documents performance trends; confirms Legal-BERT outperforming generic baselines \\
-\textbf{Advantages} & Highlights challenges like hallucinations, privacy concerns, and computational costs \\
-\textbf{Future Scope} & Focus on domain-specific prompting, privacy preservation, and hybrid symbolic models \\
+Parameter & Details \\
+\hline
+Title & Exploring LLMs Applications in Law: A Literature Review \\
+Area of Work & Systematic literature review of Transformer and LLM applications in law \\
+Dataset & Survey of 61 core publications (utilizing CUAD, ContractNLI, etc.) \\
+Methodology & PRISMA-style database search, snowballing, and taxonomic categorization \\
+Algorithms & BERT, RoBERTa, Legal-BERT, CaseBERT, T5, and GPT architectures \\
+Results & Confirmed performance gains of domain-specific fine-tuning; mapped legal application domains \\
+Advantages & Identifies critical open research challenges like hallucinations and high costs \\
+Future Scope & Prompt engineering, federated learning, and hybrid symbolic architectures \\
 \bottomrule
 \end{tabular}
 \caption{Summary of Paper 2}
@@ -320,48 +322,50 @@ The authors highlight the need for research into domain-specific prompt engineer
 
 \newpage
 
-\subsection{Paper 3: MCNN-LSTM}
-\noindent\textbf{Authors:} Hasib K. M., Azam S., Karim A., Al Marouf A., Shamrat F. M. J., Montaha S., Yeo K. C., Jonkman M., Alhajj R., Rokne J. G. (2023)\\
-\textbf{Title:} ``MCNN-LSTM: Combining CNN and LSTM to Classify Multi-Class Text in Imbalanced News Data.''\\
-\textbf{Journal:} \textit{IEEE Access}, vol. 11, pp. 93048--93063.\\
-\textbf{DOI:} \url{https://doi.org/10.1109/ACCESS.2023.3309697}
+\section{Paper 3 -- Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy}
+\label{sec:paper3}
+
+Authors: Kutbi M. (2023)\\
+Title: ``Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy.''\\
+Journal: \textit{IEEE Access}, vol. 11, pp. 117576--117581.\\
+DOI: \url{https://doi.org/10.1109/ACCESS.2023.3325895}
 
 \paragraph{Area of Work:}
-The paper focuses on multi-class text classification in imbalanced datasets, which is highly relevant to legal clause datasets like CUAD that exhibit severe category imbalance.
+The paper investigates privacy-preserving text classification, focusing on using Named Entity Recognition (NER) as an enhancement preprocessing step.
 
 \paragraph{Dataset:}
-Evaluated on imbalanced news datasets (including BBC News and Reuters) containing articles categorized into multiple news segments.
+Evaluated on standard text classification benchmarks and an in-house collected legal document dataset.
 
 \paragraph{Methodology:}
-The authors proposed a hybrid deep learning model combining a Multi-channel Convolutional Neural Network (MCNN) and a Long Short-Term Memory (LSTM) network. The model extracts local n-gram features and sequential long-range dependencies, utilizing class weights and Tomek-Link sampling to handle dataset imbalance.
+The author proposes identifying sensitive entities (such as names, dates, organizations, and locations) using NER and replacing them with generic entity labels. The modified text is then converted into TF-IDF representation and passed to classical classifiers.
 
 \paragraph{Algorithms:}
-The model uses Multi-channel CNN, LSTM, word embeddings (Word2Vec, GloVe), and a Softmax classifier.
+Evaluated using Naive Bayes, Support Vector Machines (SVM), Decision Tree Induction, and Nearest Neighbor classifiers.
 
 \paragraph{Results:}
-The model achieved an F1-score of 98\% and an accuracy of 99.71\%, outperforming standard baseline models on imbalanced text datasets.
+Experimental results showed that incorporating NER-based entity replacement achieved high accuracy (above 95\%) and strong F1-scores. The approach successfully reduces vocabulary dimensionality and preserves privacy without degrading the classification performance of downstream models.
 
 \paragraph{Advantages:}
-Effectively captures both local syntax patterns and long-range contextual relationships, while maintaining high performance on minority classes.
+Provides an effective, simple preprocessing method that handles sensitive legal text, protecting privacy while maintaining high classifier accuracy.
 
 \paragraph{Future Scope:}
-The authors suggest testing the model on other domains (such as legal text) and exploring Transformer layers instead of LSTM.
+Exploring deep learning-based NER and zero-shot domain adaptation to improve entity replacement robustness in unstructured texts.
 
 \begin{table}[h]
 \centering
 \small
 \begin{tabular}{p{3.5cm}p{11.5cm}}
 \toprule
-\textbf{Parameter} & \textbf{Details} \\
-\midrule
-\textbf{Title} & MCNN-LSTM: Combining CNN and LSTM to Classify Multi-Class Text \\
-\textbf{Area of Work} & Multi-class text classification under severe class imbalance \\
-\textbf{Dataset} & Imbalanced news datasets (BBC News, Reuters) \\
-\textbf{Methodology} & Parallel CNN filters for local patterns, LSTM for sequential context, class-balancing \\
-\textbf{Algorithms} & MCNN, LSTM, Word2Vec, GloVe, Softmax \\
-\textbf{Results} & 99.71\% classification accuracy and 98\% F1-score \\
-\textbf{Advantages} & Captures local and global text representations; handles imbalanced classes \\
-\textbf{Future Scope} & Evaluation on non-news datasets, replacement of LSTM with Transformer layers \\
+Parameter & Details \\
+\hline
+Title & Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy \\
+Area of Work & Privacy-preserving text classification using NER preprocessing \\
+Dataset & Standard text classification benchmarks and an in-house legal document dataset \\
+Methodology & NER-based entity detection and replacement, feature extraction, and classification \\
+Algorithms & Naive Bayes, Support Vector Machines (SVM), Decision Trees, and Nearest Neighbor \\
+Results & Achieved accuracy above 95\%; successfully reduced dimensionality and preserved privacy \\
+Advantages & Protects sensitive data while maintaining downstream classifier accuracy \\
+Future Scope & Integration of deep learning NER models and zero-shot domain adaptation \\
 \bottomrule
 \end{tabular}
 \caption{Summary of Paper 3}
@@ -371,17 +375,20 @@ The authors suggest testing the model on other domains (such as legal text) and 
 \newpage
 
 \section{Literature Review Summary}
+\label{sec:lit_review_summary}
 
 \begin{table}[h]
 \centering
-\scriptsize
-\begin{tabular}{p{2cm}p{2.3cm}p{2.3cm}p{2.3cm}p{2.3cm}p{2.3cm}p{2.3cm}}
+\small
+\begin{tabular}{p{3.0cm}p{4.2cm}p{4.2cm}p{3.8cm}}
 \toprule
-\textbf{Title} & \textbf{Area} & \textbf{Dataset} & \textbf{Methodology} & \textbf{Algorithms} & \textbf{Advantages} & \textbf{Limitations} \\
-\midrule
-\textbf{LegalReasoner} (2024) & Legal Judgment Prediction & ECHR, CAIL2018 & Multi-stage knowledge infusion and graph-based retrieval & LLMs, GNNs, GANs, Hierarchical Attention & High accuracy; incorporates legal context & Expensive GPUs; high latency \\
-\textbf{LLMs in Law} (2025) & Systematic mapping of Legal NLP & Survey of 61 papers & Systematic review of Transformer applications & BERT, RoBERTa, Legal-BERT, GPT & Maps research trends and gaps & Review-only; no new model implementation \\
-\textbf{MCNN-LSTM} (2023) & Text classification in imbalanced datasets & News datasets (BBC, Reuters) & Multi-channel feature extraction and class-weighting & CNN, LSTM, Word2Vec, Softmax & High F1-score; robust local/global features & Computationally heavy; hard to interpret \\
+Paper & Main Focus & Key Finding & Relevance to ClauseIQ \\
+\hline
+Quevedo Caballero et al. (2024) & Systematic mapping of Legal NLP research (2015--2022) & Identified rapid research growth, task categories, and dataset/ontology gaps & Establishes clause classification as a valid task and supports CUAD selection \\
+\hline
+Siino et al. (2025) & Systematic review of Transformer and LLM applications in law & Confirms domain-specific fine-tuning outperforms generic models; notes cost/privacy limits & Contextualizes ClauseIQ and highlights the practical need for cost-efficient models \\
+\hline
+Kutbi (2023) & Privacy-preserving text classification using NER preprocessing & NER tag replacement reduces features and preserves privacy while achieving >95\% accuracy & Justifies classical classifiers (NB, SVM) and guides privacy-friendly preprocessing \\
 \bottomrule
 \end{tabular}
 \caption{Literature Review Comparison Table}
@@ -389,9 +396,11 @@ The authors suggest testing the model on other domains (such as legal text) and 
 \end{table}
 
 \section{Findings and Proposals}
-The reviewed literature converges on three points that directly shape ClauseIQ's design. First, contract clause classification and semantic clause search are recognised, well-motivated sub-tasks within legal NLP (Siino et al., 2025), and CUAD is an established benchmark for them. Second, pairing a classification component with a retrieval/search component — as LegalReasoner does with GNN-based case-law retrieval alongside its reasoning stage (Wang et al., 2024) — is a proven pattern for structured legal text systems; ClauseIQ mirrors this at a smaller scale by pairing a TF-IDF + classical-ML classifier with a TF-IDF + cosine-similarity search module. Third, and most practically, Hasib et al. (2023) show that on multi-class, heavily imbalanced text classification, classical ML models (Logistic Regression, Naive Bayes, SVM) remain reasonably competitive once imbalance-aware evaluation and training strategies are applied, even though a deep hybrid model ultimately scores highest. Since CUAD is itself severely imbalanced across its 41 categories, this finding directly justifies ClauseIQ's decision to build a classical ML baseline first — using TF-IDF features with Naive Bayes, SVM, Logistic Regression and Random Forest, evaluated with macro-averaged F1 and per-class metrics — rather than committing immediately to a deep-learning or transformer-based pipeline.
+\label{sec:findings_and_proposals}
+The reviewed literature converges on three key points that directly shape ClauseIQ's design. First, contract clause classification and semantic clause search are recognized, well-motivated sub-tasks within Legal NLP, as mapped out in the systematic reviews of both Quevedo Caballero et al. (2024) and Siino et al. (2025), and CUAD is an established, high-quality benchmark for evaluating them. Second, literature shows that combining feature extraction with classification is highly effective for legal texts; specifically, Kutbi (2023) demonstrates that incorporating feature engineering steps (like identifying named entities) can significantly support downstream classifiers such as Naive Bayes and Support Vector Machines, achieving accuracies above 95\%. Third, because legal clause classification datasets like CUAD are heavily imbalanced, classical machine learning classifiers (Logistic Regression, Naive Bayes, SVM, and Random Forest) serve as highly interpretable and resource-efficient models for the task. The literature confirms that domain-specific features and structured preprocessing are essential to handle high-dimensional, sparse text distributions.
 
-Based on these findings, the proposed direction for ClauseIQ is: (1) build a clean, deduplicated clause-level dataset from CUAD's 41 categories; (2) represent clause text using TF-IDF (unigrams and bigrams); (3) train and compare Multinomial Naive Bayes, Linear SVM, Logistic Regression and Random Forest classifiers, using class-weighting and macro-F1 to account for the pronounced class imbalance documented in Section 3; (4) build a companion intelligent-search module that ranks clauses by cosine similarity to a free-text query over the same TF-IDF space; and (5) reserve deep-learning / transformer-based extensions (e.g., Legal-BERT, as flagged in the literature) for a possible future main project, consistent with the scope constraint that led the mentor to reject the earlier, more ambitious DocuMind AI proposal.
+Based on these findings from the literature, ClauseIQ proposes a lightweight, interpretable, and computationally efficient classical Machine Learning pipeline. First, legal text classification is established as a valid and critical Legal NLP task, for which the expert-annotated Contract Understanding Atticus Dataset (CUAD) serves as an appropriate and rigorous benchmark. To extract features from raw contract text, TF-IDF vectorization (utilizing both unigram and bigram representations) is proposed to build an interpretable, length-normalized feature matrix. On this feature space, four classical classifiers---namely Multinomial Naive Bayes, Support Vector Machines (SVM), Logistic Regression, and Random Forest---will be systematically trained and compared to classify clauses into the 41 CUAD categories. Furthermore, the system will leverage cosine similarity over these TF-IDF vector representations to support intelligent clause search and retrieve relevant provisions based on natural language queries. Initially, the project focuses strictly on this classical pipeline, ensuring high interpretability and CPU-friendly execution, while deferring computationally intensive deep learning and transformer-based architectures to potential future extensions.
+
 
 \newpage
 
@@ -503,29 +512,100 @@ On average each contract contributes about 27.1 labelled clauses, but this varie
 \label{fig:clauses_per_contract}
 \end{figure}
 
-The category distribution is highly uneven: ``Parties'' alone accounts for 2,554 of the 13,823 clauses (about 18\%), followed by ``License Grant'', ``Cap On Liability'', ``Anti-Assignment'' and ``Audit Rights'', each in the 600–800 range. This class imbalance, discussed further in Section \ref{subsec:class_analysis}, is a central design consideration for the modelling stage.
+The category distribution is highly uneven: ``Parties'' accounts for 2,554 of the 13,823 annotated clause spans in the raw dataset, but is reduced to 1,272 in the cleaned dataset after removing short spans. This is followed by ``License Grant'', ``Cap On Liability'', ``Anti-Assignment'' and ``Audit Rights'', which form the majority of the annotated clauses. This class imbalance, discussed further in Section \ref{subsec:class_analysis}, is a central design consideration for the modelling stage.
 
 \begin{figure}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 2.5cm{\vfill\centering [Top 15 Categories: Parties (2554), License Grant (752), Cap On Liability (680), ...]\vfill}}
-\caption{Top 15 most frequent clause categories in CUAD}
+\framebox[0.85\textwidth]{\vbox to 1.8cm{\vfill\centering \scriptsize \texttt{Top Categories: Parties (1272), License Grant (774), Cap On Liability (672),} \\ \texttt{Anti-Assignment (652), Audit Rights (642), Insurance (558), Expiration Date (467)}\vfill}}
+\caption{Top clause categories in the cleaned CUAD dataset}
 \label{fig:top_15_categories}
 \end{figure}
 
-We also outline the following visual placeholders:
-\begin{figure}[h]
-\centering
-\framebox[0.85\textwidth]{\vbox to 2cm{\vfill\centering [Histogram showing skewness of word count distribution]\vfill}}
-\caption{Distribution of clause length (word count)}
-\label{fig:length_dist}
-\end{figure}
+\subsection{Dataset Text Statistics}
+\label{subsec:dataset_text_statistics}
+To gain deeper insights into the linguistic profile and structure of the Contract Understanding Atticus Dataset (CUAD), text statistics were calculated directly from the processed dataset.
 
-\begin{figure}[h]
+\paragraph{Paragraph Length Statistics}
+In the raw SQuAD-style JSON configuration of CUAD, each commercial contract is formatted as a single continuous text context (representing a paragraph block). Across the 510 contracts, the average paragraph length is 52,563.01 characters and 7,861.19 words, reflecting the dense and complex structure of commercial legal agreements.
+
+\paragraph{N-Gram Frequencies}
+Bigrams and trigrams were extracted from the cleaned clause text to understand word combinations and common legal phrases. Table \ref{tab:frequent_bigrams} and Table \ref{tab:frequent_trigrams} list the top 10 most frequent bigrams and trigrams, respectively, calculated from the actual cleaned corpus.
+
+\begin{table}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 2cm{\vfill\centering [Boxplot representing clause distributions over 510 contracts]\vfill}}
-\caption{Number of annotated clauses per contract}
-\label{fig:clauses_per_contract_boxplot}
-\end{figure}
+\small
+\begin{tabular}{lc}
+\toprule
+Bigram & Frequency \\
+\hline
+of the & 7,318 \\
+this agreement & 5,927 \\
+to the & 4,354 \\
+in the & 2,957 \\
+of this & 2,617 \\
+shall be & 2,147 \\
+with the & 1,577 \\
+the term & 1,522 \\
+for the & 1,515 \\
+the other & 1,357 \\
+\bottomrule
+\end{tabular}
+\caption{Most Frequent Bigrams in CUAD}
+\label{tab:frequent_bigrams}
+\end{table}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lc}
+\toprule
+Trigram & Frequency \\
+\hline
+of this agreement & 2,331 \\
+in accordance with & 945 \\
+the other party & 932 \\
+this agreement shall & 879 \\
+during the term & 859 \\
+in connection with & 791 \\
+under this agreement & 786 \\
+the effective date & 720 \\
+the right to & 713 \\
+with respect to & 699 \\
+\bottomrule
+\end{tabular}
+\caption{Most Frequent Trigrams in CUAD}
+\label{tab:frequent_trigrams}
+\end{table}
+
+\paragraph{Legal Abbreviations Frequencies}
+Common legal and business abbreviations were counted in the cleaned clause texts using regular expressions (with word-boundary safety). Table \ref{tab:legal_abbreviations} details their frequency counts across the dataset.
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lc}
+\toprule
+Abbreviation & Frequency \\
+\hline
+inc. & 400 \\
+llc & 141 \\
+ltd. & 89 \\
+co. & 45 \\
+e.g. & 39 \\
+corp. & 35 \\
+i.e. & 17 \\
+etc. & 17 \\
+v. & 15 \\
+vs. & 1 \\
+sec. & 1 \\
+art. & 0 \\
+ex. & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Legal Abbreviations Frequencies in CUAD}
+\label{tab:legal_abbreviations}
+\end{table}
+
 
 \newpage
 
@@ -548,45 +628,15 @@ Before cleaning: 13,823 rows. Removed 1,567 clauses with < 3 tokens (11.34\%). C
 \label{fig:cleaning_results}
 \end{figure}
 
-\begin{lstlisting}[language=Python, caption={Text Cleaning and Normalization Code Snippet}]
-import re
-
-def clean_text(t):
-    t = re.sub(r'\s+', ' ', str(t))                  # collapse whitespace
-    t = re.sub(r"[^A-Za-z0-9.,;:()%$\-\s]", ' ', t)  # strip odd artefacts
-    return t.strip()
-
-df['clean_text'] = df['clause_text'].apply(clean_text)
-df_clean = df[df['clean_text'].str.split().str.len() >= 3]
-\end{lstlisting}
-
 \subsection{Analysis of Feature Variables}
 \label{subsec:feature_analysis}
 Clause text is converted into numerical features using Term Frequency–Inverse Document Frequency (TF-IDF) with unigrams and bigrams, a vocabulary capped at 5,000 terms, English stop-word removal, and a minimum document frequency of 2 (to discard one-off tokens such as OCR noise or party names).
-
-\begin{lstlisting}[language=Python, caption={TF-IDF Feature Extraction Code Snippet}]
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-tfidf = TfidfVectorizer(max_features=5000, stop_words='english',
-                        ngram_range=(1,2), min_df=2)
-X = tfidf.fit_transform(df_clean['clean_text'])
-print('TF-IDF matrix shape:', X.shape)
-print('Sparsity: {:.4f}%'.format(
-    100 * (1 - X.nnz / (X.shape[0]*X.shape[1]))))
-\end{lstlisting}
 
 \begin{figure}[h]
 \centering
 \framebox[0.85\textwidth]{\vbox to 1.8cm{\vfill\centering \texttt{TF-IDF matrix shape: (12256, 5000)} \\ \texttt{Sparsity: 99.5187\%} \\ \scriptsize \texttt{Top terms: agreement(449.05), shall(394.78), party(353.97), term(211.92), company(203.05)}\vfill}}
 \caption{TF-IDF feature matrix statistics and top terms}
 \label{fig:tfidf_stats}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\framebox[0.85\textwidth]{\vbox to 2cm{\vfill\centering [Bar chart of top 20 terms: agreement, shall, party, term, company, ...]\vfill}}
-\caption{Top 20 TF-IDF terms across the clause corpus}
-\label{fig:top_terms_bar}
 \end{figure}
 
 As expected for legal text, the highest-weighted terms are boilerplate contract vocabulary (``agreement'', ``shall'', ``party'', ``section''). These generic terms are shared across almost every category, so the classifiers must rely on more category-specific bigrams (e.g. ``agreement shall'', ``prior written'') and rarer discriminating terms to separate the 41 classes — this is one reason bigrams were included in the TF-IDF configuration rather than unigrams alone.
@@ -600,42 +650,121 @@ As expected for legal text, the highest-weighted terms are boilerplate contract 
 \label{fig:class_imbalance_bins}
 \end{figure}
 
-The 41 clause categories are strongly imbalanced. The largest class (``Parties'', 2,554 samples) has roughly 95 times more examples than the smallest class (``Price Restrictions'', 27 samples). Four categories fall below 40 samples after cleaning:
-\begin{figure}[h]
+The 41 clause categories are strongly imbalanced. The largest class (``Parties'', 1,272 samples after cleaning) has roughly 47 times more examples than the smallest class (``Price Restrictions'', 27 samples). Table \ref{tab:rare_categories} lists the four rarest categories that fall below 40 samples after data cleaning.
+
+\begin{table}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 1.5cm{\vfill\centering \small \texttt{Third Party Beneficiary: 39} \\ \texttt{Most Favored Nation: 38} \\ \texttt{Unlimited/All-You-Can-Eat-License: 32} \\ \texttt{Price Restrictions: 27}\vfill}}
+\small
+\begin{tabular}{lc}
+\toprule
+Category & Cleaned Samples \\
+\hline
+Third Party Beneficiary & 39 \\
+Most Favored Nation & 38 \\
+Unlimited/All-You-Can-Eat-License & 32 \\
+Price Restrictions & 27 \\
+\bottomrule
+\end{tabular}
 \caption{Rare categories identified for class-imbalance handling}
-\label{fig:rare_categories}
-\end{figure}
+\label{tab:rare_categories}
+\end{table}
 
-Following the imbalance-handling strategy validated by Hasib et al. (2023) in Section \ref{ch:supporting_literature}, the modelling stage will address this imbalance using class-weighted loss (\texttt{class\_weight='balanced'} in scikit-learn), stratified train/test splitting so every category is represented in both splits, and macro-averaged F1-score (rather than plain accuracy) as the primary evaluation metric, since accuracy alone would be dominated by the majority ``Parties'' class.
+Following the imbalance-handling strategy validated in modern Legal NLP studies, the modelling stage will address this imbalance using class-weighted loss (\texttt{class\_weight='balanced'} in classifiers), stratified train/test splitting so every category is represented in both splits, and macro-averaged F1-score as the primary evaluation metric, since accuracy alone would be dominated by the majority classes.
 
-\section{Data Visualization}
-The following visualisations summarise the shape of the CUAD-derived clause dataset used for ClauseIQ.
-\begin{figure}[h]
+\subsection{Text Similarity for Duplicate and Near-Duplicate Clause Analysis}
+\label{subsec:text_similarity_duplicates}
+To identify nearly identical contracts and repeated clauses with minor wording changes, ClauseIQ plans to incorporate a text similarity module as part of the preprocessing and exploratory pipeline. Because legal drafting frequently repeats boilerplate language with small modifications (such as changing a party name, date, or maximum cap amount), identifying duplicate or near-duplicate text is critical to evaluate data redundancy and ensure model robustness.
+
+Consistent with ClauseIQ's classical machine learning scope, this duplicate analysis is performed using a Term Frequency-Inverse Document Frequency (TF-IDF) feature matrix coupled with Cosine Similarity. The process flow is designed as follows:
+\begin{enumerate}
+    \item \textbf{Text Normalization}: Raw contract clauses are cleaned and normalized as detailed in Section \ref{subsec:data_cleaning} to remove whitespace and formatting artifacts.
+    \item \textbf{TF-IDF Representation}: The cleaned texts are converted into high-dimensional, length-normalized feature vectors over the unigram and bigram vocabulary (described in Section \ref{subsec:feature_analysis}).
+    \item \textbf{Cosine Similarity Computation}: The similarity score between any two clause vectors, $A$ and $B$, is computed as:
+    \begin{equation}
+        \text{Similarity}(A, B) = \frac{A \cdot B}{\|A\| \|B\|} = \frac{\sum_{i=1}^n A_i B_i}{\sqrt{\sum_{i=1}^n A_i^2} \sqrt{\sum_{i=1}^n B_i^2}}
+    \end{equation}
+    \item \textbf{Threshold and Duplicates Identification}: Clauses achieving a similarity score above a predefined threshold (such as $0.90$ or $0.95$) are flagged as duplicates or near-duplicates.
+\end{enumerate}
+This similarity pipeline allows ClauseIQ to identify redundant provisions and map contract-level structural repetitions without introducing heavy deep learning or semantic embedding models, keeping the execution local and computationally efficient.
+
+\section{Data Visualization and Split Validation}
+The following tables and analysis summarize the distribution of the CUAD-derived clause dataset and validate the proposed split strategy.
+
+\paragraph{Category Distribution and Length Statistics}
+Table \ref{tab:top_categories} lists the sample counts for the top 10 most frequent clause categories in the cleaned dataset.
+
+\begin{table}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 2.2cm{\vfill\centering [Bar chart representing the full distribution of samples across all 41 categories]\vfill}}
-\caption{Full distribution of all 41 clause categories}
-\label{fig:full_category_dist}
-\end{figure}
+\small
+\begin{tabular}{lc}
+\toprule
+Category & Cleaned Samples \\
+\hline
+Parties & 1,272 \\
+License Grant & 774 \\
+Cap On Liability & 672 \\
+Anti-Assignment & 652 \\
+Audit Rights & 642 \\
+Insurance & 558 \\
+Expiration Date & 467 \\
+Governing Law & 462 \\
+Agreement Date & 449 \\
+Post-Termination Services & 449 \\
+\bottomrule
+\end{tabular}
+\caption{Top 10 most frequent clause categories in cleaned CUAD}
+\label{tab:top_categories}
+\end{table}
 
-\begin{figure}[h]
+Clause length also varies meaningfully by category. For instance, ``Post-Termination Services'' and ``License Grant'' clauses tend to be longer and more detailed, whereas ``Agreement Date'' and ``Parties'' represent short factual spans. Table \ref{tab:length_by_category} details the word length metrics for the top 10 categories.
+
+\begin{table}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 2.2cm{\vfill\centering [Boxplot of word lengths for the top 10 most frequent categories]\vfill}}
-\caption{Clause length by category (top 10 most frequent categories)}
-\label{fig:length_by_category}
-\end{figure}
+\small
+\begin{tabular}{lccc}
+\toprule
+Category & Mean Words & Min Words & Max Words \\
+\hline
+Parties & 5.74 & 3 & 88 \\
+License Grant & 65.51 & 3 & 397 \\
+Cap On Liability & 59.58 & 5 & 308 \\
+Anti-Assignment & 47.53 & 3 & 375 \\
+Audit Rights & 48.85 & 5 & 316 \\
+Insurance & 48.47 & 3 & 354 \\
+Expiration Date & 38.11 & 3 & 251 \\
+Governing Law & 33.86 & 5 & 139 \\
+Agreement Date & 3.89 & 3 & 19 \\
+Post-Termination Services & 70.99 & 3 & 281 \\
+\bottomrule
+\end{tabular}
+\caption{Clause Word Length Statistics for Top 10 Categories}
+\label{tab:length_by_category}
+\end{table}
 
-Clause length also varies meaningfully by category — e.g. ``Audit Rights'' and ``Insurance'' clauses tend to be longer and more detailed than short factual spans such as ``Agreement Date'' — which is useful contextual information even though the primary features used for classification are TF-IDF weighted terms rather than length.
+\paragraph{Train/Test Split Validation and Leakage Analysis}
+In legal NLP, performing splits at the clause level can introduce severe data leakage because clauses from the same contract will appear across both training and testing sets, artificially inflating evaluation scores. To prevent this, splits must be performed at the contract level. Table \ref{tab:split_validation} compares the pre-defined contract-level split against a standard clause-level stratified split.
 
-\begin{figure}[h]
+\begin{table}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 2.2cm{\vfill\centering [Train/Test Split ratio diagram: 80\% training split, 20\% validation split, stratified]\vfill}}
-\caption{Planned stratified train/test split of the clause dataset}
-\label{fig:train_test_split_diagram}
-\end{figure}
+\small
+\begin{tabular}{lcc}
+\toprule
+Validation Metric & Clause-Level Split & Contract-Level Split \\
+\hline
+Training Clauses & 9,804 & 9,656 \\
+Testing Clauses & 2,452 & 2,600 \\
+Training Unique Contracts & 510 & 480 \\
+Testing Unique Contracts & 474 & 102 \\
+Contract Overlap (Leakage) & 474 & 0 \\
+Missing Categories (Train) & 0 & 0 \\
+Missing Categories (Test) & 0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{Train/Test Split Validation and Data Leakage Comparison}
+\label{tab:split_validation}
+\end{table}
 
-A stratified 80:20 train/test split (\texttt{random\_state = 42}) is planned for the modelling stage so that every one of the 41 categories — including the rarest ones — is represented proportionally in both the training and test sets.
+The pre-defined contract-level split has zero contract overlap, ensuring completely clean validation boundaries. Furthermore, testing shows that even with contract-level splitting, all 41 clause categories are fully represented in both the training set (with sample counts ranging from 1,075 for ``Parties'' to 23 for ``Price Restrictions'') and the testing set (ranging from 197 for ``Parties'' to 4 for ``Price Restrictions''). None of the 41 categories are missing from either split, validating the feasibility of evaluating the models on this split.
 
 \newpage
 
@@ -706,11 +835,104 @@ Model performance is validated quantitatively using:
 
 \begin{figure}[h]
 \centering
-\framebox[0.85\textwidth]{\vbox to 3cm{\vfill\centering [Activity Diagram showing the process: Text Input -> Cleaning -> TF-IDF -> Classifier -> Class Prediction / Search Ranking]\vfill}}
+\begin{tikzpicture}[
+  node distance=1.1cm,
+  every node/.style={fill=white, draw=black, rounded corners, font=\small, minimum width=5cm, minimum height=0.6cm, align=center},
+  arrow/.style={thick, ->, >=stealth}
+]
+  \node (start) [circle, draw, minimum width=1.5cm] {START};
+  \node (load) [below of=start] {Load CUAD Dataset};
+  \node (preprocess) [below of=load] {Preprocess Clauses};
+  \node (vectorize) [below of=preprocess] {TF-IDF Vectorization};
+  \node (train) [below of=vectorize] {Train Classical ML Models};
+  \node (evaluate) [below of=train] {Evaluate Models};
+  \node (build) [below of=evaluate] {Build TF-IDF Search Index};
+  \node (query) [below of=build] {Enter Clause / Search Query};
+  \node (classify) [below of=query] {Classify / Rank Similar Clauses};
+  \node (end) [below of=classify, circle, draw, minimum width=1.5cm] {END};
+
+  \draw [arrow] (start) -- (load);
+  \draw [arrow] (load) -- (preprocess);
+  \draw [arrow] (preprocess) -- (vectorize);
+  \draw [arrow] (vectorize) -- (train);
+  \draw [arrow] (train) -- (evaluate);
+  \draw [arrow] (evaluate) -- (build);
+  \draw [arrow] (build) -- (query);
+  \draw [arrow] (query) -- (classify);
+  \draw [arrow] (classify) -- (end);
+\end{tikzpicture}
 \caption{Activity diagram: TF-IDF + classical ML clause classification and search pipeline}
 \label{fig:activity_diagram}
 \end{figure}
 
+\newpage
+
+\section{Project Pipeline}
+
+\subsection{Project Pipeline Diagram with Explanation}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=1.1cm,
+  every node/.style={fill=white, draw=black, rounded corners, font=\small, minimum width=5cm, minimum height=0.6cm, align=center},
+  arrow/.style={thick, ->, >=stealth}
+]
+  \node (raw) {Raw CUAD JSON};
+  \node (flatten) [below of=raw] {Flattened DataFrame};
+  \node (clean) [below of=flatten] {Data Cleaning \& Preprocessing};
+  \node (split) [below of=clean] {Contract-Level Train/Test Split};
+  \node (train) [below of=split] {Model Compare (NB, SVM, LR, RF)};
+  \node (api) [below of=train] {Expose Web Interface / API};
+
+  \draw [arrow] (raw) -- (flatten);
+  \draw [arrow] (flatten) -- (clean);
+  \draw [arrow] (clean) -- (split);
+  \draw [arrow] (split) -- (train);
+  \draw [arrow] (train) -- (api);
+\end{tikzpicture}
+\caption{ClauseIQ project pipeline flow}
+\label{fig:project_pipeline}
+\end{figure}
+
+\paragraph{Data}
+The pipeline begins with the CUAD dataset (510 contracts, 41 clause categories), which is flattened from its SQuAD-style JSON format into a clause-level table as described in Section \ref{ch:system_analysis}. Exploratory data analysis (class distribution, length distribution, missing-value and duplicate checks) is performed to understand the corpus, followed by data cleaning and TF-IDF-based preprocessing as described in Section \ref{subsec:data_cleaning}.
+
+\paragraph{Model Building}
+The cleaned, vectorised dataset is split into stratified training (80\%) and testing (20\%) subsets. Four classical ML models — Multinomial Naive Bayes, Linear SVM, Logistic Regression and Random Forest — are trained on the TF-IDF features with class-weighting to address the imbalance documented in Section \ref{subsec:class_analysis}, and compared using macro-F1, per-class F1 and accuracy to select the best-performing classifier.
+
+\paragraph{Intelligent Search \& Deployment}
+Independently of classification, a TF-IDF index of the full clause corpus is built to support cosine-similarity-based intelligent search: a free-text query is vectorised in the same TF-IDF space and the most similar clauses are ranked and returned. The selected classifier and the search index are planned to be persisted (via joblib) and exposed through a simple web/API interface so a user can classify a new clause or search the corpus for clauses matching a natural-language query.
+
+\section{System Implementation}
+\label{sec:system_implementation}
+This section documents the Python implementation details for the various preprocessing, feature extraction, classifier training, and cosine similarity search modules of ClauseIQ.
+
+\subsection{Text Preprocessing and Data Cleaning}
+To normalize raw contract texts, whitespace is collapsed and non-standard characters are removed, retaining common punctuation marks. Short clause spans with fewer than 3 words are filtered out to improve classification quality.
+\begin{lstlisting}[language=Python, caption={Text Cleaning and Normalization Code Snippet}]
+import re
+
+def clean_text(t):
+    t = re.sub(r'\s+', ' ', str(t))                  # collapse whitespace
+    t = re.sub(r"[^A-Za-z0-9.,;:()%$\-\s]", ' ', t)  # strip odd artefacts
+    return t.strip()
+
+df['clean_text'] = df['clause_text'].apply(clean_text)
+df_clean = df[df['clean_text'].str.split().str.len() >= 3]
+\end{lstlisting}
+
+\subsection{TF-IDF Feature Extraction}
+Cleaned contract clauses are vectorized into a high-dimensional, length-normalized feature space using unigram and bigram representation, with the vocabulary capped at the top 5,000 terms.
+\begin{lstlisting}[language=Python, caption={TF-IDF Feature Extraction Code Snippet}]
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+tfidf = TfidfVectorizer(max_features=5000, stop_words='english',
+                        ngram_range=(1,2), min_df=2)
+X = tfidf.fit_transform(df_clean['clean_text'])
+\end{lstlisting}
+
+\subsection{Pipeline Training and Search Workflows}
+The classifier is trained using a stratified split to ensure full class representation. The search module uses the same TF-IDF space and Cosine Similarity to compute ranking scores for user queries.
 \begin{lstlisting}[language=Python, caption={Pipeline Training and Inference Pseudocode}]
 # TF-IDF + Classifier Training and Similarity Searching
 
@@ -730,27 +952,6 @@ def search_clauses(query, corpus_vectors, tfidf, top_k):
     scores = cosine_similarity(q_vec, corpus_vectors)
     return top_k_ranked(scores, top_k)
 \end{lstlisting}
-
-\newpage
-
-\section{Project Pipeline}
-
-\subsection{Project Pipeline Diagram with Explanation}
-\begin{figure}[h]
-\centering
-\framebox[0.85\textwidth]{\vbox to 3.5cm{\vfill\centering [Pipeline Diagram: Raw CUAD JSON -> Flattened DataFrame -> Cleaning -> Split -> Model Compare -> Expose API]\vfill}}
-\caption{ClauseIQ project pipeline}
-\label{fig:project_pipeline}
-\end{figure}
-
-\paragraph{Data}
-The pipeline begins with the CUAD dataset (510 contracts, 41 clause categories), which is flattened from its SQuAD-style JSON format into a clause-level table as described in Section \ref{ch:system_analysis}. Exploratory data analysis (class distribution, length distribution, missing-value and duplicate checks) is performed to understand the corpus, followed by data cleaning and TF-IDF-based preprocessing as described in Section \ref{subsec:data_cleaning}.
-
-\paragraph{Model Building}
-The cleaned, vectorised dataset is split into stratified training (80\%) and testing (20\%) subsets. Four classical ML models — Multinomial Naive Bayes, Linear SVM, Logistic Regression and Random Forest — are trained on the TF-IDF features with class-weighting to address the imbalance documented in Section \ref{subsec:class_analysis}, and compared using macro-F1, per-class F1 and accuracy to select the best-performing classifier.
-
-\paragraph{Intelligent Search \& Deployment}
-Independently of classification, a TF-IDF index of the full clause corpus is built to support cosine-similarity-based intelligent search: a free-text query is vectorised in the same TF-IDF space and the most similar clauses are ranked and returned. The selected classifier and the search index are planned to be persisted (via joblib) and exposed through a simple web/API interface so a user can classify a new clause or search the corpus for clauses matching a natural-language query.
 
 \section{Feasibility Analysis}
 Feasibility has been assessed across technical, economic and operational dimensions, consistent with the scope-controlled, classical-ML approach agreed with the project guide.
@@ -781,10 +982,10 @@ The system's scope is intentionally bounded to the 41 CUAD categories and to cla
 \begin{thebibliography}{99}
 
 \bibitem{legalreasoner}
-Wang X., Zhang X., Hoo V., Shao Z., Zhang X.,
-``LegalReasoner: A Multi-Stage Framework for Legal Judgment Prediction via Large Language Models and Knowledge Integration,''
-\textit{IEEE Access}, vol. 12, pp. 166843--166854, 2024.
-\url{https://doi.org/10.1109/ACCESS.2024.3496666}
+Quevedo Caballero E., Černý T., Rodriguez A., Rivas P., Yero J., Sooksatra K., Taibi D.,
+``Legal Natural Language Processing From 2015 to 2022: A Comprehensive Systematic Mapping Study of Advances and Applications,''
+\textit{IEEE Access}, vol. 12, pp. 145286--145317, 2024.
+\url{https://doi.org/10.1109/ACCESS.2024.3414967}
 
 \bibitem{siino2025}
 Siino M., Falco M., Croce D., Rosso P.,
@@ -793,10 +994,10 @@ Siino M., Falco M., Croce D., Rosso P.,
 \url{https://doi.org/10.1109/ACCESS.2025.3533217}
 
 \bibitem{hasib2023}
-Hasib K. M., Azam S., Karim A., Al Marouf A., Shamrat F. M. J., Montaha S., Yeo K. C., Jonkman M., Alhajj R., Rokne J. G.,
-``MCNN-LSTM: Combining CNN and LSTM to Classify Multi-Class Text in Imbalanced News Data,''
-\textit{IEEE Access}, vol. 11, pp. 93048--93063, 2023.
-\url{https://doi.org/10.1109/ACCESS.2023.3309697}
+Kutbi M.,
+``Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy,''
+\textit{IEEE Access}, vol. 11, pp. 117576--117581, 2023.
+\url{https://doi.org/10.1109/ACCESS.2023.3325895}
 
 \bibitem{cuad}
 D. Hendrycks, C. Burns, A. Chen, and S. Ball,
