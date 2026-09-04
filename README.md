@@ -376,20 +376,82 @@ Clause Classification
 
 ---
 
-## 📈 Model Evaluation
+## 📈 Model Evaluation (Sprint 1 Results)
 
-Each classification algorithm will be evaluated using the same dataset split and evaluation metrics.
+Each classification algorithm is evaluated on the identical held-out stratified test set (2,441 clauses) using TF-IDF features strictly fit on training data.
 
-Example comparison:
+| Model | Accuracy | Macro Precision | Macro Recall | Macro F1 | Weighted F1 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Logistic Regression (Baseline)** | 71.90% | 0.6481 | 0.6622 | 64.74% | 71.96% |
+| **Linear SVM (Tuned C=0.1)** | **72.63%** | 0.6323 | **0.6665** | 64.18% | **72.26%** |
+| Naive Bayes | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 |
+| Random Forest | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 |
 
-| Model               | Accuracy | Precision | Recall | F1-Score |
-| ------------------- | -------: | --------: | -----: | -------: |
-| Logistic Regression |      TBD |       TBD |    TBD |      TBD |
-| SVM                 |      TBD |       TBD |    TBD |      TBD |
-| Naive Bayes         |      TBD |       TBD |    TBD |      TBD |
-| Random Forest       |      TBD |       TBD |    TBD |      TBD |
+---
 
-> **Note:** Actual values will be added after model training and evaluation.
+## 🚀 Sprint 1: Core ML Pipeline
+
+Sprint 1 delivers the fully functional, reproducible Core Machine Learning Pipeline for ClauseIQ.
+
+### 1. Sprint Objective
+Build and verify the complete core ML pipeline for classifying contract clauses into CUAD clause categories using Classical Machine Learning, from raw PDF ingestion to tuned model evaluation.
+
+### 2. Dataset Information (Source of Truth)
+All statistics and models are derived from `data/clauseiq_dataset.csv`:
+- **Total Records**: 12,204 rows
+- **Columns**: 3 (`contract_id`, `clause_text`, `category`)
+- **Missing Values**: 0
+- **Unique Contracts**: 510 commercial agreements
+- **Unique Categories**: 41 legal clause categories
+- **Top Categories**: *Parties* (1,251), *License Grant* (774), *Cap On Liability* (672), *Anti-Assignment* (652), *Audit Rights* (642)
+- **Bottom Categories**: *Unlimited/All-You-Can-Eat-License* (32), *Price Restrictions* (27)
+- *Note on row count discrepancy*: An earlier raw extract noted 13,823 rows; the active verified dataset contains exactly 12,204 clean rows after deduplication.
+
+### 3. Pipeline Components
+- **PDF Text Extraction (`src/pdf_extractor.py`)**: Uses PyMuPDF (`pymupdf`) to extract text from text-based contract PDFs, handling path resolution dynamically.
+- **Clause Splitting (`src/clause_splitter.py`)**: Uses spaCy's `en_core_web_sm` model for sentence/clause boundary detection via `doc.sents`.
+- **Text Cleaning (`src/text_cleaner.py`, `src/clean_dataset.py`)**: Normalizes whitespace, strips URLs and emails, removes non-alphanumeric noise while preserving essential legal terms (*shall*, *may*, *not*, *unless*, *provided*, *agreement*, *party*).
+- **TF-IDF Vectorization (`src/feature_extraction.py`)**: Extracts unigram and bigram features (`ngram_range=(1,2)`, `max_features=10000`, `sublinear_tf=True`). Strict train-only fitting prevents data leakage.
+- **Stratified Train/Test Split**: 80/20 split (`random_state=42`) producing 9,763 training samples and 2,441 test samples across 41 classes.
+- **Baseline Logistic Regression (`src/train_baseline.py`)**: Balanced class-weighted baseline achieving 71.90% accuracy and 64.74% macro F1.
+- **Tuned Linear SVM (`src/train_svm.py`)**: Balanced `LinearSVC` tuned using 3-fold cross-validation (`C=0.1`), achieving 72.63% accuracy and 72.26% weighted F1.
+- **Model Comparison (`src/model_comparison.py`)**: Generates comparative benchmark across models on the test partition.
+- **End-to-End Demo (`src/demo_pipeline.py`)**: Ingests `sample_contract.pdf`, segments clauses, and classifies them into legal categories.
+
+### 4. Serialized Model Artifacts (`models/`)
+- `tfidf_vectorizer.pkl`: Fitted TF-IDF vectorizer (10,000 features)
+- `label_encoder.pkl`: Label encoder mapping 41 classes
+- `train_test_split.pkl`: Tuple of `(X_train, X_test, y_train, y_test)`
+- `logistic_regression.pkl`: Trained Logistic Regression model
+- `svm_classifier.pkl`: Tuned Linear SVM classifier
+
+### 5. How to Run the Sprint 1 Pipeline
+From the project root:
+```powershell
+# 1. Clean the raw dataset
+.venv\Scripts\python.exe src\clean_dataset.py
+
+# 2. Extract TF-IDF features and create stratified train/test split
+.venv\Scripts\python.exe src\feature_extraction.py
+
+# 3. Train and evaluate Logistic Regression baseline
+.venv\Scripts\python.exe src\train_baseline.py
+
+# 4. Tune and evaluate Linear SVM
+.venv\Scripts\python.exe src\train_svm.py
+
+# 5. Run model comparison
+.venv\Scripts\python.exe src\model_comparison.py
+
+# 6. Run end-to-end PDF-to-classification demonstration
+.venv\Scripts\python.exe src\demo_pipeline.py
+
+# 7. Run automated test suite
+.venv\Scripts\python.exe -m unittest tests\test_sprint1.py -v
+```
+
+### 6. Limitations & Notes
+- **Contract-Level Overlap**: The clause-level stratified split results in 99.8% of test contracts having clauses in the training set. Contract-grouped splits (`GroupShuffleSplit`) will be evaluated in future sprints to test cross-contract generalization.
 
 ---
 
