@@ -1,0 +1,25 @@
+\chapter{LIMITATIONS AND FUTURE SCOPE}
+\label{ch:future_scope}
+
+This chapter reviews the technical limitations of the current classical machine learning architecture and outlines prospective research horizons for prospective main-project development.
+
+\section{System Limitations}
+\label{sec:system_limitations}
+
+While ClauseIQ delivers high precision, predictable inference latency ($<10$~ms), and transparent mathematical interpretability, the current implementation operates under specific boundaries:
+\begin{enumerate}
+    \item \textbf{Single-Label Formulation:} In real-world commercial contracts, certain multifaceted provisions contain compound covenants (e.g., a clause simultaneously governing intellectual property licenses and post-termination audit covenants). ClauseIQ currently predicts the dominant category in a single-label multiclass setting.
+    \item \textbf{Syntactic and Collocation Dependency:} Classical TF-IDF representation relies on exact n-gram matching. While effective for standardized boilerplate terminology, semantic variations expressing identical legal intents through disparate synonyms without shared vocabulary can experience reduced cosine similarity scores.
+    \item \textbf{Document Formatting Complexity:} Document extraction using PyMuPDF processes linear text streams effectively, but highly complex multi-column layouts, embedded image scans requiring OCR, or complex table boundaries represent challenging edge cases for plain-text sentence tokenizers.
+\end{enumerate}
+
+\section{Prospective Future Work: DocuMind AI Concept}
+\label{sec:documind_future_scope}
+
+As a prospective concept for the subsequent MCA Main Project, the methodologies established in ClauseIQ can serve as the foundational benchmark for a significantly expanded enterprise system titled \textbf{DocuMind AI}:
+\begin{enumerate}
+    \item \textbf{Hybrid Classical \& Dense Retrieval Architecture:} DocuMind AI envisions a dual-retrieval pipeline pairing ClauseIQ's high-speed TF-IDF lexical filtering with dense bi-encoder embeddings (e.g., BGE-large or Legal-BERT embeddings), yielding reciprocal rank fusion for superior recall across ambiguous terminology.
+    \item \textbf{Retrieval-Augmented Generation (RAG) for Contract QA:} Implementing an offline, verifiable RAG pipeline where retrieved clauses provide grounded context for localized compliance analysis, automated risk scoring, and redlining suggestions.
+    \item \textbf{Automated Named Entity Recognition (NER) Redaction:} Pre-processing contracts through privacy-preserving entity masking algorithms to redact personally identifiable information (PII), proprietary monetary amounts, and corporate identifiers before downstream indexing.
+    \item \textbf{Containerized Microservices Orchestration:} Packaging the React frontend, FastAPI gateway, ML inference workers, and PostgreSQL database within Docker Compose and Kubernetes configurations for scalable cloud deployment.
+\end{enumerate}

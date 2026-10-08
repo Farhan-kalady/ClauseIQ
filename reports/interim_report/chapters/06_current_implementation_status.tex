@@ -1,0 +1,161 @@
+\chapter{SYSTEM INTEGRATION AND DEPLOYMENT}
+\label{ch:current_implementation_status}
+
+This chapter documents the completed software engineering integration and deployment modules implemented in ClauseIQ during Sprint 3. The architecture transitions the isolated machine learning and information retrieval engines into an end-to-end, full-stack enterprise contract intelligence platform.
+
+% ----------------------------------------------------------------------
+% Section 6.1: End-to-End System Architecture
+% ----------------------------------------------------------------------
+\section{End-to-End System Architecture}
+\label{sec:system_architecture}
+
+The ClauseIQ architecture follows a decoupled, service-oriented multi-tier topology:
+
+\begin{center}
+\textbf{React.js Frontend (Vite)} \\
+$\Downarrow$ \textit{(HTTP / JSON \& Multipart Payloads)} \\
+\textbf{FastAPI RESTful Backend Service} \\
+$\Downarrow$ \textit{(In-Memory Inference \& BLAS Dot Products)} \\
+\textbf{Sprint 2 ML Classifier + TF-IDF Vectorizer + Cosine Search Engine} \\
+$\Downarrow$ \textit{(Asynchronous Telemetry \& Audit Logging)} \\
+\textbf{Supabase PostgreSQL Relational Database}
+\end{center}
+
+\subsection{Key Architectural Properties}
+\begin{enumerate}
+    \item \textbf{Strict Classical Machine Learning Core:} In strict adherence to project constraints, the system operates purely on classical statistical learning (Multinomial Logistic Regression, TF-IDF feature projection with 10,000 $n$-gram dimensions, and Cosine Vector Space Retrieval). No generative AI, Large Language Models (LLMs), or black-box transformer components are utilized.
+    \item \textbf{Single-Instance Startup Loading:} The 3.28~MB Logistic Regression model, 404~KB TF-IDF vectorizer, and 41-class label encoder are loaded into memory once during application startup via FastAPI's asynchronous \texttt{lifespan} context manager. Per-request artifact deserialization overhead is entirely eliminated.
+    \item \textbf{Graceful Degradation:} If Supabase PostgreSQL credentials are not supplied in the local development environment, the backend automatically transitions to an offline/local telemetry mode without throwing exceptions or interrupting client queries.
+\end{enumerate}
+
+% ----------------------------------------------------------------------
+% Section 6.2: Intelligent Search Implementation & Evaluation
+% ----------------------------------------------------------------------
+\section{Intelligent Search Implementation}
+\label{sec:search_implementation}
+
+ClauseIQ implements an intelligent clause retrieval engine based on \textbf{TF-IDF Vector Space Representation and Cosine Similarity} (\texttt{src/search.py}). 
+
+\subsection{Search Architecture and Indexing}
+The search engine indexes all \textbf{12,204 contract clauses} into an in-memory sparse Compressed Sparse Row (CSR) matrix using the persisted 10,000-dimensional vectorizer (\texttt{artifacts/tfidf\_vectorizer.joblib}). 
+
+The operational search workflow executes as follows:
+\begin{enumerate}
+    \item \textbf{Query Ingestion:} The user submits an arbitrary natural-language query string (e.g., ``\textit{termination for convenience provisions}'').
+    \item \textbf{Text Normalization:} The query is normalized using the shared \texttt{clean\_text} preprocessor (lowercasing, whitespace consolidation, punctuation stripping).
+    \item \textbf{Sparse Vector Projection:} The normalized query is transformed into a 10,000-dimensional unit vector using the exact same vocabulary and IDF parameters established during model training.
+    \item \textbf{Candidate Pre-Filtering (Optional):} If the user specifies an optional category filter (e.g., restricting search exclusively to \textit{Governing Law}), candidate indices are subset prior to similarity calculation, boosting retrieval speed.
+    \item \textbf{Cosine Similarity Computation:} Vector dot products are calculated between the query vector and all candidate corpus vectors using optimized BLAS routines.
+    \item \textbf{Thresholding and Ranking:} Candidate clauses with similarity scores below an optional minimum threshold ($\text{min\_score}$) are pruned. The remaining clauses are sorted in strictly monotonic non-increasing order.
+    \item \textbf{Top-$k$ Formatting:} The top-$k$ highest-scoring clauses are returned along with their similarity score, rank, source contract identifier, and predicted legal category.
+\end{enumerate}
+
+\subsection{Search Retrieval Evaluation ($P@k$ and $R@k$)}
+Table \ref{tab:search_evaluation} summarizes the empirical retrieval metrics logged in \texttt{results/search\_evaluation.csv} across five canonical legal query benchmarks.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lcccccccc}
+\toprule
+\textbf{Query String} & \textbf{Count} & \textbf{P@1} & \textbf{R@1} & \textbf{P@3} & \textbf{R@3} & \textbf{P@5} & \textbf{P@10} & \textbf{R@10} \\
+\midrule
+\texttt{termination for convenience} & 246 & 1.0000 & 0.0041 & 0.6667 & 0.0081 & 0.6000 & 0.7000 & 0.0285 \\
+\texttt{governing law}               & 462 & 1.0000 & 0.0022 & 1.0000 & 0.0065 & 1.0000 & 0.9000 & 0.0195 \\
+\texttt{non-compete}                 & 257 & 0.0000 & 0.0000 & 0.6667 & 0.0078 & 0.8000 & 0.9000 & 0.0350 \\
+\texttt{limitation of liability}     & 839 & 1.0000 & 0.0012 & 1.0000 & 0.0036 & 1.0000 & 0.9000 & 0.0107 \\
+\texttt{audit rights}                & 642 & 1.0000 & 0.0016 & 1.0000 & 0.0047 & 1.0000 & 0.9000 & 0.0140 \\
+\midrule
+\textbf{Macro Average}               & \textbf{--} & \textbf{0.8000} & \textbf{0.0018} & \textbf{0.8667} & \textbf{0.0061} & \textbf{0.8800} & \textbf{0.8600} & \textbf{0.0215} \\
+\bottomrule
+\end{tabular}
+\caption{Empirical Information Retrieval evaluation of ClauseIQ search engine}
+\label{tab:search_evaluation}
+\end{table}
+
+The search engine achieves a \textbf{Macro Average Precision at 1 ($P@1$) of 80.00\%} and a \textbf{Precision at 5 ($P@5$) of 88.00\%}. For queries such as ``\textit{governing law}'', ``\textit{limitation of liability}'', and ``\textit{audit rights}'', 100\% of the top-5 retrieved clauses are verified, legally relevant matches.
+
+% ----------------------------------------------------------------------
+% Section 6.3: FastAPI Backend & API Design
+% ----------------------------------------------------------------------
+\section{FastAPI Backend Service Architecture}
+\label{sec:fastapi_backend}
+
+The backend service is structured into modular layers adhering to enterprise separation of concerns (\texttt{api/config.py}, \texttt{api/schemas.py}, \texttt{api/services/}, \texttt{api/routers/}, and \texttt{api/main.py}).
+
+\subsection{Endpoint Specification}
+\begin{enumerate}
+    \item \texttt{GET /health}: System health, model readiness, vector dimensions, and Supabase connectivity status.
+    \item \texttt{POST /classify}: Accepts raw clause text within \texttt{ClassifyRequest}. Returns predicted category, true softmax probability confidence score, model name, and the top-3 alternative legal categories with their calibrated probabilities.
+    \item \texttt{POST /classify/file}: Accepts uploaded contract documents (PDF or plain text). Ingests bytes in-memory, executes document text extraction via PyMuPDF, performs sentence-level clause segmentation via \texttt{clause\_splitter.py}, transforms each clause via TF-IDF, and returns multi-clause classifications with metadata.
+    \item \texttt{POST /search}: Accepts \texttt{SearchRequest} with query, top-$k$ cutoff ($1 \le k \le 50$), optional category filter, and minimum score threshold. Returns ranked results with cosine similarity scores, predicted categories, and source contract IDs.
+    \item \texttt{GET /categories}: Exposes the complete list of 41 supported CUAD legal categories.
+\end{enumerate}
+
+% ----------------------------------------------------------------------
+% Section 6.4: React.js Web Frontend Implementation
+% ----------------------------------------------------------------------
+\section{React.js Web Frontend Implementation}
+\label{sec:frontend_implementation}
+
+A modern, responsive Single Page Application (SPA) was developed using **React.js and Vite** (\texttt{frontend/}).
+
+\subsection{User Interface Architecture}
+\begin{itemize}
+    \item \textbf{Aesthetic & Typography:} Built with a sleek dark slate theme (`#0a0e17`), glassmorphism card surfaces, and clean Inter typography.
+    \item \textbf{Clause Classifier View:} Supports direct clause pasting with pre-configured quick benchmark samples (Governing Law, Confidentiality, Termination, Non-Compete). Renders color-coded category badges, probability meters, and top-3 alternative classification likelihoods.
+    \item \textbf{Contract Document Upload:} Provides an interactive drag-and-drop zone for PDF and TXT contract uploads, displaying extracted clause breakdowns with individual predictions.
+    \item \textbf{Intelligent Clause Search View:} Features natural-language query inputs, quick legal query chips, real-time top-$k$ slider controls, dynamic category dropdown filters populated directly from the API, and similarity percentage bars.
+    \item \textbf{Dynamic Configuration:} Consumes backend URL strictly from environment variables (\texttt{VITE\_API\_URL}) to prevent hardcoded origins.
+\end{itemize}
+
+% ----------------------------------------------------------------------
+% Section 6.5: Supabase PostgreSQL Database Integration
+% ----------------------------------------------------------------------
+\section{Supabase PostgreSQL Persistence Layer}
+\label{sec:database_implementation}
+
+Persistence is managed via **Supabase PostgreSQL** (\texttt{database/schema.sql} and \texttt{docs/database.md}). Four relational tables capture domain metadata and operational telemetry:
+\begin{enumerate}
+    \item \texttt{contracts}: Stores uploaded document names and upload timestamps.
+    \item \texttt{clauses}: Stores extracted individual clauses, referencing \texttt{contracts(id)} with cascade deletion, along with predicted categories and confidence scores.
+    \item \texttt{classification\_logs}: Captures audit logs for all single-clause classifications.
+    \item \texttt{search\_logs}: Records queries, category filters, requested $k$, and returned result counts for retrieval telemetry.
+\end{enumerate}
+
+Row Level Security (RLS) is enabled across all tables, paired with B-tree indexes on foreign keys and category columns. Uploaded binary PDFs are processed in-memory and never stored on disk, preserving strict data privacy.
+
+% ----------------------------------------------------------------------
+% Section 6.6: Comprehensive Testing and Quality Assurance
+% ----------------------------------------------------------------------
+\section{Automated Testing and Verification}
+\label{sec:automated_testing}
+
+The ClauseIQ platform is verified across a comprehensive 41-test automated suite executed via \texttt{pytest}:
+\begin{itemize}
+    \item \textbf{Sprint 1 Core Suite (\texttt{tests/test\_sprint1.py}):} 9 tests verifying text cleaning, regex clause splitting fallback, PDF extraction from sample contracts, model artifact presence, and baseline inference.
+    \item \textbf{Sprint 2 Retrieval Suite (\texttt{tests/test\_sprint2.py}):} 15 tests verifying search ranking order, top-$k$ truncation, category filtering, empty query handling, and API endpoints.
+    \item \textbf{Sprint 3 Integration Suite (\texttt{tests/test\_sprint3.py}):} 17 tests verifying health checks, probability confidence output, multi-clause PDF upload parsing, CORS options headers, input edge cases (special characters, long inputs), and Supabase graceful degradation.
+\end{itemize}
+
+\subsubsection*{Verified Test Outcome}
+\begin{center}
+    \textbf{41 passed, 0 failed (100\% pass rate in 5.39 seconds)}
+\end{center}
+
+Additionally, a comprehensive manual frontend testing checklist is established in \texttt{docs/frontend\_test\_checklist.md} covering navigation, file upload, search filtering, and responsive viewports.
+
+% ----------------------------------------------------------------------
+% Section 6.7: Sprint 2 Metric Re-Verification
+% ----------------------------------------------------------------------
+\section{Sprint 2 Model Metric Re-Verification}
+\label{sec:metric_reverification}
+
+To guarantee that the integrated and deployed models suffered zero silent degradation or drift, the complete evaluation pipeline was re-executed against the held-out test split ($N = 2,441$). The empirical results are 100.00\% identical to the baseline:
+\begin{itemize}
+    \item \textbf{Selected Model:} Logistic Regression (Balanced, $C=1.0$).
+    \item \textbf{Test Accuracy:} \textbf{0.7190} (71.90\%).
+    \item \textbf{Macro F1-Score:} \textbf{0.6474} (64.74\%).
+    \item \textbf{Weighted F1-Score:} \textbf{0.7196} (71.96\%).
+    \item \textbf{Macro Precision / Recall:} \textbf{0.6481} / \textbf{0.6622}.
+\end{itemize}

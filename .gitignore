@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+env/
+venv/
+ENV/
+
+# Testing & Artifacts
+.pytest_cache/
+models/random_forest*.pkl
+artifacts/tools/
+
+# Node / React
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+.env.local
+.env.*.local
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

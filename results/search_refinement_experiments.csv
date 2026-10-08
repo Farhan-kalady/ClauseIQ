@@ -1,0 +1,6 @@
+Experiment,Mean P@1,Mean P@3,Mean P@5,Mean P@10,Mean R@5,Mean R@10
+"Baseline (Unigram+Bigram, Sublinear TF=True)",0.8,0.8667,0.88,0.84,0.0105,0.0211
+"Exp 1: Unigram Only (ngram_range=(1,1))",0.6,0.8,0.88,0.88,0.0115,0.0227
+Exp 2: Linear TF (sublinear_tf=False),0.8,0.8667,0.88,0.88,0.0105,0.0224
+Exp 3: Standard English Stopwords Stripped,0.8,0.8667,0.92,0.9,0.0118,0.0226
+Exp 4: Score Threshold Filtering (min_score=0.20),0.8,0.8667,0.88,0.84,0.0105,0.0211

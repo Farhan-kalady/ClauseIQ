@@ -1,0 +1,197 @@
+\chapter{SUPPORTING LITERATURE}
+\label{ch:supporting_literature}
+
+\section{Literature Review}
+\label{sec:literature_review}
+To establish the theoretical and empirical grounding for ClauseIQ, this chapter reviews three foundational research publications in Legal Natural Language Processing (Legal NLP), contract analysis, and text classification published between 2023 and 2025 in \textit{IEEE Access}.
+
+% ----------------------------------------------------------------------
+% Paper 1
+% ----------------------------------------------------------------------
+\subsection*{Paper 1 -- Legal Natural Language Processing From 2015 to 2022: A Comprehensive Systematic Mapping Study of Advances and Applications}
+\label{subsec:paper1}
+
+\noindent\textbf{Authors:} Quevedo Caballero E., \v{C}ern\'{y} T., Rodriguez A., Rivas P., Yero J., Sooksatra K., Taibi D. \\
+\textbf{Publication Details:} \textit{IEEE Access}, vol. 12, pp. 145286--145317, 2024. \\
+\textbf{Digital Object Identifier (DOI):} \url{https://doi.org/10.1109/ACCESS.2024.3414967}
+
+\subsubsection*{Overview and Area of Work}
+This publication presents an exhaustive Systematic Mapping Study (SMS) of Legal NLP research published over an eight-year period (2015 to 2022). The authors systematically catalogued, classified, and analyzed 179 primary studies across digital libraries (IEEE Xplore, ACM Digital Library, Scopus, and Web of Science) to map the evolution of legal text processing tasks, algorithmic paradigms, benchmarks, and unresolved domain challenges.
+
+\subsubsection*{Problem Statement and Scope}
+Legal documents are characterized by domain-specific jargon, syntactic archaisms, non-linear cross-references, and structural variability that render general-purpose NLP models suboptimal. The study investigated what legal tasks are being automated, which datasets are establishing community benchmarks, and whether classical statistical models remain relevant alongside modern neural approaches.
+
+\subsubsection*{Methodology}
+The study followed established systematic literature review guidelines:
+\begin{enumerate}
+    \item Formulation of five targeted research questions focusing on task distribution, architectural choices, evaluation paradigms, and domain challenges.
+    \item Rigorous multi-stage filtering from an initial corpus of over 2,400 papers down to 179 high-quality primary studies.
+    \item Thematic taxonomy creation categorizing tasks into Information Extraction, Text Classification, Legal Information Retrieval, and Legal Judgment Prediction.
+\end{enumerate}
+
+\subsubsection*{Key Findings}
+\begin{itemize}
+    \item \textbf{Text Classification Prominence:} Multi-class legal document and clause classification emerged as one of the two most dominant task categories across the eight-year survey, accounting for nearly 30\% of all investigated literature.
+    \item \textbf{Prevalence of Classical Baselines:} Despite the introduction of BERT and transformer models in 2018, classical machine learning approaches (particularly Support Vector Machines, Logistic Regression, and Naive Bayes coupled with n-gram TF-IDF representations) continue to serve as the universal standard baseline across more than 40\% of evaluated benchmarks.
+    \item \textbf{Data Scarcity and Class Imbalance:} The authors identified extreme class imbalance and the scarcity of expert-annotated corpora as the single greatest bottleneck in real-world legal NLP deployment.
+\end{itemize}
+
+\subsubsection*{Relevance to ClauseIQ}
+Quevedo Caballero et al. provide direct academic justification for ClauseIQ's architectural framework. Their survey validates that:
+\begin{enumerate}
+    \item Multi-class clause categorization is a core, legitimate problem in legal informatics.
+    \item A classical TF-IDF baseline represents an essential, rigorous foundation before adopting more complex neural frameworks.
+    \item Addressing severe class imbalance through specialized metrics (such as Macro-F1) is mandatory for credible legal classification systems.
+\end{enumerate}
+
+% ----------------------------------------------------------------------
+% Paper 2
+% ----------------------------------------------------------------------
+\subsection*{Paper 2 -- Exploring LLMs Applications in Law: A Literature Review on Current Legal NLP Approaches}
+\label{subsec:paper2}
+
+\noindent\textbf{Authors:} Siino M., Falco M., Croce D., Rosso P. \\
+\textbf{Publication Details:} \textit{IEEE Access}, vol. 13, pp. 18253--18276, 2025. \\
+\textbf{Digital Object Identifier (DOI):} \url{https://doi.org/10.1109/ACCESS.2025.3533217}
+
+\subsubsection*{Overview and Area of Work}
+This survey examines the deployment of Large Language Models (LLMs) and advanced neural NLP techniques across diverse legal domains from 2017 through 2023, comparing them against classical and smaller fine-tuned models.
+
+\subsubsection*{Problem Statement and Scope}
+The rapid proliferation of generative language models has generated immense interest within legal technology. However, deploying multi-billion-parameter neural models introduces significant challenges, including hallucinations, high inference latency, prohibitive fine-tuning and hosting costs, lack of deterministic reproducibility, and data privacy concerns regarding confidential commercial contracts. This paper evaluates the practical trade-offs between classical NLP, specialized smaller models, and generative LLMs.
+
+\subsubsection*{Methodology}
+The authors conducted a PRISMA-compliant systematic review of 61 selected papers, synthesizing task performance, hardware footprints, dataset choices, and deployment feasibility across contract analysis, statutory interpretation, and legal document drafting.
+
+\subsubsection*{Key Findings}
+\begin{itemize}
+    \item \textbf{CUAD as the Gold Standard:} The Contract Understanding Atticus Dataset (CUAD) was explicitly identified as the premier open-source benchmark for legal contract clause identification, cited across numerous experimental evaluations.
+    \item \textbf{The Cost-Accuracy Trade-off:} The survey documented that while LLMs demonstrate strong zero-shot reasoning, carefully tuned classical algorithms and specialized discriminative models frequently achieve comparable or superior precision on narrowly scoped classification tasks, at a fraction of the computational and financial cost.
+    \item \textbf{Real-World Deployment Barriers:} LLM-based solutions face severe latency barriers (often exceeding 2,000\,ms per query) and privacy liabilities when processing non-public contracts via cloud APIs, making local, lightweight pipelines highly attractive for practical enterprise adoption.
+\end{itemize}
+
+\subsubsection*{Relevance to ClauseIQ}
+Siino et al.'s findings strongly corroborate ClauseIQ's technical choices:
+\begin{enumerate}
+    \item It directly validates the selection of CUAD as the premier benchmark for contract clause intelligence.
+    \item It provides empirical support for a classical machine learning approach, demonstrating that high-cost generative LLMs are not inherently required for robust clause triage.
+    \item It highlights the operational value of low-latency, deterministic, offline-capable architectures for legal workflows.
+\end{enumerate}
+
+% ----------------------------------------------------------------------
+% Paper 3
+% ----------------------------------------------------------------------
+\subsection*{Paper 3 -- Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy}
+\label{subsec:paper3}
+
+\noindent\textbf{Authors:} Kutbi M. \\
+\textbf{Publication Details:} \textit{IEEE Access}, vol. 11, pp. 117576--117581, 2023. \\
+\textbf{Digital Object Identifier (DOI):} \url{https://doi.org/10.1109/ACCESS.2023.3325895}
+
+\subsubsection*{Overview and Area of Work}
+Unlike the preceding systematic surveys, this publication is a targeted empirical research investigation. Kutbi explores whether applying Named Entity Recognition (NER) to identify and mask entity tokens (such as specific personal names, company names, and geographic locations) with standardized tags can improve downstream text classification accuracy while simultaneously protecting privacy in sensitive domain texts.
+
+\subsubsection*{Problem Statement and Methodology}
+In legal contracts, paragraphs frequently contain contract-specific proper nouns (e.g., specific counterparty names, monetary numbers, execution dates) that carry virtually zero discriminative signal for identifying the underlying clause category. Leaving raw named entities intact inflates the feature space with sparse, contract-specific tokens, causing overfitting and privacy leakage.
+
+Kutbi evaluated a pipeline utilizing a spaCy NER model to detect named entities and replace them with generic placeholder tokens (e.g., \texttt{PERSON}, \texttt{ORG}, \texttt{GPE}) prior to TF-IDF feature extraction. The pipeline was tested on an in-house legal corpus of Limited Partnership Agreement (LPA) contract paragraphs (spanning 20 clause categories) alongside two benchmark general text datasets (Movie Reviews and Comparative Sentences). Classifiers including Linear Support Vector Machines were evaluated across unigram, bigram, and trigram configurations using 10 iterations of 5-fold cross-validation.
+
+\subsubsection*{Key Experimental Results}
+Kutbi reported original experimental results across feature configurations. Table \ref{tab:kutbi_results} reproduces the empirical findings on the legal Limited Partnership Agreement (LPA) dataset.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{lccc}
+\toprule
+\textbf{Dataset} & \textbf{N-gram Config} & \textbf{Linear SVM (Raw Text)} & \textbf{Linear SVM (+ NER Replacement)} \\
+\midrule
+Legal LPA (20 classes) & 1-gram & 55.37\% & 58.31\% \\
+\textbf{Legal LPA (20 classes)} & \textbf{2-gram} & \textbf{55.60\%} & \textbf{63.76\%} \\
+Legal LPA (20 classes) & 3-gram & 57.48\% & 62.83\% \\
+\midrule
+Movie Reviews & 1-gram & 81.00\% & 81.90\% \\
+Movie Reviews & 2-gram & 82.50\% & 82.80\% \\
+Movie Reviews & 3-gram & 82.60\% & 82.50\% \\
+\midrule
+Comparative Sentences & 1-gram & 68.30\% & 68.54\% \\
+Comparative Sentences & 2-gram & 66.66\% & 67.37\% \\
+Comparative Sentences & 3-gram & 65.25\% & 66.59\% \\
+\bottomrule
+\end{tabular}
+\caption{Empirical evaluation of Linear SVM with and without entity replacement (Kutbi, 2023)}
+\label{tab:kutbi_results}
+\end{table}
+
+The most significant finding for contract analysis is that on the legal LPA corpus, bigram (2-gram) Linear SVM classification accuracy improved substantially from \textbf{55.60\%} to \textbf{63.76\%} (an absolute gain of \textbf{+8.16\%}) when named entity replacement was introduced.
+
+\subsubsection*{Relevance to ClauseIQ}
+Kutbi's empirical investigation is directly relevant to ClauseIQ:
+\begin{enumerate}
+    \item It validates that classical Linear SVM models operating on n-gram TF-IDF representations are highly responsive to legal contract text classification.
+    \item It demonstrates that bigram (2-gram) features yield superior discriminative capability over unigrams in legal contexts, directly supporting ClauseIQ's adoption of unigram+bigram TF-IDF feature extraction.
+    \item It highlights that commercial contract clauses are laden with counterparty names and dates that can introduce feature noise, validating ClauseIQ's careful tokenization and stopword normalization.
+\end{enumerate}
+
+% ----------------------------------------------------------------------
+% Section 2.2: Summary Table
+% ----------------------------------------------------------------------
+\section{Literature Review Summary}
+\label{sec:literature_summary}
+Table \ref{tab:lit_summary} synthesizes the core findings and architectural relevance of the three reviewed publications.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabularx}{\textwidth}{p{2.8cm}p{3.2cm}p{4.2cm}X}
+\toprule
+\textbf{Publication} & \textbf{Approach / Scope} & \textbf{Key Findings} & \textbf{Relevance to ClauseIQ} \\
+\midrule
+\textbf{Quevedo Caballero et al. (2024)} \cite{quevedo2024} & 
+Systematic Mapping Study of Legal NLP (2015--2022); 179 primary studies. & 
+Multi-class text classification is a primary legal NLP task; classical TF-IDF baselines remain dominant; class imbalance is a major challenge. & 
+Legitimizes classical TF-IDF classification for CUAD; reinforces the requirement for balanced/macro evaluation metrics. \\
+\midrule
+\textbf{Siino et al. (2025)} \cite{siino2025} & 
+PRISMA review of LLMs and classical NLP in law (2017--2023); 61 papers. & 
+Identifies CUAD as the standard benchmark; demonstrates that tuned classical models offer superior efficiency and deterministic output over LLMs. & 
+Validates choice of CUAD benchmark; confirms computational, financial, and privacy benefits of classical ML. \\
+\midrule
+\textbf{Kutbi (2023)} \cite{kutbi2023} & 
+Empirical evaluation on legal contract paragraphs using Linear SVM and NER. & 
+Bigram representations paired with Linear SVM achieved 63.76\% accuracy on legal text; entity normalization reduces noise and improves accuracy. & 
+Directly motivates unigram+bigram TF-IDF representations; provides comparative empirical baseline for legal clause classification. \\
+\bottomrule
+\end{tabularx}
+\caption{Comprehensive summary of supporting literature}
+\label{tab:lit_summary}
+\end{table}
+
+% ----------------------------------------------------------------------
+% Section 2.3: Findings and Proposals
+% ----------------------------------------------------------------------
+\section{Findings and Proposals}
+\label{sec:findings_and_proposals}
+The synthesis of the supporting literature establishes three critical takeaways:
+\begin{enumerate}
+    \item \textbf{Domain Legitimacy:} Legal clause classification is an active, well-defined problem in applied computing with clear commercial utility.
+    \item \textbf{Benchmark Authority:} CUAD is the literature-recognized, peer-reviewed standard for contract intelligence.
+    \item \textbf{Classical ML Feasibility:} Classical machine learning algorithms operating on high-dimensional sparse TF-IDF vectors offer an optimal balance of accuracy, low latency, determinism, and computational thrift.
+\end{enumerate}
+
+\subsubsection*{Identified Research Gaps}
+Despite the strengths of existing studies, significant practical gaps remain:
+\begin{itemize}
+    \item \textbf{Lack of Integrated Applications:} Most existing publications present isolated offline benchmark evaluations (e.g., reporting cross-validation numbers on static datasets) without delivering a deployable, interactive system that legal professionals can use.
+    \item \textbf{Neglect of Retrieval:} Studies typically focus exclusively on classification or exclusively on search, whereas real-world contract triage requires both automated classification and free-text similarity search over the same clause index.
+    \item \textbf{Arbitrary Class Down-sampling:} Many student and preliminary projects reduce CUAD to an arbitrary subset of 8 or 9 high-frequency categories, obscuring the severe real-world class imbalance across all 41 categories.
+\end{itemize}
+
+\subsubsection*{ClauseIQ System Proposals}
+To directly bridge these identified gaps within an academically disciplined framework, ClauseIQ proposes:
+\begin{enumerate}
+    \item \textbf{Full 41-Category Classification:} Maintaining the complete, unpruned 41-class scope of the flattened CUAD corpus (12,204 rows), addressing the true 46.33:1 imbalance ratio.
+    \item \textbf{Rigorous 4-Model Comparative Benchmark:} Implementing and systematically tuning four distinct classical algorithms (Logistic Regression, Linear SVM, Multinomial Naive Bayes, Random Forest) on an identical 80/20 held-out split.
+    \item \textbf{Dual Capability (Classification + Intelligent Search):} Coupling multi-class classification with a TF-IDF + Cosine Similarity search engine over the exact same feature representation, evaluated empirically using Information Retrieval metrics ($P@k$ and $R@k$).
+    \item \textbf{Modular API Architecture:} Wrapping model inference and search pipelines within a lightweight FastAPI REST backend to demonstrate end-to-end engineering completeness.
+\end{enumerate}

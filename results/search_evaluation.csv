@@ -1,0 +1,6 @@
+Query,Target Categories,Corpus Relevant Count,P@1,R@1,Hits@1,P@3,R@3,Hits@3,P@5,R@5,Hits@5,P@10,R@10,Hits@10
+termination for convenience,Termination For Convenience,246,1.0,0.0041,1,0.6667,0.0081,2,0.6,0.0122,3,0.7,0.0285,7
+governing law,Governing Law,462,1.0,0.0022,1,1.0,0.0065,3,1.0,0.0108,5,0.9,0.0195,9
+non-compete,Non-Compete,257,0.0,0.0,0,0.6667,0.0078,2,0.8,0.0156,4,0.9,0.035,9
+limitation of liability,"Cap On Liability, Uncapped Liability",839,1.0,0.0012,1,1.0,0.0036,3,1.0,0.006,5,0.9,0.0107,9
+audit rights,Audit Rights,642,1.0,0.0016,1,1.0,0.0047,3,1.0,0.0078,5,0.9,0.014,9

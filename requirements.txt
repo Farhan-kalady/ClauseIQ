@@ -1,4 +1,4 @@
-﻿annotated-doc==0.0.5
+annotated-doc==0.0.5
 annotated-types==0.8.0
 anyio==4.15.0
 asttokens==3.0.2
@@ -17,6 +17,11 @@ cycler==0.12.1
 cymem==2.0.13
 debugpy==1.8.21
 defusedxml==0.7.1
+fastapi>=0.115.0
+pytest>=8.0.0
+uvicorn>=0.30.0
+python-multipart>=0.0.12
+supabase>=2.30.0
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl#sha256=1932429db727d4bff3deed6b34cfc05df17794f4a52eeb26cf8928f7c1a0fb85
 executing==2.2.1
 fastjsonschema==2.22.2

@@ -1,0 +1,50 @@
+\chapter{APPENDIX}
+\label{ch:appendix}
+
+This appendix provides the minimum software and hardware environment specifications required to execute, reproduce, and serve the ClauseIQ machine learning pipeline and API service.
+
+\section{Minimum Software Requirements}
+\label{sec:appendix_software}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{llp{7cm}}
+\toprule
+\textbf{Component} & \textbf{Specification} & \textbf{Purpose / Notes} \\
+\midrule
+Operating System & Windows 10/11, Ubuntu 20.04+, macOS 12+ & Cross-platform POSIX or Windows runtime \\
+Language Runtime & Python 3.10 to 3.14 (64-bit) & Core execution environment \\
+Machine Learning & \texttt{scikit-learn} $\ge$ 1.3.0 & Estimators, GridSearchCV, TF-IDF vectorizer \\
+Scientific Computing & \texttt{numpy} $\ge$ 1.24.0, \texttt{scipy} $\ge$ 1.10.0 & Sparse matrices and BLAS dot products \\
+Data Manipulation & \texttt{pandas} $\ge$ 2.0.0 & Tabular corpus manipulation \\
+API Framework & \texttt{fastapi} $\ge$ 0.100.0, \texttt{uvicorn} $\ge$ 0.22.0 & High-performance ASGI REST server \\
+Data Validation & \texttt{pydantic} $\ge$ 2.0.0 & Strict schema and type validation \\
+Testing Framework & \texttt{pytest} $\ge$ 7.4.0 & Automated unit and integration testing \\
+Document Ingestion & \texttt{pymupdf} (\texttt{fitz}) $\ge$ 1.22.0 & Contract text extraction \\
+Serialization & \texttt{joblib} $\ge$ 1.3.0 & Compressed model artifact persistence \\
+Version Control & Git $\ge$ 2.30.0 & Distributed repository management \\
+\bottomrule
+\end{tabular}
+\caption{Minimum software requirements for ClauseIQ}
+\label{tab:software_requirements}
+\end{table}
+
+\section{Minimum Hardware Requirements}
+\label{sec:appendix_hardware}
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{llp{7cm}}
+\toprule
+\textbf{Hardware Resource} & \textbf{Minimum Requirement} & \textbf{Recommended Production Spec} \\
+\midrule
+Processor (CPU) & Dual-core x86\_64 (2.0 GHz) & Quad-core Intel Core i5/i7 or AMD Ryzen 5 \\
+System Memory (RAM) & 4.0 GB & 8.0 GB to 16.0 GB \\
+Storage Space & 4.0 GB free disk space & 10.0 GB SSD (NVMe preferred) \\
+Graphics Processor (GPU) & None required & None required (CPU execution) \\
+Network Interface & Standard Ethernet or Wi-Fi & Required for package downloads and API serving \\
+\bottomrule
+\end{tabular}
+\caption{Minimum and recommended hardware specifications}
+\label{tab:hardware_requirements}
+\end{table}

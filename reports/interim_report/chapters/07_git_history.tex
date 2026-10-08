@@ -1,0 +1,41 @@
+\chapter{GIT HISTORY}
+\label{ch:git_history}
+
+In accordance with the MACE Mini Project documentation standards, this chapter documents the verified version control history of the ClauseIQ project repository. All commit identifiers, dates, and log messages correspond exactly to the actual Git repository log.
+
+\section{Repository Overview}
+\label{sec:repo_overview}
+The ClauseIQ codebase is maintained under Git version control. The repository tracks iterative project milestones from exploratory data analysis through pipeline structuring, baseline modeling, and model evaluation.
+
+\section{Verified Commit Log}
+\label{sec:commit_log}
+Table \ref{tab:git_commits} lists the verified commits recorded in the repository's primary branch history.
+
+\begin{table}[h!]
+\centering
+\small
+\begin{tabular}{cccl}
+\toprule
+\textbf{Commit Hash} & \textbf{Date} & \textbf{Author / Branch} & \textbf{Milestone / Commit Message} \\
+\midrule
+\texttt{b651e16} & 2026-08-07 & \texttt{main} & DataSet Exploration Completed \\
+\texttt{c7e9720} & 2026-08-19 & \texttt{main} & Report added \\
+\texttt{2a3b196} & 2026-08-19 & \texttt{main} & Readme File Added \\
+\texttt{b5dcd46} & 2026-09-04 & \texttt{main} & Project structure setup for Sprint 1 \\
+\texttt{07e65a6} & 2026-09-05 & \texttt{main} & Complete Sprint 1 core ML pipeline \\
+\bottomrule
+\end{tabular}
+\caption{Verified Git commit history of the ClauseIQ repository}
+\label{tab:git_commits}
+\end{table}
+
+\section{Milestone Progression}
+\label{sec:milestone_progression}
+The repository history reflects a structured, incremental engineering workflow:
+\begin{enumerate}
+    \item \textbf{Exploratory Milestone (\texttt{b651e16}):} Execution of data exploration scripts, verification of the 12,204-row CUAD tabular corpus, missing value audits, and initial text length distributions.
+    \item \textbf{Documentation Baseline (\texttt{c7e9720}, \texttt{2a3b196}):} Addition of project documentation, architectural specifications, and initial presentation reports.
+    \item \textbf{Architecture Setup (\texttt{b5dcd46}):} Structuring of the project repository into modular source packages (\texttt{src/}, \texttt{data/}, \texttt{models/}, \texttt{notebooks/}, \texttt{tests/}).
+    \item \textbf{Sprint 1 ML Pipeline (\texttt{07e65a6}):} Implementation of text cleaning utilities, clause splitting logic, initial TF-IDF vectorization, and baseline classifier implementations.
+    \item \textbf{Sprint 2 Modeling and Search (Current State):} Hyperparameter optimization of Naive Bayes and Random Forest, comprehensive four-model held-out testing, generation of $41 \times 41$ confusion matrices, implementation and empirical evaluation of the TF-IDF + Cosine Similarity search engine, FastAPI backend implementation, and automated test suite validation.
+\end{enumerate}

@@ -1,0 +1,33 @@
+\chapter{CONCLUSION}
+\label{ch:conclusion}
+
+This interim report documents the research, data engineering, model training, and empirical evaluation completed for \textbf{ClauseIQ: Machine Learning-Based Contract Clause Classification and Intelligent Search System}.
+
+\section{Summary of Completed Work}
+\label{sec:conclusion_summary}
+The objectives established for this phase of the project have been systematically achieved and empirically verified:
+\begin{enumerate}
+    \item \textbf{Dataset Engineering and Integrity:} Sourced and flattened the Contract Understanding Atticus Dataset (CUAD) into a complete, structured tabular dataset consisting of \textbf{12,204 clauses} spanning \textbf{510 commercial contracts} and \textbf{41 legal categories}. Rigorous validation confirmed zero missing values, characterized a 46.33:1 class imbalance ratio, and established that short clauses represent valid legal entities that must be preserved.
+    \item \textbf{Feature Extraction Pipeline:} Implemented a disciplined text preprocessing workflow and fitted a \textbf{10,000-feature unigram+bigram TF-IDF vectorizer} with sublinear term frequency scaling on the training split, effectively capturing legal collocations without data leakage.
+    \item \textbf{Model Training and Optimization:} Successfully trained and optimized four classical machine learning classifiers on a verified stratified split of \textbf{9,763 training samples}:
+    \begin{itemize}
+        \item Multinomial Naive Bayes tuned via 5-fold Stratified GridSearchCV ($\alpha = 0.01$, Best CV Macro-F1: 0.5905).
+        \item Random Forest tuned via 3-fold Stratified RandomizedSearchCV ($n=200$, depth$=50$, Best CV Macro-F1: 0.5776).
+        \item Linear SVM trained with balanced class weights ($C = 0.1$).
+        \item Multinomial Logistic Regression trained with balanced class weights ($C = 1.0$).
+    \end{itemize}
+    \item \textbf{Empirical Evaluation on Held-Out Test Set ($N = 2,441$):}
+    \begin{itemize}
+        \item \textbf{Logistic Regression:} Accuracy = 71.90\%, Macro Precision = 64.81\%, Macro Recall = 66.22\%, \textbf{Macro-F1 = 64.74\%}, Weighted-F1 = 71.96\%.
+        \item \textbf{Linear SVM:} Accuracy = 72.63\%, Macro Precision = 63.23\%, Macro Recall = 66.65\%, Macro-F1 = 64.18\%, Weighted-F1 = 72.26\%.
+        \item \textbf{Multinomial Naive Bayes:} Accuracy = 69.27\%, Macro-F1 = 58.53\%.
+        \item \textbf{Random Forest:} Accuracy = 65.46\%, Macro-F1 = 56.34\%.
+    \end{itemize}
+    \item \textbf{Best Model Selection:} Formally selected \textbf{Logistic Regression} as the production classifier based on the predefined primary criterion of Macro-F1 (64.74\%), ensuring robust protection across minority risk categories while delivering natively calibrated confidence scores.
+    \item \textbf{Intelligent Search Engine:} Developed and empirically validated a TF-IDF + Cosine Similarity search engine over all 12,204 clauses, achieving an average \textbf{Precision at 1 ($P@1$) of 80.00\%} and \textbf{Precision at 5 ($P@5$) of 88.00\%} with query execution latency under 10 milliseconds.
+    \item \textbf{Model Serving and Quality Assurance:} Implemented a modular FastAPI backend serving classification and search endpoints, supported by an automated test suite with \textbf{15 passed tests (100\% pass rate)}.
+\end{enumerate}
+
+\section{Concluding Assessment}
+\label{sec:concluding_assessment}
+The experimental results demonstrate that classical machine learning operating on high-dimensional n-gram TF-IDF representations provides an exceptionally effective, lightweight, deterministic, and computationally frugal framework for enterprise legal contract intelligence. Linear decision boundaries successfully discriminate complex legal covenants across 41 imbalanced categories without requiring expensive GPU infrastructure or non-deterministic deep language models.

@@ -1,0 +1,49 @@
+Classification Report - Multinomial Naive Bayes
+============================================================
+                                    precision    recall  f1-score   support
+
+        Affiliate License-Licensee       0.28      0.35      0.31        23
+        Affiliate License-Licensor       0.12      0.21      0.15        14
+                    Agreement Date       0.63      0.95      0.76        85
+                   Anti-Assignment       0.84      0.84      0.84       131
+                      Audit Rights       0.88      0.95      0.91       129
+                  Cap On Liability       0.75      0.73      0.74       135
+                 Change Of Control       0.70      0.65      0.67        51
+ Competitive Restriction Exception       0.27      0.32      0.29        25
+               Covenant Not To Sue       0.78      0.80      0.79        35
+                     Document Name       1.00      0.98      0.99        61
+                    Effective Date       0.59      0.24      0.34        84
+                       Exclusivity       0.36      0.39      0.37        82
+                   Expiration Date       0.71      0.72      0.72        93
+                     Governing Law       0.98      0.98      0.98        92
+                         Insurance       0.96      0.96      0.96       112
+           Ip Ownership Assignment       0.80      0.76      0.78        63
+  Irrevocable Or Perpetual License       0.13      0.15      0.14        33
+                Joint Ip Ownership       0.67      0.52      0.59        23
+                     License Grant       0.43      0.37      0.40       155
+                Liquidated Damages       0.67      0.50      0.57        24
+                Minimum Commitment       0.74      0.79      0.76        85
+               Most Favored Nation       1.00      0.38      0.55         8
+           No-Solicit Of Customers       0.50      0.33      0.40        12
+           No-Solicit Of Employees       0.74      0.78      0.76        18
+                       Non-Compete       0.48      0.51      0.50        51
+                 Non-Disparagement       0.75      0.69      0.72        13
+          Non-Transferable License       0.12      0.12      0.12        59
+Notice Period To Terminate Renewal       0.22      0.25      0.24        24
+                           Parties       1.00      0.91      0.95       250
+         Post-Termination Services       0.60      0.69      0.64        90
+                Price Restrictions       0.00      0.00      0.00         5
+                      Renewal Term       0.39      0.40      0.40        42
+            Revenue/Profit Sharing       0.81      0.92      0.86        83
+                    Rofr/Rofo/Rofn       0.74      0.81      0.77        73
+                Source Code Escrow       0.67      0.62      0.64        13
+       Termination For Convenience       0.76      0.80      0.78        49
+           Third Party Beneficiary       0.64      0.88      0.74         8
+                Uncapped Liability       0.20      0.21      0.21        33
+ Unlimited/All-You-Can-Eat-License       0.11      0.17      0.13         6
+                Volume Restriction       0.88      0.62      0.72        34
+                 Warranty Duration       0.83      0.83      0.83        35
+
+                          accuracy                           0.69      2441
+                         macro avg       0.60      0.59      0.59      2441
+                      weighted avg       0.70      0.69      0.69      2441

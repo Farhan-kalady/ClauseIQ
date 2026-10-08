@@ -376,16 +376,118 @@ Clause Classification
 
 ---
 
-## 📈 Model Evaluation (Sprint 1 Results)
+## 📈 Model Evaluation (Sprint 2 Complete 4-Model Benchmark)
 
-Each classification algorithm is evaluated on the identical held-out stratified test set (2,441 clauses) using TF-IDF features strictly fit on training data.
+All four classification algorithms were evaluated on the **exact same held-out stratified test set** (2,441 clauses) using the common TF-IDF representation strictly fit on training data ($N=9,763$).
 
-| Model | Accuracy | Macro Precision | Macro Recall | Macro F1 | Weighted F1 |
-| :--- | :---: | :---: | :---: | :---: | :---: |
-| **Logistic Regression (Baseline)** | 71.90% | 0.6481 | 0.6622 | 64.74% | 71.96% |
-| **Linear SVM (Tuned C=0.1)** | **72.63%** | 0.6323 | **0.6665** | 64.18% | **72.26%** |
-| Naive Bayes | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 |
-| Random Forest | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 | Sprint 2 |
+| Model | Accuracy | Macro Precision | Macro Recall | Macro F1 (Primary) | Weighted Precision | Weighted Recall | Weighted F1 |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Logistic Regression (Selected)** | 71.90% | **0.6481** | 0.6622 | **0.6474** | **0.7354** | 71.90% | 71.96% |
+| **Linear SVM (Tuned C=0.1)** | **72.63%** | 0.6323 | **0.6665** | 0.6418 | 0.7331 | **72.63%** | **72.26%** |
+| **Multinomial Naive Bayes (alpha=0.01)** | 69.27% | 0.6024 | 0.5867 | 0.5853 | 0.6996 | 69.27% | 69.03% |
+| **Random Forest (200 trees, depth 50)** | 65.46% | 0.5527 | 0.5904 | 0.5634 | 0.6577 | 65.46% | 64.96% |
+
+> **Selected Model**: **Logistic Regression** was chosen because it achieves the highest **Macro-F1 (0.6474)** across all 41 imbalanced legal categories, providing balanced protection on high-risk rare clauses while natively outputting well-calibrated confidence probabilities via softmax.
+> Visual comparison charts and confusion matrices are saved in `results/model_comparison.png` and `results/confusion_matrices/`.
+
+---
+
+## 🔍 Intelligent Search System (TF-IDF + Cosine Similarity)
+
+ClauseIQ implements high-speed, classical semantic clause retrieval without heavy neural dependencies:
+- **Index**: 12,204 validated clauses pre-indexed in 10,000-dimensional TF-IDF space.
+- **Scoring**: Cosine similarity between L2-normalized query vectors and corpus vectors.
+- **Latency**: Sub-10ms query execution time.
+- **Filtering**: Supports exact and fuzzy category filtering (`category_filter`) and score thresholds (`min_score`).
+
+### Retrieval Benchmark ($P@k$ & $R@k$ on Realistic Queries)
+
+| Query | Target Categories | P@1 | P@3 | P@5 | P@10 | R@5 | R@10 |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| `termination for convenience` | Termination For Convenience | 1.00 | 0.67 | 0.60 | 0.70 | 0.0122 | 0.0285 |
+| `governing law` | Governing Law | 1.00 | 1.00 | 1.00 | 0.90 | 0.0108 | 0.0195 |
+| `non-compete` | Non-Compete | 0.00 | 0.67 | 0.80 | 0.90 | 0.0156 | 0.0350 |
+| `limitation of liability` | Cap On Liability, Uncapped Liability | 1.00 | 1.00 | 1.00 | 0.90 | 0.0060 | 0.0107 |
+| `audit rights` | Audit Rights | 1.00 | 1.00 | 1.00 | 0.90 | 0.0078 | 0.0140 |
+| **Macro Average** | **All Evaluated Queries** | **0.80** | **0.87** | **0.88** | **0.86** | **0.0105** | **0.0215** |
+
+---
+
+## ⚡ FastAPI Backend & API Endpoints
+
+The backend is built with **FastAPI** and served with **Uvicorn**:
+
+```bash
+# Start FastAPI backend server
+uvicorn main:app --reload --port 8000
+```
+Interactive Swagger documentation is available at: `http://localhost:8000/docs`
+
+### 1. Clause Classification: `POST /classify`
+**Request Body**:
+```json
+{
+  "clause_text": "This Agreement and all disputes hereunder shall be governed by the laws of the State of New York."
+}
+```
+**Response Body**:
+```json
+{
+  "clause_text": "This Agreement and all disputes hereunder shall be governed by the laws of the State of New York.",
+  "cleaned_text": "this agreement and all disputes hereunder shall be governed by the laws of the state of new york.",
+  "predicted_category": "Governing Law",
+  "confidence_score": 0.9886,
+  "model_name": "LogisticRegression"
+}
+```
+
+### 2. Intelligent Search: `POST /search`
+**Request Body**:
+```json
+{
+  "query": "termination for convenience",
+  "top_k": 3,
+  "category_filter": null,
+  "min_score": 0.0
+}
+```
+**Response Body**:
+```json
+{
+  "query": "termination for convenience",
+  "total_results": 3,
+  "results": [
+    {
+      "rank": 1,
+      "clause_text": "Termination for Convenience. [***].",
+      "predicted_category": "Termination For Convenience",
+      "true_category": "Termination For Convenience",
+      "similarity_score": 1.0,
+      "source_contract": "PHREESIA,INC_05_28_2019-EX-10.18-STRATEGIC ALLIANCE AGREEMENT"
+    }
+  ]
+}
+```
+
+---
+
+## 🧪 Testing & Verification
+
+Run the full automated test suite using `pytest`:
+```bash
+pytest tests/ -v
+```
+All 15 Sprint 2 tests pass with 100% success covering search ranking, top-k truncation, category filters, input validation, and API routes.
+
+---
+
+## 🎬 Running the End-to-End Demo
+
+Run the interactive CLI demonstration:
+```bash
+python demo.py
+```
+This demonstrates live clause classification with confidence probabilities and ranked search queries across all 12,204 clauses.
 
 ---
 

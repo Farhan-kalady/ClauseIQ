@@ -1,0 +1,433 @@
+\documentclass[12pt, a4paper]{report}
+
+% ==============================================================================
+% TYPOGRAPHY & ENCODING (Times New Roman, 12pt, 1.5 Line Spacing)
+% ==============================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newtxtext,newtxmath} % Standard Times New Roman typography
+\usepackage{microtype}
+\usepackage{setspace}
+\onehalfspacing
+
+% ==============================================================================
+% PAGE GEOMETRY (1 Inch on All Sides)
+% ==============================================================================
+\usepackage[
+  a4paper,
+  left=1.00in,
+  right=1.00in,
+  top=1.00in,
+  bottom=1.00in,
+  headheight=18pt,
+  headsep=12pt,
+  footskip=28pt
+]{geometry}
+
+% ==============================================================================
+% SECTION & CHAPTER HEADINGS FORMATTING
+% Main Heading: 16pt, Sub Heading: 14pt, Sub-sub Heading: 12pt
+% ==============================================================================
+\usepackage{titlesec}
+
+% Chapter Heading: 16pt Bold Uppercase
+\titleformat{\chapter}[hang]
+  {\bfseries\fontsize{16}{20}\selectfont}
+  {\thechapter.}{0.55em}{\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+% Section Heading (Sub Heading): 14pt Bold
+\titleformat{\section}
+  {\bfseries\fontsize{14}{18}\selectfont}
+  {\thesection.}{0.55em}{}
+\titlespacing*{\section}{0pt}{16pt}{8pt}
+
+% Subsection Heading (Sub-sub Heading): 12pt Bold
+\titleformat{\subsection}
+  {\bfseries\fontsize{12}{16}\selectfont}
+  {\thesubsection.}{0.55em}{}
+\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+
+% Sub-subsection Heading: 12pt Italic/Bold
+\titleformat{\subsubsection}
+  {\bfseries\fontsize{12}{15}\selectfont}
+  {\thesubsubsection.}{0.55em}{}
+\titlespacing*{\subsubsection}{0pt}{10pt}{4pt}
+
+% Simplify chapter headers to remove default "Chapter N" prefix
+\makeatletter
+\renewcommand{\@makechapterhead}[1]{%
+  \vspace*{0pt}%
+  {\parindent\z@ \raggedright \normalfont
+    \bfseries\fontsize{16}{20}\selectfont
+    \thechapter.\quad\MakeUppercase{#1}\par\nobreak
+    \vskip 20pt}}
+\makeatother
+
+% ==============================================================================
+% MACE BORDER SETUP (Single Rectangular Border Around Each Page)
+% ==============================================================================
+\usepackage{tikz}
+\usepackage{eso-pic}
+\AddToShipoutPictureBG{%
+\begin{tikzpicture}[remember picture,overlay]
+\draw[line width=1.0pt]
+    ([xshift=0.35in,yshift=-0.35in]current page.north west)
+    rectangle
+    ([xshift=-0.35in,yshift=0.35in]current page.south east);
+\end{tikzpicture}%
+}
+
+% ==============================================================================
+% HEADER & FOOTER FORMATTING
+% ==============================================================================
+\usepackage{fancyhdr}
+\newcommand{\ReportTitle}{ClauseIQ -- Machine Learning-Based Contract Clause Classification and Intelligent Search System}
+\newcommand{\DepartmentName}{Department of Computer Applications, MACE}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\small\ReportTitle}
+\fancyfoot[L]{\small\DepartmentName}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.6pt}
+\renewcommand{\footrulewidth}{0.6pt}
+
+% Plain style for chapter-opening pages (maintains identical header & footer)
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyhead[R]{\small\ReportTitle}
+  \fancyfoot[L]{\small\DepartmentName}
+  \fancyfoot[R]{\small\thepage}
+  \renewcommand{\headrulewidth}{0.6pt}
+  \renewcommand{\footrulewidth}{0.6pt}
+}
+
+% ==============================================================================
+% PARAGRAPH FORMATTING (Indentation & Spacing)
+% ==============================================================================
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.75em}
+\usepackage{ragged2e}
+\AtBeginDocument{\justifying}
+
+% ==============================================================================
+% TABLES, FIGURES & UTILITIES
+% ==============================================================================
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{caption}
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  justification=centering,
+  singlelinecheck=true,
+  skip=6pt
+}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5em, itemsep=2pt, topsep=4pt}
+\setlist[enumerate]{leftmargin=1.7em, itemsep=2pt, topsep=4pt}
+
+% Hyperref & URLs
+\usepackage{xurl}
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdfborder={0 0 0}
+]{hyperref}
+
+% ==============================================================================
+% DOCUMENT BEGINS
+% ==============================================================================
+\begin{document}
+
+% ------------------------------------------------------------------------------
+% 1. TITLE PAGE (No Header, No Footer, No Page Number)
+% ------------------------------------------------------------------------------
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+    \vspace*{0.2in}
+    
+    {\bfseries\fontsize{18}{22}\selectfont CLAUSEIQ -- MACHINE LEARNING-BASED CONTRACT CLAUSE CLASSIFICATION AND INTELLIGENT SEARCH SYSTEM\par}
+    
+    \vspace{0.35in}
+    
+    {\fontsize{13}{16}\selectfont\textit{INTERIM PROJECT REPORT}\par}
+    
+    \vspace{0.15in}
+    
+    {\fontsize{12}{15}\selectfont Submitted in partial fulfillment of the requirements for the award of the Degree of\par}
+    \vspace{0.08in}
+    {\bfseries\fontsize{14}{17}\selectfont MASTER OF COMPUTER APPLICATIONS\par}
+    
+    \vspace{0.35in}
+    
+    {\fontsize{12}{15}\selectfont Submitted by\par}
+    \vspace{0.08in}
+    {\bfseries\fontsize{14}{17}\selectfont MOHAMMED FARHAN K\par}
+    {\fontsize{12}{15}\selectfont (Reg. No: MAC25MCA-2042)\par}
+    
+    \vspace{0.35in}
+    
+    {\fontsize{12}{15}\selectfont Under the guidance of\par}
+    \vspace{0.08in}
+    {\bfseries\fontsize{13}{16}\selectfont Dr. SONIA ABRAHAM\par}
+    {\fontsize{12}{15}\selectfont Associate Professor, Department of Computer Applications\par}
+    
+    \vspace{0.45in}
+    
+    {\bfseries\fontsize{13}{16}\selectfont DEPARTMENT OF COMPUTER APPLICATIONS\par}
+    {\bfseries\fontsize{12}{15}\selectfont MAR ATHANASIUS COLLEGE OF ENGINEERING\par}
+    {\fontsize{11}{14}\selectfont KOTHAMANGALAM, KERALA -- 686666\par}
+    \vspace{0.08in}
+    {\fontsize{12}{15}\selectfont SEPTEMBER 2026\par}
+    
+\end{center}
+\end{titlepage}
+
+% ------------------------------------------------------------------------------
+% 2. CERTIFICATE (No Page Number)
+% ------------------------------------------------------------------------------
+\newpage
+\thispagestyle{empty}
+\begin{center}
+    {\bfseries\fontsize{14}{17}\selectfont DEPARTMENT OF COMPUTER APPLICATIONS\par}
+    {\bfseries\fontsize{13}{16}\selectfont MAR ATHANASIUS COLLEGE OF ENGINEERING\par}
+    {\fontsize{11}{14}\selectfont KOTHAMANGALAM, KERALA -- 686666\par}
+    
+    \vspace{0.3in}
+    
+    {\bfseries\fontsize{16}{19}\selectfont\underline{BONAFIDE CERTIFICATE}\par}
+\end{center}
+
+\vspace{0.25in}
+
+{\justifying\fontsize{12}{17}\selectfont
+This is to certify that this interim project report titled \textbf{``ClauseIQ -- Machine Learning-Based Contract Clause Classification and Intelligent Search System''} is a bonafide record of the work carried out by \textbf{MOHAMMED FARHAN K} (Reg. No: \textbf{MAC25MCA-2042}) in partial fulfillment of the requirements for the award of the Degree of \textbf{Master of Computer Applications} from the \textbf{APJ Abdul Kalam Technological University} during the academic year 2025--2027.\par}
+
+\vspace{0.6in}
+
+\noindent
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \textbf{Dr. SONIA ABRAHAM}\\
+    Project Guide\\
+    Associate Professor\\
+    Department of Computer Applications\\
+    MACE, Kothamangalam
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \centering
+    \textbf{MANU JOHN / MINU MARIA JOSEPH}\\
+    Project Coordinators\\
+    Assistant Professors\\
+    Department of Computer Applications\\
+    MACE, Kothamangalam
+\end{minipage}
+
+\vspace{0.8in}
+
+\begin{center}
+    \textbf{HEAD OF THE DEPARTMENT}\\
+    Department of Computer Applications\\
+    Mar Athanasius College of Engineering\\
+    Kothamangalam, Kerala
+\end{center}
+
+% ------------------------------------------------------------------------------
+% 3. DECLARATION (Starts Roman Page Numbering: Page i)
+% ------------------------------------------------------------------------------
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\begin{center}
+    {\bfseries\fontsize{16}{19}\selectfont DECLARATION\par}
+\end{center}
+
+\vspace{0.2in}
+
+{\justifying\fontsize{12}{17}\selectfont
+I, \textbf{MOHAMMED FARHAN K} (Reg. No: \textbf{MAC25MCA-2042}), hereby declare that the interim project report entitled \textbf{``ClauseIQ -- Machine Learning-Based Contract Clause Classification and Intelligent Search System''} submitted to the Department of Computer Applications, Mar Athanasius College of Engineering, Kothamangalam, in partial fulfillment of the requirements for the award of the Degree of \textbf{Master of Computer Applications}, is an authentic record of original work carried out by me under the guidance and supervision of \textbf{Dr. Sonia Abraham}, Associate Professor, Department of Computer Applications.
+
+I further declare that this report has not previously formed the basis for the award of any degree, diploma, associateship, fellowship, or other similar title of recognition to any university or institution.\par}
+
+\vspace{0.8in}
+
+\noindent
+\begin{minipage}[t]{0.5\textwidth}
+    \textbf{Place:} Kothamangalam\\
+    \textbf{Date:} 29-09-2026
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.4\textwidth}
+    \raggedleft
+    \textbf{MOHAMMED FARHAN K}\\
+    Reg. No: MAC25MCA-2042
+\end{minipage}
+
+% ------------------------------------------------------------------------------
+% 4. ACKNOWLEDGEMENT (Page ii)
+% ------------------------------------------------------------------------------
+\newpage
+\begin{center}
+    {\bfseries\fontsize{16}{19}\selectfont ACKNOWLEDGEMENT\par}
+\end{center}
+
+\vspace{0.2in}
+
+{\justifying\fontsize{12}{17}\selectfont
+I take this opportunity to express my profound gratitude and heartfelt appreciation to all individuals who have contributed to the successful completion of this interim project phase.
+
+First and foremost, I express my sincere gratitude to \textbf{Dr. Sonia Abraham}, Associate Professor and Project Guide, Department of Computer Applications, for her insightful guidance, valuable suggestions, constructive criticism, and continuous encouragement throughout the conception, modeling, and evaluation phases of ClauseIQ.
+
+I extend my sincere thanks to \textbf{Prof. Manu John} and \textbf{Prof. Minu Maria Joseph}, Project Coordinators, for their meticulous scheduling, review assessments, and continuous support.
+
+I express my deepest gratitude to the \textbf{Head of the Department}, Department of Computer Applications, and to the \textbf{Principal}, Mar Athanasius College of Engineering, Kothamangalam, for providing the state-of-the-art computational facilities and academic environment essential for conducting this research.
+
+I also express my heartfelt thanks to all the faculty and non-teaching staff of the Department of Computer Applications for their direct and indirect assistance. Finally, I thank my family and friends for their enduring patience, encouragement, and support throughout the course of this work.\par}
+
+\vspace{0.5in}
+\begin{flushright}
+    \textbf{MOHAMMED FARHAN K}
+\end{flushright}
+
+% ------------------------------------------------------------------------------
+% 5. ABSTRACT (Page iii)
+% ------------------------------------------------------------------------------
+\newpage
+\begin{center}
+    {\bfseries\fontsize{16}{19}\selectfont ABSTRACT\par}
+\end{center}
+
+\vspace{0.2in}
+
+{\justifying\fontsize{12}{17}\selectfont
+Modern enterprises manage thousands of commercial contracts annually, where manual retrieval and categorization of operative clauses (such as limitation of liability, non-compete covenants, governing law, and audit rights) is labor-intensive, error-prone, and non-scalable. To address these industry bottlenecks, \textbf{ClauseIQ} is developed as a machine learning-based contract intelligence system that performs multi-class legal clause classification and intelligent semantic search.
+
+ClauseIQ is built and evaluated upon the Contract Understanding Atticus Dataset (CUAD), an authoritative corpus of 510 commercial contracts curated from SEC EDGAR filings and expert-annotated across 41 legal clause categories. For this work, span annotations were flattened and cleaned into a structured tabular corpus of \textbf{12,204 clauses} spanning all \textbf{41 categories}. The dataset exhibits a severe real-world class imbalance ratio of \textbf{46.33 : 1}, ranging from 1,251 instances for \textit{Parties} to 27 instances for \textit{Price Restrictions}. Textual features are extracted using Term Frequency--Inverse Document Frequency (TF-IDF) configured for \textbf{10,000 unigram and bigram features} with sublinear term frequency scaling.
+
+Four classical machine learning algorithms—Multinomial Naive Bayes, Linear Support Vector Machine (Linear SVM), Multinomial Logistic Regression, and Random Forest—were trained on a stratified 80\% split (\textbf{9,763 training samples}) and evaluated on an exact held-out 20\% split (\textbf{2,441 testing samples}) across all 41 categories. Hyperparameter tuning was conducted using Stratified K-Fold Cross-Validation optimizing explicitly for Macro-Averaged F1-Score (Macro-F1). 
+
+On the held-out test set, \textbf{Logistic Regression} achieved \textbf{71.90\% Accuracy} and the highest \textbf{Macro-F1 of 64.74\%} (Weighted-F1: 71.96\%), while \textbf{Linear SVM} achieved \textbf{72.63\% Accuracy} and \textbf{64.18\% Macro-F1}. Because Macro-F1 weights all 41 categories equally under severe imbalance, and because Logistic Regression provides class probability estimates through its multinomial softmax formulation for confidence scoring, Logistic Regression was formally selected as the optimal production classifier. In parallel, a TF-IDF + Cosine Similarity search engine was developed and empirically benchmarked across canonical legal query scenarios, achieving a \textbf{Precision at 1 ($P@1$) of 80.00\%} and \textbf{Precision at 5 ($P@5$) of 88.00\%} with sub-10ms query execution speed. The classification and search services are exposed via a modular FastAPI REST backend validated by an automated test suite with \textbf{15 passed tests (100\% pass rate)}. Remaining deliverables—including live Supabase PostgreSQL database integration and a React.js web interface—are clearly delineated for the final project phase.\par}
+
+% ------------------------------------------------------------------------------
+% 6. LIST OF TABLES (Page iv)
+% ------------------------------------------------------------------------------
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+
+% ------------------------------------------------------------------------------
+% 7. LIST OF FIGURES (Page v)
+% ------------------------------------------------------------------------------
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+
+% ------------------------------------------------------------------------------
+% 8. CONTENTS (No Page Number)
+% ------------------------------------------------------------------------------
+\newpage
+\begingroup
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[R]{\small\ReportTitle}%
+  \fancyfoot[L]{\small\DepartmentName}%
+  \fancyfoot[R]{}% Suppress page number on TOC pages
+  \renewcommand{\headrulewidth}{0.6pt}%
+  \renewcommand{\footrulewidth}{0.6pt}%
+}
+\pagestyle{plain}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{2}
+\tableofcontents
+\clearpage
+\endgroup
+
+% ------------------------------------------------------------------------------
+% 9. MAIN BODY: CHAPTERS (Arabic Page Numbering Starts Here at Page 1)
+% ------------------------------------------------------------------------------
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\pagestyle{fancy}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyhead[R]{\small\ReportTitle}%
+  \fancyfoot[L]{\small\DepartmentName}%
+  \fancyfoot[R]{\small\thepage}%
+  \renewcommand{\headrulewidth}{0.6pt}%
+  \renewcommand{\footrulewidth}{0.6pt}%
+}
+
+\include{chapters/01_introduction}
+\include{chapters/02_literature_review}
+\include{chapters/03_system_analysis}
+\include{chapters/04_system_design_model_building}
+\include{chapters/05_results_and_discussion}
+% Chapters 6-10 are excluded from the Interim Report per guide structure
+% (Remaining deliverables and future extensions will be documented in the Final Report)
+
+% ------------------------------------------------------------------------------
+% 10. REFERENCES
+% ------------------------------------------------------------------------------
+\newpage
+\phantomsection
+\addcontentsline{toc}{chapter}{REFERENCES}
+\begin{thebibliography}{99}
+
+\bibitem{quevedo2024}
+E.~Quevedo~Caballero, T.~\v{C}ern\'{y}, A.~Rodriguez, P.~Rivas, J.~Yero, K.~Sooksatra, and D.~Taibi,
+``Legal Natural Language Processing From 2015 to 2022: A Comprehensive Systematic Mapping Study of Advances and Applications,''
+\textit{IEEE Access}, vol.~12, pp.~145286--145317, 2024.
+\url{https://doi.org/10.1109/ACCESS.2024.3414967}
+
+\bibitem{siino2025}
+M.~Siino, M.~Falco, D.~Croce, and P.~Rosso,
+``Exploring LLMs Applications in Law: A Literature Review on Current Legal NLP Approaches,''
+\textit{IEEE Access}, vol.~13, pp.~18253--18276, 2025.
+\url{https://doi.org/10.1109/ACCESS.2025.3533217}
+
+\bibitem{kutbi2023}
+M.~Kutbi,
+``Named Entity Recognition Utilized to Enhance Text Classification While Preserving Privacy,''
+\textit{IEEE Access}, vol.~11, pp.~117576--117581, 2023.
+\url{https://doi.org/10.1109/ACCESS.2023.3325895}
+
+\bibitem{cuad2021}
+D.~Hendrycks, C.~Burns, A.~Chen, and S.~Ball,
+``CUAD: An Expert-Annotated NLP Dataset for Legal Contract Review,''
+in \textit{Proceedings of the Neural Information Processing Systems (NeurIPS)}, 2021.
+\url{https://arxiv.org/abs/2103.06268}
+
+\bibitem{scikit-learn}
+F.~Pedregosa, G.~Varoquaux, A.~Gramfort, V.~Michel, B.~Thirion, O.~Grisel, M.~Blondel, P.~Prettenhofer, R.~Weiss, V.~Dubourg, J.~Vanderplas, A.~Passos, D.~Cournapeau, M.~Brucher, M.~Perrot, and E.~Duchesnay,
+``Scikit-learn: Machine Learning in Python,''
+\textit{Journal of Machine Learning Research}, vol.~12, pp.~2825--2830, 2011.
+
+\bibitem{spacy2017}
+M.~Honnibal and I.~Montani,
+``spaCy: Industrial-strength Natural Language Processing in Python,''
+\textit{Zenodo}, 2017.
+
+\bibitem{fastapi}
+S.~Ram\'irez,
+``FastAPI: High performance, easy to learn, fast to code, ready for production,''
+2018. \url{https://fastapi.tiangolo.com/}
+
+\end{thebibliography}
+
+\end{document}

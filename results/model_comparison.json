@@ -1,0 +1,42 @@
+[
+    {
+        "Model": "Logistic Regression",
+        "Accuracy": 0.719,
+        "Macro Precision": 0.6481,
+        "Macro Recall": 0.6622,
+        "Macro F1": 0.6474,
+        "Weighted Precision": 0.7354,
+        "Weighted Recall": 0.719,
+        "Weighted F1": 0.7196
+    },
+    {
+        "Model": "Linear SVM",
+        "Accuracy": 0.7263,
+        "Macro Precision": 0.6323,
+        "Macro Recall": 0.6665,
+        "Macro F1": 0.6418,
+        "Weighted Precision": 0.7331,
+        "Weighted Recall": 0.7263,
+        "Weighted F1": 0.7226
+    },
+    {
+        "Model": "Multinomial Naive Bayes",
+        "Accuracy": 0.6927,
+        "Macro Precision": 0.6024,
+        "Macro Recall": 0.5867,
+        "Macro F1": 0.5853,
+        "Weighted Precision": 0.6996,
+        "Weighted Recall": 0.6927,
+        "Weighted F1": 0.6903
+    },
+    {
+        "Model": "Random Forest",
+        "Accuracy": 0.6546,
+        "Macro Precision": 0.5527,
+        "Macro Recall": 0.5904,
+        "Macro F1": 0.5634,
+        "Weighted Precision": 0.6577,
+        "Weighted Recall": 0.6546,
+        "Weighted F1": 0.6496
+    }
+]

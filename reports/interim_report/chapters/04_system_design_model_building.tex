@@ -1,0 +1,117 @@
+\chapter{SYSTEM DESIGN}
+\label{ch:system_design}
+
+This chapter details the system design, dataset splitting strategy, feature extraction pipeline, model training workflows, and hyperparameter optimization methodologies for the four classical machine learning classifiers evaluated in ClauseIQ.
+
+% ----------------------------------------------------------------------
+% Section 4.1: Model(s) Building
+% ----------------------------------------------------------------------
+\section{Model(s) Building}
+\label{sec:model_building}
+
+\subsection{Implementation Code}
+\label{subsec:implementation_code}
+The model-building subsystem is engineered to ensure reproducible, modular execution without data leakage. The implementation is organized into four core functional modules:
+\begin{enumerate}
+    \item \textbf{Text Normalization and Ingestion Module (\texttt{src/clean\_dataset.py}):} Loads the cleaned 12,204-clause corpus from \texttt{data/clauseiq\_dataset\_clean.csv}, verifying column schemas and label encodings.
+    \item \textbf{Stratified Splitting Module (\texttt{src/clean\_dataset.py}):} Generates reproducible train and test subsets while strictly preserving per-class label proportions across all 41 categories.
+    \item \textbf{TF-IDF Feature Extraction Module (\texttt{src/feature\_extraction.py}):} Fits the vocabulary exclusively on training text samples and applies sparse transformations across both subsets.
+    \item \textbf{Classifier Training and Optimization Module (\texttt{src/train\_baseline.py}, \texttt{src/train\_svm.py}, \texttt{src/train\_nb.py}, \texttt{src/train\_random\_forest.py}):} Trains and tunes the four candidate machine learning algorithms using cross-validation on the training set, serializing the final estimators and vectorizers for model evaluation and API serving.
+\end{enumerate}
+
+\subsection{Model Planning (Training/Testing split of the dataset)}
+\label{subsec:model_planning}
+In legal natural language processing, partitioning the dataset must be performed with extreme care. Because the dataset exhibits a severe 46.33:1 class imbalance across 41 categories, an unstratified random split would result in extreme undersampling or complete absence of rare categories (such as \textit{Price Restrictions} with 27 total instances or \textit{Third Party Beneficiary} with 39 instances) from the test evaluation set.
+
+To guarantee rigorous statistical representation, a \textbf{stratified 80/20 train/test split} was executed using \texttt{train\_test\_split} with \texttt{random\_state=42} and stratification governed by the target label array.
+
+The verified sample counts of the split are:
+\begin{itemize}
+    \item \textbf{Total Corpus Records:} 12,204 samples
+    \item \textbf{Training Split ($N_{\text{train}}$):} \textbf{9,763 samples} (80.0\%)
+    \item \textbf{Testing Split ($N_{\text{test}}$):} \textbf{2,441 samples} (20.0\%)
+    \item \textbf{Number of Classes Represented:} \textbf{41 classes} in both training and testing sets
+    \item \textbf{Missing Classes in Either Split:} \textbf{0} (full class preservation verified)
+\end{itemize}
+
+The split artifacts were serialized directly to \texttt{models/train\_test\_split.pkl}, guaranteeing that all four machine learning models are evaluated on the \textbf{exact same held-out test instances}.
+
+\subsubsection*{Feature Representation and Vectorization}
+Feature extraction is performed by fitting \texttt{TfidfVectorizer} exclusively on the 9,763 training samples to prevent data leakage from the test split. The parameters are:
+\begin{itemize}
+    \item \textbf{Max Features:} \textbf{10,000 features}
+    \item \textbf{N-gram Range:} $(1, 2)$ (capturing unigram vocabulary and bigram collocations)
+    \item \textbf{Sublinear Term Frequency:} Enabled ($\text{sublinear\_tf} = \text{True}$)
+    \item \textbf{Minimum Document Frequency:} $\text{min\_df} = 2$
+\end{itemize}
+
+Applying this vectorizer produces a sparse Compressed Sparse Row (CSR) matrix of shape $(9763, 10000)$ for training and $(2441, 10000)$ for testing.
+
+\subsection{Training}
+\label{subsec:training}
+Four classical machine learning algorithms were trained and evaluated:
+\begin{enumerate}
+    \item Multinomial Naive Bayes
+    \item Random Forest Classifier
+    \item Linear Support Vector Machine (Linear SVM)
+    \item Multinomial Logistic Regression
+\end{enumerate}
+
+To ensure optimal performance under class imbalance, hyperparameter tuning was conducted using Stratified K-Fold Cross-Validation, scoring candidates explicitly on \textbf{Macro-F1} (\texttt{scoring='f1\_macro'}).
+
+\subsubsection*{1. Multinomial Naive Bayes Optimization (\texttt{src/train\_nb.py})}
+Multinomial Naive Bayes does not natively support class weighting. Consequently, systematic tuning of the additive smoothing parameter $\alpha$ is required to prevent majority classes from overwhelming posterior probabilities.
+\begin{itemize}
+    \item \textbf{Tuning Strategy:} \texttt{GridSearchCV} with 5-fold Stratified Cross-Validation.
+    \item \textbf{Candidate Search Space:} $\alpha \in \{0.001, 0.01, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0\}$ (8 candidates).
+    \item \textbf{Optimization Objective:} \texttt{f1\_macro}.
+    \item \textbf{Optimal Parameter:} $\alpha = \mathbf{0.01}$.
+    \item \textbf{Cross-Validation Performance:} Best 5-fold CV Macro-F1 = \textbf{0.5905}.
+\end{itemize}
+
+\subsubsection*{2. Random Forest Classifier Optimization (\texttt{src/train\_random\_forest.py})}
+Due to the computational complexity of training ensembles across 10,000 sparse dimensions, hyperparameter optimization was conducted using randomized parameter search:
+\begin{itemize}
+    \item \textbf{Tuning Strategy:} \texttt{RandomizedSearchCV} with 3-fold Stratified Cross-Validation.
+    \item \textbf{Iterations Evaluated:} 8 parameter configurations.
+    \item \textbf{Parameter Search Grid:}
+    \begin{itemize}
+        \item \texttt{n\_estimators}: $[100, 150, 200]$
+        \item \texttt{max\_depth}: $[30, 50, \text{None}]$
+        \item \texttt{min\_samples\_split}: $[2, 5, 10]$
+        \item \texttt{class\_weight}: $[\text{'balanced'}, \text{'balanced\_subsample'}]$
+    \end{itemize}
+    \item \textbf{Optimal Parameters Identified:}
+    \begin{itemize}
+        \item $\text{n\_estimators} = \mathbf{200}$
+        \item $\text{min\_samples\_split} = \mathbf{10}$
+        \item $\text{max\_depth} = \mathbf{50}$
+        \item $\text{class\_weight} = \mathbf{\text{'balanced'}}$
+    \end{itemize}
+    \item \textbf{Cross-Validation Performance:} Best 3-fold CV Macro-F1 = \textbf{0.5776}.
+\end{itemize}
+
+\subsubsection*{3. Linear Support Vector Machine (\texttt{src/train\_svm.py})}
+Linear SVM was trained using the One-vs-Rest (OvR) multiclass scheme with balanced class weighting:
+\begin{itemize}
+    \item \textbf{Kernel:} Linear.
+    \item \textbf{Regularization Parameter:} $C = 0.1$.
+    \item \textbf{Loss Function:} Squared hinge loss.
+    \item \textbf{Class Weighting:} \texttt{class\_weight='balanced'}, scaling the penalty inversely proportional to category frequency.
+\end{itemize}
+
+\subsubsection*{4. Logistic Regression (\texttt{src/train\_baseline.py})}
+Multinomial Logistic Regression was parameterized as follows:
+\begin{itemize}
+    \item \textbf{Formulation:} Multinomial cross-entropy (softmax loss).
+    \item \textbf{Regularization:} $L_2$ penalty with inverse regularization strength $C = 1.0$.
+    \item \textbf{Optimization Solver:} L-BFGS (Limited-memory Broyden--Fletcher--Goldfarb--Shanno).
+    \item \textbf{Maximum Iterations:} 1,000 (ensuring complete convergence).
+    \item \textbf{Class Weighting:} \texttt{class\_weight='balanced'}.
+\end{itemize}
+
+\subsection{Testing}
+\label{subsec:testing}
+Once trained and tuned on the training split, all four estimators were evaluated on the \textbf{exact same held-out test dataset} ($N = 2,441$). Test samples were transformed using the persisted vectorizer and passed through each model's prediction pipeline.
+
+Classification performance was comprehensively assessed by computing scikit-learn's classification report across all 41 categories, generating full $41 \times 41$ confusion matrices, and logging accuracy, precision, recall, macro-averaged metrics, and weighted-averaged metrics. The empirical findings are detailed in Chapter \ref{ch:results_and_discussion}.
