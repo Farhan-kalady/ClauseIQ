@@ -342,6 +342,7 @@ The API will be available locally through the FastAPI server.
 ### Start the React Frontend
 
 ```bash
+cd frontend
 npm install
 npm run dev
 ```

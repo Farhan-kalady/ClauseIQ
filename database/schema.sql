@@ -68,15 +68,28 @@ ALTER TABLE clauses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE classification_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE search_logs ENABLE ROW LEVEL SECURITY;
 
--- Allow anonymous or service_role read & insert access for the API
+-- Allow anonymous or service_role read & insert access for the API (idempotent)
+DROP POLICY IF EXISTS "Allow public read on contracts" ON contracts;
 CREATE POLICY "Allow public read on contracts" ON contracts FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert on contracts" ON contracts;
 CREATE POLICY "Allow public insert on contracts" ON contracts FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public read on clauses" ON clauses;
 CREATE POLICY "Allow public read on clauses" ON clauses FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert on clauses" ON clauses;
 CREATE POLICY "Allow public insert on clauses" ON clauses FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public read on classification_logs" ON classification_logs;
 CREATE POLICY "Allow public read on classification_logs" ON classification_logs FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert on classification_logs" ON classification_logs;
 CREATE POLICY "Allow public insert on classification_logs" ON classification_logs FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Allow public read on search_logs" ON search_logs;
 CREATE POLICY "Allow public read on search_logs" ON search_logs FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Allow public insert on search_logs" ON search_logs;
 CREATE POLICY "Allow public insert on search_logs" ON search_logs FOR INSERT WITH CHECK (true);
+
