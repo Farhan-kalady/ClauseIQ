@@ -13,13 +13,14 @@ router = APIRouter(tags=["Search & Metadata"])
     summary="Search clause corpus using cosine similarity",
 )
 def search_clauses(payload: SearchRequest):
-    """Search 12,204 pre-indexed contract clauses using TF-IDF and Cosine Similarity."""
+    """Search pre-indexed CUAD contract clauses or a specific uploaded contract using TF-IDF and Cosine Similarity."""
     try:
-        results = execute_search(
+        results, scope = execute_search(
             query=payload.query,
             top_k=payload.top_k,
             category_filter=payload.category_filter,
             min_score=payload.min_score,
+            contract_id=payload.contract_id,
         )
     except ValueError as e:
         raise HTTPException(
@@ -41,6 +42,8 @@ def search_clauses(payload: SearchRequest):
 
     return SearchResponse(
         query=payload.query,
+        search_scope=scope,
+        contract_id=payload.contract_id,
         total_results=len(items),
         results=items,
     )

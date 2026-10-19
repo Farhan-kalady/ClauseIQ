@@ -32,15 +32,18 @@ class Settings:
     ARTIFACTS_DIR: Path = PROJECT_ROOT / "artifacts"
     MODELS_DIR: Path = PROJECT_ROOT / "models"
     
-    # CORS
+    # CORS: No wildcard '*' default when credentials are enabled
+    _raw_cors = os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173,http://127.0.0.1:3000"
+    )
     CORS_ORIGINS: list[str] = [
         origin.strip()
-        for origin in os.getenv(
-            "CORS_ORIGINS",
-            "http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173,*"
-        ).split(",")
-        if origin.strip()
+        for origin in _raw_cors.split(",")
+        if origin.strip() and origin.strip() != "*"
     ]
+    if not CORS_ORIGINS:
+        CORS_ORIGINS = ["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173", "http://127.0.0.1:3000"]
     
     # Supabase configuration
     SUPABASE_URL: str = os.getenv("SUPABASE_URL", "")

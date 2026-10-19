@@ -149,6 +149,16 @@ def build_artifacts(
     clf.fit(X_train, y_train)
     joblib.dump(clf, artifacts_dir / "best_model.joblib")
 
+    print("Fitting reproducible calibrated model on training features...")
+    from sklearn.calibration import CalibratedClassifierCV
+    calibrated_clf = CalibratedClassifierCV(
+        estimator=LogisticRegression(C=1.0, max_iter=2000, class_weight="balanced", random_state=42),
+        method="sigmoid",
+        cv=3,
+    )
+    calibrated_clf.fit(X_train, y_train)
+    joblib.dump(calibrated_clf, artifacts_dir / "calibrated_model.joblib")
+
     # 5. Evaluate on held-out test split
     y_pred = clf.predict(X_test)
     probs = clf.predict_proba(X_test) if hasattr(clf, "predict_proba") else None

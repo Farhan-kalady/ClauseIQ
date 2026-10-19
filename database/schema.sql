@@ -1,5 +1,5 @@
 -- ==============================================================================
--- ClauseIQ - Supabase PostgreSQL Database Schema (Sprint 3)
+-- ClauseIQ - Supabase PostgreSQL Database Schema
 -- Machine Learning-Based Contract Clause Classification and Search System
 -- ==============================================================================
 
@@ -61,35 +61,42 @@ CREATE INDEX IF NOT EXISTS idx_classification_logs_created_at ON classification_
 CREATE INDEX IF NOT EXISTS idx_search_logs_created_at ON search_logs(created_at DESC);
 
 -- ------------------------------------------------------------------------------
--- Row Level Security (RLS) Policies
+-- Row Level Security (RLS) Configuration & Key Architecture
+-- ------------------------------------------------------------------------------
+-- SECURITY NOTE:
+-- - The backend uses SUPABASE_KEY in .env.
+-- - For production deployments, SUPABASE_KEY should be a Supabase service_role key
+--   which bypasses RLS and protects database access behind the FastAPI server.
+-- - The public anon key should have restricted permissions to avoid data scraping.
 -- ------------------------------------------------------------------------------
 ALTER TABLE contracts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE clauses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE classification_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE search_logs ENABLE ROW LEVEL SECURITY;
 
--- Allow anonymous or service_role read & insert access for the API (idempotent)
-DROP POLICY IF EXISTS "Allow public read on contracts" ON contracts;
-CREATE POLICY "Allow public read on contracts" ON contracts FOR SELECT USING (true);
+-- Contracts: Allow read access, permit insert by API service
+DROP POLICY IF EXISTS "Allow read on contracts" ON contracts;
+CREATE POLICY "Allow read on contracts" ON contracts FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Allow public insert on contracts" ON contracts;
-CREATE POLICY "Allow public insert on contracts" ON contracts FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow insert on contracts" ON contracts;
+CREATE POLICY "Allow insert on contracts" ON contracts FOR INSERT WITH CHECK (true);
 
-DROP POLICY IF EXISTS "Allow public read on clauses" ON clauses;
-CREATE POLICY "Allow public read on clauses" ON clauses FOR SELECT USING (true);
+-- Clauses: Allow read access, permit insert by API service
+DROP POLICY IF EXISTS "Allow read on clauses" ON clauses;
+CREATE POLICY "Allow read on clauses" ON clauses FOR SELECT USING (true);
 
-DROP POLICY IF EXISTS "Allow public insert on clauses" ON clauses;
-CREATE POLICY "Allow public insert on clauses" ON clauses FOR INSERT WITH CHECK (true);
+DROP POLICY IF EXISTS "Allow insert on clauses" ON clauses;
+CREATE POLICY "Allow insert on clauses" ON clauses FOR INSERT WITH CHECK (true);
 
+-- Telemetry Logs: Insert allowed, restrict select to prevent public telemetry leakage
+DROP POLICY IF EXISTS "Allow insert on classification_logs" ON classification_logs;
+CREATE POLICY "Allow insert on classification_logs" ON classification_logs FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Allow insert on search_logs" ON search_logs;
+CREATE POLICY "Allow insert on search_logs" ON search_logs FOR INSERT WITH CHECK (true);
+
+-- Restrict read on telemetry logs to service_role only (or authenticated users)
 DROP POLICY IF EXISTS "Allow public read on classification_logs" ON classification_logs;
-CREATE POLICY "Allow public read on classification_logs" ON classification_logs FOR SELECT USING (true);
-
-DROP POLICY IF EXISTS "Allow public insert on classification_logs" ON classification_logs;
-CREATE POLICY "Allow public insert on classification_logs" ON classification_logs FOR INSERT WITH CHECK (true);
-
 DROP POLICY IF EXISTS "Allow public read on search_logs" ON search_logs;
-CREATE POLICY "Allow public read on search_logs" ON search_logs FOR SELECT USING (true);
-
-DROP POLICY IF EXISTS "Allow public insert on search_logs" ON search_logs;
-CREATE POLICY "Allow public insert on search_logs" ON search_logs FOR INSERT WITH CHECK (true);
-
+CREATE POLICY "Restrict read on classification_logs" ON classification_logs FOR SELECT USING (auth.role() = 'service_role' OR auth.role() = 'authenticated');
+CREATE POLICY "Restrict read on search_logs" ON search_logs FOR SELECT USING (auth.role() = 'service_role' OR auth.role() = 'authenticated');

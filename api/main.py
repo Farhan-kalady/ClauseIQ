@@ -16,7 +16,7 @@ from api.services.supabase_service import get_supabase_client
 from search import get_search_engine
 
 # Import modular routers
-from api.routers import health, classify, search
+from api.routers import health, classify, search, contracts
 
 
 @asynccontextmanager
@@ -38,7 +38,7 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# Enable CORS for React frontend integration
+# Enable CORS for React frontend integration with explicit origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -51,6 +51,7 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(classify.router)
 app.include_router(search.router)
+app.include_router(contracts.router)
 
 
 if __name__ == "__main__":

@@ -54,7 +54,7 @@ def test_classify_valid_clause(client):
     assert data["confidence"] is not None
     assert 0.0 <= data["confidence"] <= 1.0
     assert data["confidence_type"] == "probability"
-    assert data["model_name"] == "LogisticRegression"
+    assert "LogisticRegression" in data["model_name"]
     assert "alternatives" in data
     assert isinstance(data["alternatives"], list)
     assert len(data["alternatives"]) <= 3
@@ -143,6 +143,24 @@ def test_classify_empty_file_upload(client):
         files={"file": ("empty.pdf", b"", "application/pdf")},
     )
     assert response.status_code == 400
+
+
+def test_classify_corrupted_pdf_upload(client):
+    response = client.post(
+        "/classify/file",
+        files={"file": ("corrupted.pdf", b"NOT A VALID PDF CONTENT", "application/pdf")},
+    )
+    assert response.status_code == 400
+    assert "Corrupted or invalid PDF" in response.json().get("detail", "")
+
+
+def test_classify_unsupported_file_upload(client):
+    response = client.post(
+        "/classify/file",
+        files={"file": ("document.png", b"\x89PNG\r\n\x1a\n", "image/png")},
+    )
+    assert response.status_code == 400
+    assert "Unsupported file format" in response.json().get("detail", "")
 
 
 # ==============================================================================
@@ -255,3 +273,71 @@ def test_supabase_service_graceful_handling():
 
         res_search = log_search("sample query", None, 5, 3)
         assert res_search is None
+
+
+# ==============================================================================
+# 8. Phase 3 Backend Enhancements Tests: Read Endpoints & Scoped Search
+# ==============================================================================
+
+def test_contracts_read_endpoints_and_scoped_search(client):
+    txt_content = (
+        "This Agreement shall be governed by Delaware law.\n\n"
+        "Either party may terminate this agreement upon thirty days written notice.\n\n"
+        "Confidential information shall be protected for three years."
+    ).encode("utf-8")
+
+    # 1. Upload a document
+    upload_res = client.post(
+        "/classify/file",
+        files={"file": ("service_agreement_phase3.txt", txt_content, "text/plain")},
+    )
+    assert upload_res.status_code == 200
+    upload_data = upload_res.json()
+    assert "contract_id" in upload_data
+    contract_id = upload_data["contract_id"]
+    assert contract_id is not None
+    assert upload_data["total_clauses"] >= 2
+
+    # 2. GET /contracts
+    contracts_res = client.get("/contracts")
+    assert contracts_res.status_code == 200
+    contracts_list = contracts_res.json()
+    assert isinstance(contracts_list, list)
+    matching = [c for c in contracts_list if c["id"] == contract_id]
+    assert len(matching) > 0
+    assert matching[0]["document_name"] == "service_agreement_phase3.txt"
+
+    # 3. GET /contracts/{id}/clauses
+    clauses_res = client.get(f"/contracts/{contract_id}/clauses")
+    assert clauses_res.status_code == 200
+    clauses_data = clauses_res.json()
+    assert clauses_data["contract_id"] == contract_id
+    assert clauses_data["document_name"] == "service_agreement_phase3.txt"
+    assert len(clauses_data["clauses"]) == upload_data["total_clauses"]
+
+    # 4. Search scoped to this contract_id
+    search_res = client.post(
+        "/search",
+        json={"query": "governing law delaware", "top_k": 3, "contract_id": contract_id},
+    )
+    assert search_res.status_code == 200
+    search_data = search_res.json()
+    assert search_data["contract_id"] == contract_id
+    assert "Uploaded Contract" in search_data["search_scope"]
+    assert search_data["total_results"] > 0
+    assert "delaware" in search_data["results"][0]["clause_text"].lower()
+
+    # 5. Non-existent contract 404
+    non_existent = client.get("/contracts/00000000-0000-0000-0000-000000000000/clauses")
+    assert non_existent.status_code == 404
+
+
+def test_upload_hardening_signature_and_size_limits(client):
+    # PDF with fake extension but invalid signature
+    fake_pdf = client.post(
+        "/classify/file",
+        files={"file": ("fake_signature.pdf", b"NOT_A_REAL_PDF_HEADER_DATA", "application/pdf")},
+    )
+    assert fake_pdf.status_code == 400
+    assert "Missing %PDF file signature" in fake_pdf.json()["detail"]
+

@@ -157,7 +157,7 @@ def test_api_classify_endpoint_success(client):
     assert data["predicted_category"] == "Governing Law"
     assert data["confidence_score"] is not None
     assert 0.0 <= data["confidence_score"] <= 1.0
-    assert data["model_name"] == "LogisticRegression"
+    assert "LogisticRegression" in data["model_name"]
 
 
 def test_api_classify_endpoint_empty_text(client):

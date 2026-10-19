@@ -1,21 +1,22 @@
 {
   "manifest_version": "2.0",
-  "created_at_utc": "2026-10-19T06:21:43.860304+00:00",
+  "created_at_utc": "2026-10-19T06:33:00.180139+00:00",
   "model_name": "LogisticRegression-HybridWordChar",
   "model_class": "LogisticRegression",
   "model_parameters": {
     "C": 1.0,
-    "class_weight": "balanced",
     "max_iter": 2000,
+    "class_weight": "balanced",
     "random_state": 42,
     "solver": "lbfgs"
   },
   "preprocessing": {
-    "cleaner": "clean_text_lemmatized",
+    "pipeline": "clean_text_pipeline",
     "lemmatizer": "NLTK WordNetLemmatizer",
     "regex_normalization": true
   },
-  "feature_union": {
+  "feature_pipeline": {
+    "type": "FeatureUnion",
     "word_features": 25000,
     "word_ngram_range": [
       1,
@@ -27,25 +28,32 @@
       3,
       5
     ],
-    "total_features": 40000,
     "sublinear_tf": true
+  },
+  "dataset": {
+    "source": "CUAD v1 derived",
+    "total_samples": 12204,
+    "contracts_count": 510,
+    "num_classes": 41,
+    "train_samples": 9763,
+    "test_samples": 2441,
+    "split_method": "stratified_80_20",
+    "split_random_state": 42
   },
   "metrics_held_out_test_split_a": {
     "accuracy": 0.7231,
-    "macro_f1": 0.6591,
-    "weighted_f1": 0.7265,
     "macro_precision": 0.6607,
     "macro_recall": 0.6696,
-    "ece": 0.1545,
-    "high_conf_precision": 0.8195
+    "macro_f1": 0.6591,
+    "weighted_precision": 0.7409,
+    "weighted_recall": 0.7231,
+    "weighted_f1": 0.7265
   },
-  "metrics_held_out_test_split_b": {
-    "accuracy": 0.7393,
-    "macro_f1": 0.6947,
-    "weighted_f1": 0.7371,
-    "macro_precision": 0.6976,
-    "macro_recall": 0.7123,
-    "ece": 0.2005,
-    "high_conf_precision": 0.8655
+  "environment": {
+    "python_version": "3.14.6",
+    "scikit_learn_version": "1.9.0",
+    "joblib_version": "1.5.3",
+    "numpy_version": "2.5.2",
+    "pandas_version": "3.0.5"
   }
 }

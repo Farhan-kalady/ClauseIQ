@@ -46,7 +46,7 @@ def log_classification(
 
     try:
         record = {
-            "input_text": input_text[:4000],  # Bound text length
+            "input_text": input_text[:4000],
             "predicted_category": predicted_category,
             "confidence_score": confidence_score,
             "document_name": document_name,
@@ -86,31 +86,121 @@ def log_search(
 def save_contract_and_clauses(
     document_name: str,
     clauses: List[Dict[str, Any]],
+    contract_id: Optional[str] = None,
 ) -> Optional[str]:
-    """Store contract metadata and extracted classified clauses in Supabase."""
+    """Store contract metadata and extracted classified clauses in Supabase atomically.
+    
+    If clause insertion fails, the created contract record is rolled back to prevent orphans.
+    """
     client = get_supabase_client()
     if not client:
         return None
 
     try:
-        contract_res = client.table("contracts").insert({"document_name": document_name}).execute()
+        contract_payload = {"document_name": document_name}
+        if contract_id:
+            contract_payload["id"] = contract_id
+
+        contract_res = client.table("contracts").insert(contract_payload).execute()
         if not contract_res.data:
             return None
-        contract_id = contract_res.data[0]["id"]
+        saved_id = contract_res.data[0]["id"]
 
         clause_records = [
             {
-                "contract_id": contract_id,
+                "contract_id": saved_id,
                 "clause_text": c.get("clause_text", "")[:4000],
                 "category": c.get("predicted_category", "Unknown"),
                 "confidence_score": c.get("confidence"),
             }
             for c in clauses
         ]
-        if clause_records:
-            client.table("clauses").insert(clause_records).execute()
 
-        return contract_id
+        if clause_records:
+            try:
+                client.table("clauses").insert(clause_records).execute()
+            except Exception as clause_err:
+                logger.error(f"Failed to insert clauses, rolling back contract {saved_id}: {clause_err}")
+                try:
+                    client.table("contracts").delete().eq("id", saved_id).execute()
+                except Exception as rb_err:
+                    logger.critical(f"Rollback failed for contract {saved_id}: {rb_err}")
+                return None
+
+        return saved_id
     except Exception as e:
         logger.warning(f"Supabase save_contract_and_clauses failed: {e}")
         return None
+
+
+def fetch_contracts(limit: int = 50) -> List[Dict[str, Any]]:
+    """Retrieve saved contracts list from Supabase or fallback to in-memory uploads."""
+    client = get_supabase_client()
+    if client:
+        try:
+            res = client.table("contracts").select("id, document_name, created_at").order("created_at", desc=True).limit(limit).execute()
+            if res.data:
+                # Also fetch clause counts
+                contracts = []
+                for row in res.data:
+                    c_id = row["id"]
+                    count_res = client.table("clauses").select("id", count="exact").eq("contract_id", c_id).execute()
+                    contracts.append({
+                        "id": c_id,
+                        "document_name": row["document_name"],
+                        "total_clauses": count_res.count or 0,
+                        "created_at": row["created_at"],
+                    })
+                return contracts
+        except Exception as e:
+            logger.warning(f"Failed to query contracts from Supabase: {e}")
+
+    # Offline in-memory fallback
+    from api.services.ml_service import list_uploaded_contracts
+    return list_uploaded_contracts()
+
+
+def fetch_contract_clauses(contract_id: str) -> Optional[Dict[str, Any]]:
+    """Retrieve clauses for a given contract ID from Supabase or fallback to in-memory uploads."""
+    client = get_supabase_client()
+    if client:
+        try:
+            c_res = client.table("contracts").select("id, document_name, created_at").eq("id", contract_id).execute()
+            if c_res.data:
+                c_row = c_res.data[0]
+                cl_res = client.table("clauses").select("id, clause_text, category, confidence_score").eq("contract_id", contract_id).order("created_at").execute()
+                clauses = [
+                    {
+                        "clause_index": idx,
+                        "clause_text": row["clause_text"],
+                        "cleaned_text": row["clause_text"].lower(),
+                        "predicted_category": row["category"],
+                        "confidence": row["confidence_score"],
+                        "confidence_score": row["confidence_score"],
+                        "confidence_status": "High confidence" if (row["confidence_score"] or 0) >= 0.50 else "Moderate confidence",
+                        "is_out_of_scope": False,
+                        "alternatives": [],
+                    }
+                    for idx, row in enumerate(cl_res.data or [], start=1)
+                ]
+                return {
+                    "contract_id": contract_id,
+                    "document_name": c_row["document_name"],
+                    "total_clauses": len(clauses),
+                    "clauses": clauses,
+                }
+        except Exception as e:
+            logger.warning(f"Failed to query contract clauses from Supabase: {e}")
+
+    # Offline in-memory fallback
+    from api.services.ml_service import get_uploaded_contract
+    uploaded = get_uploaded_contract(contract_id)
+    if uploaded:
+        return {
+            "contract_id": contract_id,
+            "document_name": uploaded["document_name"],
+            "total_clauses": uploaded["total_clauses"],
+            "clauses": uploaded["clauses"],
+        }
+
+    return None

@@ -82,14 +82,16 @@ class ClauseSearchEngine:
         top_k: int = 5,
         category_filter: Optional[str] = None,
         min_score: float = 0.0,
+        contract_id: Optional[str] = None,
     ) -> List[Dict[str, Any]]:
-        """Search clauses by query using cosine similarity.
+        """Search clauses by query using cosine similarity across CUAD corpus.
         
         Args:
             query: The search text query.
             top_k: Number of ranked results to return (default: 5).
             category_filter: Optional category to filter results by.
             min_score: Optional minimum cosine similarity threshold.
+            contract_id: Optional CUAD contract ID to restrict corpus search.
 
         Returns:
             List of ranked result dictionaries.
@@ -103,37 +105,45 @@ class ClauseSearchEngine:
 
         query_vec = self.vectorizer.transform([cleaned_query])
 
-        # If query contains only out-of-vocabulary words
-        if query_vec.nnz == 0:
+        if hasattr(self.vectorizer, "transformer_list"):
+            word_vec = self.vectorizer.transformer_list[0][1].transform([cleaned_query])
+            if word_vec.nnz == 0:
+                return []
+        elif query_vec.nnz == 0:
             return []
 
-        # Cosine similarity against all corpus clauses
-        # Both query_vec and corpus_tfidf are L2-normalized by TfidfVectorizer
-        sim_scores = cosine_similarity(query_vec, self.corpus_tfidf).flatten()
+        # Filter by contract_id if specified in CUAD corpus
+        if contract_id:
+            c_mask = self.df["contract_id"].astype(str) == str(contract_id)
+            if not c_mask.any():
+                return []
+            candidate_indices = np.where(c_mask)[0]
+        else:
+            candidate_indices = np.arange(len(self.df))
 
-        # Apply category filter if provided
+        # Filter by category if specified
         if category_filter:
             category_filter_lower = category_filter.strip().lower()
-            mask = self.df["category"].astype(str).str.lower() == category_filter_lower
-            if not mask.any():
-                # Try matching without exact case
-                mask = self.df["category"].astype(str).str.lower().str.contains(category_filter_lower, regex=False)
-            filtered_indices = np.where(mask)[0]
-        else:
-            filtered_indices = np.arange(len(self.df))
+            cat_series = self.df["category"].iloc[candidate_indices].astype(str).str.lower()
+            match_mask = cat_series == category_filter_lower
+            if not match_mask.any():
+                match_mask = cat_series.str.contains(category_filter_lower, regex=False)
+            candidate_indices = candidate_indices[np.where(match_mask)[0]]
 
-        if len(filtered_indices) == 0:
+        if len(candidate_indices) == 0:
             return []
 
-        filtered_scores = sim_scores[filtered_indices]
+        # Compute cosine similarity
+        candidate_tfidf = self.corpus_tfidf[candidate_indices]
+        sim_scores = cosine_similarity(query_vec, candidate_tfidf).flatten()
 
         # Filter by min_score
-        valid_mask = filtered_scores >= min_score
+        valid_mask = sim_scores >= min_score
         if not np.any(valid_mask):
             return []
 
-        valid_indices = filtered_indices[valid_mask]
-        valid_scores = filtered_scores[valid_mask]
+        valid_indices = candidate_indices[valid_mask]
+        valid_scores = sim_scores[valid_mask]
 
         # Top-K sorting (descending similarity)
         if len(valid_scores) > top_k:
@@ -159,6 +169,66 @@ class ClauseSearchEngine:
 
         return results
 
+    def search_custom_clauses(
+        self,
+        clauses: List[Dict[str, Any]],
+        query: str,
+        top_k: int = 5,
+        category_filter: Optional[str] = None,
+        min_score: float = 0.0,
+        document_name: str = "Uploaded Contract",
+    ) -> List[Dict[str, Any]]:
+        """Search an ad-hoc or uploaded list of clauses using the fitted vectorizer."""
+        if not query or not isinstance(query, str) or not query.strip() or not clauses:
+            return []
+
+        cleaned_query = clean_text(query)
+        if not cleaned_query:
+            return []
+
+        query_vec = self.vectorizer.transform([cleaned_query])
+        if query_vec.nnz == 0:
+            return []
+
+        # Filter by category if requested
+        if category_filter:
+            cat_lower = category_filter.strip().lower()
+            filtered_clauses = [c for c in clauses if c.get("predicted_category", "").lower() == cat_lower]
+        else:
+            filtered_clauses = list(clauses)
+
+        if not filtered_clauses:
+            return []
+
+        clause_texts = [c.get("cleaned_text") or clean_text(c.get("clause_text", "")) for c in filtered_clauses]
+        clause_vecs = self.vectorizer.transform(clause_texts)
+
+        sim_scores = cosine_similarity(query_vec, clause_vecs).flatten()
+
+        valid_items = []
+        for c, score in zip(filtered_clauses, sim_scores):
+            if score >= min_score:
+                valid_items.append((c, float(score)))
+
+        if not valid_items:
+            return []
+
+        valid_items.sort(key=lambda x: x[1], reverse=True)
+        top_items = valid_items[:top_k]
+
+        results = []
+        for rank, (c, score) in enumerate(top_items, start=1):
+            results.append({
+                "rank": rank,
+                "clause_text": c.get("clause_text", ""),
+                "predicted_category": c.get("predicted_category", "Unknown"),
+                "true_category": None,
+                "similarity_score": round(float(score), 4),
+                "source_contract": document_name,
+            })
+
+        return results
+
 
 # Global singleton instance for application reuse
 _search_engine_instance: Optional[ClauseSearchEngine] = None
@@ -176,27 +246,14 @@ def search(
     top_k: int = 5,
     category_filter: Optional[str] = None,
     min_score: float = 0.0,
+    contract_id: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """Convenience functional wrapper for searching clauses."""
     engine = get_search_engine()
-    return engine.search(query=query, top_k=top_k, category_filter=category_filter, min_score=min_score)
-
-
-if __name__ == "__main__":
-    test_queries = [
-        "termination for convenience",
-        "governing law of new york",
-        "non-compete restriction",
-        "limitation of liability",
-    ]
-
-    engine = get_search_engine()
-    for q in test_queries:
-        print("\n" + "=" * 60)
-        print(f"QUERY: '{q}'")
-        print("=" * 60)
-        res = engine.search(q, top_k=3)
-        for r in res:
-            preview = r["clause_text"].replace("\n", " ").strip()[:85]
-            print(f"Rank {r['rank']} | Sim: {r['similarity_score']:.4f} | True: [{r['true_category']}] | Pred: [{r['predicted_category']}]")
-            print(f"       Text: \"{preview}...\"\n")
+    return engine.search(
+        query=query,
+        top_k=top_k,
+        category_filter=category_filter,
+        min_score=min_score,
+        contract_id=contract_id,
+    )

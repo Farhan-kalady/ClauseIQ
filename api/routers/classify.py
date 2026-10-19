@@ -1,7 +1,10 @@
+import logging
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 from api.schemas import ClassifyRequest, ClassifyResponse, DocumentClassifyResponse
 from api.services.ml_service import classify_clause, classify_document
 from api.services.supabase_service import log_classification, save_contract_and_clauses
+
+logger = logging.getLogger("ClauseIQ.API.Classify")
 
 router = APIRouter(tags=["Classification"])
 
@@ -61,12 +64,13 @@ async def classify_file_upload(file: UploadFile = File(...)):
             detail=str(e),
         )
     except Exception as e:
+        logger.exception(f"Unexpected error processing document '{file.filename}': {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Error processing document: {str(e)}",
+            detail="An unexpected error occurred while processing the document. Please verify the document format and try again.",
         )
 
-    # Best-effort Supabase persistence
-    save_contract_and_clauses(file.filename, result["clauses"])
+    # Atomic / best-effort Supabase persistence
+    save_contract_and_clauses(file.filename, result["clauses"], contract_id=result["contract_id"])
 
     return DocumentClassifyResponse(**result)
