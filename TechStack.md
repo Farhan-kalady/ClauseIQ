@@ -31,25 +31,24 @@ ClauseIQ does **not** use Deep Learning, LLMs, RAG, or chatbot components, and n
 | Layer | Technology | Purpose | Implementation Status |
 |---|---|---|---|
 | Frontend | React 18 (JavaScript/JSX) + Vite | Single-page UI for classification and search | IMPLEMENTED |
-| Frontend styling | Plain CSS (`index.css`), Google Fonts link | Layout and theme | IMPLEMENTED |
+| Frontend styling | Plain CSS (`index.css`), Google Fonts link | Layout, tokens, dark mode, responsive styling | IMPLEMENTED |
 | API communication | Browser `fetch` over REST/JSON and multipart | Frontend-to-backend calls | IMPLEMENTED |
 | Backend | Python, FastAPI, Uvicorn | REST API and orchestration | IMPLEMENTED |
 | Validation | Pydantic models (`api/schemas.py`) | Request/response schemas | IMPLEMENTED |
-| PDF processing | PyMuPDF (`pymupdf`) | Text extraction from PDF | IMPLEMENTED |
+| PDF processing | PyMuPDF (`pymupdf`) | Text extraction from PDF with signature check | IMPLEMENTED |
 | Clause segmentation | Regular expressions (`src/clause_splitter.py`) | Split text into clauses | IMPLEMENTED |
-| Clause segmentation | spaCy `en_core_web_sm` | Loaded at import but result never used | CONFIGURED |
-| Text cleaning | Python `re` (`src/text_cleaner.py`) | Lowercase, URL/email/symbol removal | IMPLEMENTED |
-| NLP | NLTK | Listed in `requirements.txt`; never imported in code | CONFIGURED (not used) |
-| Feature extraction | scikit-learn `TfidfVectorizer` | Unigram+bigram TF-IDF, 10,000 features | IMPLEMENTED |
-| ML (served) | Logistic Regression (+ optional calibrated model) | Clause classification with probabilities | IMPLEMENTED |
-| ML (trained and compared) | Linear SVM, Multinomial Naive Bayes, Random Forest | Benchmark models | IMPLEMENTED (training/evaluation only, not served) |
-| Search | scikit-learn `cosine_similarity` | Rank corpus clauses by similarity | IMPLEMENTED |
-| Model persistence | joblib (`.joblib`, `.pkl`) | Save/load model, vectorizer, encoder | IMPLEMENTED |
-| Database | Supabase PostgreSQL via `supabase` Python client | Store contracts, clauses, logs | IMPLEMENTED in code; live project status TO BE CONFIRMED |
-| Hosting | None | – | NOT IMPLEMENTED – Hosting Provider: To Be Confirmed – Deployment not yet configured. |
+| Text cleaning | Python `re` + NLTK WordNet Lemmatizer | Normalization and lemmatization | IMPLEMENTED |
+| NLP | NLTK (`nltk.stem.WordNetLemmatizer`) | Inflected form normalization | IMPLEMENTED |
+| Feature extraction | scikit-learn `FeatureUnion` (TF-IDF) | Hybrid Word (25k) + Char_wb (15k) = 40,000 features | IMPLEMENTED |
+| ML (served) | Logistic Regression (`LogisticRegression-HybridWordChar`) | Clause classification with probabilities | IMPLEMENTED |
+| ML (trained and compared) | Linear SVM, Multinomial Naive Bayes, Random Forest | Benchmark models | IMPLEMENTED |
+| Search | scikit-learn `cosine_similarity` | Rank corpus clauses + scoped uploaded contract search | IMPLEMENTED |
+| Model persistence | joblib (`.joblib`) + manifest (`manifest.json`) | Save/load model, vectorizer, manifest | IMPLEMENTED |
+| Database | Supabase PostgreSQL via `supabase` Python client | Atomic RPC/fallback insert, read endpoints | IMPLEMENTED |
+| Hosting | None | – | NOT IMPLEMENTED – Hosting Provider: To Be Confirmed – Local deployment verified |
 | Authentication | None | – | NOT IMPLEMENTED |
-| Testing | pytest + FastAPI `TestClient` | Unit/API tests (3 files) | IMPLEMENTED (not executed here) |
-| Development tools | VS Code, Git/GitHub, venv, npm, Jupyter | Development workflow | IMPLEMENTED (see Section 12) |
+| Testing | pytest + FastAPI `TestClient` (45 tests) | Unit/API tests | IMPLEMENTED (45 passing tests) |
+| Development tools | VS Code, Git/GitHub, venv, npm, Jupyter | Development workflow | IMPLEMENTED |
 
 ---
 

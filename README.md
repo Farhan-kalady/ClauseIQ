@@ -470,6 +470,70 @@ Interactive Swagger documentation is available at: `http://localhost:8000/docs`
 }
 ```
 
+### 3. Document PDF & Text Upload: `POST /classify/file`
+Upload a contract file (PDF or TXT) to automatically extract text, segment clauses, classify each clause, and persist the records into Supabase:
+```powershell
+curl -X POST "http://localhost:8000/classify/file" -F "file=@test_data/ClauseIQ_Synthetic_Company_Service_Agreement_Test.pdf"
+```
+
+---
+
+## 🌐 Sprint 3: Full-Stack Web Application (React + Vite & Supabase)
+
+ClauseIQ includes a modern, responsive React frontend integrated with the FastAPI backend and Supabase PostgreSQL database.
+
+### 1. Environment Configuration (`.env`)
+Create or edit `.env` in the project root:
+```env
+SUPABASE_URL=https://<your-project-ref>.supabase.co
+SUPABASE_KEY=<your-publishable-anon-key>
+CORS_ORIGINS=http://localhost:3000,http://localhost:5173,http://127.0.0.1:3000,http://127.0.0.1:5173,*
+```
+
+### 2. Supabase Database Setup
+Execute the DDL script in `database/schema.sql` via your Supabase SQL Editor:
+- Creates `contracts`, `clauses`, `classification_logs`, and `search_logs` tables.
+- Enables Row Level Security (RLS) with permissive read/write policies for the application.
+- Configures B-tree indexes for fast queries.
+
+### 3. Application Startup Instructions
+
+#### Step 1: Start FastAPI Backend
+```powershell
+.venv\Scripts\python.exe -m uvicorn api.main:app --host 127.0.0.1 --port 8000 --reload
+```
+- API Health Status: `http://localhost:8000/health`
+- Interactive Swagger UI: `http://localhost:8000/docs`
+- Alternative ReDoc: `http://localhost:8000/redoc`
+
+#### Step 2: Start React Frontend
+```powershell
+cd frontend
+npm run dev
+```
+- Web Application: `http://localhost:5173/`
+
+### 4. How to Use the Web Application
+
+#### A. Single Clause Classification
+1. Open `http://localhost:5173/` in your browser.
+2. Under **Contract Clause Classification**, select the **Paste Clause Text** tab.
+3. Paste any contract clause (or click one of the quick sample chips: *Governing Law*, *Confidentiality*, *Termination*, *Non-Compete*).
+4. Click **Classify Clause** to view the predicted category, calibrated confidence bar, and top-3 alternative classes.
+
+#### B. Upload and Classify a PDF Document
+1. In the **Contract Clause Classification** tab, click **Upload Contract Document (PDF / TXT)**.
+2. Drag and drop or browse to select `test_data/ClauseIQ_Synthetic_Company_Service_Agreement_Test.pdf`.
+3. Click **Extract & Classify Document**.
+4. The system will extract the document text, segment the clauses, classify each clause, and store the metadata and clauses in Supabase.
+5. Review the scrollable list of extracted and classified clauses directly in the interface.
+
+#### C. Perform Intelligent Clause Search
+1. Click the **Clause Search** tab in the navigation bar.
+2. Enter your search query (e.g., `termination for convenience`, `limitation of liability`, `governing law`).
+3. (Optional) Adjust the **Top Results (k)** slider (1 to 25) or select a specific category in the **Optional Category Filter** dropdown.
+4. Click **Search** to view ranked matching clauses with Cosine Similarity percentages, predicted labels, and contract source identifiers.
+
 ---
 
 ## 🧪 Testing & Verification
@@ -478,48 +542,52 @@ Run the full automated test suite using `pytest`:
 ```bash
 pytest tests/ -v
 ```
-All 15 Sprint 2 tests pass with 100% success covering search ranking, top-k truncation, category filters, input validation, and API routes.
+All **45 tests** across Sprint 1, Sprint 2, and Sprint 3 pass with 100% success covering:
+- Text cleaning, NLTK lemmatization, and clause splitting
+- Model artifact loading and inference
+- Cosine similarity search, ranking order, and category filtering
+- PDF extraction, upload limits (10 MB, 100 pages, `%PDF` magic bytes signature)
+- Atomic database persistence, graceful fallback, and contract read endpoints (`/contracts`, `/contracts/{id}/clauses`)
+- Scoped search over user-uploaded contracts
 
 ---
 
-## 🎬 Running the End-to-End Demo
+## 🎬 Running Artifact Generation & Model Evaluation
 
-Run the interactive CLI demonstration:
-```bash
-python demo.py
+Rebuild artifacts reproducibly and evaluate final models:
+```powershell
+# Rebuild hybrid vectorizer and selected model
+.venv\Scripts\python.exe src/build_artifacts.py
+
+# Evaluate baseline protocol (Split A & Split B)
+.venv\Scripts\python.exe src/evaluation_protocol.py
+
+# Evaluate improved model vs. baseline
+.venv\Scripts\python.exe src/evaluate_final_model.py
 ```
-This demonstrates live clause classification with confidence probabilities and ranked search queries across all 12,204 clauses.
 
 ---
 
-## 🚀 Sprint 1: Core ML Pipeline
+## 🚀 Machine Learning Pipeline & Results
 
-Sprint 1 delivers the fully functional, reproducible Core Machine Learning Pipeline for ClauseIQ.
-
-### 1. Sprint Objective
-Build and verify the complete core ML pipeline for classifying contract clauses into CUAD clause categories using Classical Machine Learning, from raw PDF ingestion to tuned model evaluation.
-
-### 2. Dataset Information (Source of Truth)
-All statistics and models are derived from `data/clauseiq_dataset.csv`:
+### 1. Source Dataset
+All statistics and models are derived from `data/clauseiq_dataset_clean.csv`:
 - **Total Records**: 12,204 rows
 - **Columns**: 3 (`contract_id`, `clause_text`, `category`)
 - **Missing Values**: 0
 - **Unique Contracts**: 510 commercial agreements
 - **Unique Categories**: 41 legal clause categories
 - **Top Categories**: *Parties* (1,251), *License Grant* (774), *Cap On Liability* (672), *Anti-Assignment* (652), *Audit Rights* (642)
-- **Bottom Categories**: *Unlimited/All-You-Can-Eat-License* (32), *Price Restrictions* (27)
-- *Note on row count discrepancy*: An earlier raw extract noted 13,823 rows; the active verified dataset contains exactly 12,204 clean rows after deduplication.
 
-### 3. Pipeline Components
-- **PDF Text Extraction (`src/pdf_extractor.py`)**: Uses PyMuPDF (`pymupdf`) to extract text from text-based contract PDFs, handling path resolution dynamically.
-- **Clause Splitting (`src/clause_splitter.py`)**: Uses spaCy's `en_core_web_sm` model for sentence/clause boundary detection via `doc.sents`.
-- **Text Cleaning (`src/text_cleaner.py`, `src/clean_dataset.py`)**: Normalizes whitespace, strips URLs and emails, removes non-alphanumeric noise while preserving essential legal terms (*shall*, *may*, *not*, *unless*, *provided*, *agreement*, *party*).
-- **TF-IDF Vectorization (`src/feature_extraction.py`)**: Extracts unigram and bigram features (`ngram_range=(1,2)`, `max_features=10000`, `sublinear_tf=True`). Strict train-only fitting prevents data leakage.
-- **Stratified Train/Test Split**: 80/20 split (`random_state=42`) producing 9,763 training samples and 2,441 test samples across 41 classes.
-- **Baseline Logistic Regression (`src/train_baseline.py`)**: Balanced class-weighted baseline achieving 71.90% accuracy and 64.74% macro F1.
-- **Tuned Linear SVM (`src/train_svm.py`)**: Balanced `LinearSVC` tuned using 3-fold cross-validation (`C=0.1`), achieving 72.63% accuracy and 72.26% weighted F1.
-- **Model Comparison (`src/model_comparison.py`)**: Generates comparative benchmark across models on the test partition.
-- **End-to-End Demo (`src/demo_pipeline.py`)**: Ingests `sample_contract.pdf`, segments clauses, and classifies them into legal categories.
+### 2. Evaluated Splits
+- **Split A (Comparable Stratified 80/20)**: $N=9,763$ train, $N=2,441$ test clauses (`random_state=42`).
+- **Split B (Leakage-Safe Grouped 80/20 by `contract_id`)**: 408 train contracts ($N=9,718$), 102 test contracts ($N=2,486$). No contract appears in both partitions.
+
+### 3. Final Production Model
+- **Algorithm**: `LogisticRegression` ($C=1.0$, `class_weight='balanced'`)
+- **Features**: 40,000 hybrid features (25,000 Word n-grams [1,2] + 15,000 Character n-grams `char_wb` [3,5]) with sublinear term frequency scaling and NLTK WordNet lemmatization.
+- **Split B Test Results**: **0.7393 Accuracy**, **0.6947 Macro F1** (+2.56% over baseline), **0.8655 High Confidence Precision**.
+- **Split A Test Results**: **0.7231 Accuracy**, **0.6591 Macro F1**, **0.1545 ECE** (calibrated down from 0.2822).
 
 ### 4. Serialized Model Artifacts (`models/`)
 - `tfidf_vectorizer.pkl`: Fitted TF-IDF vectorizer (10,000 features)

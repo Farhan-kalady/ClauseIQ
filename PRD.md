@@ -580,20 +580,21 @@ Whether the final 12,204 count covers all 41 categories (including any with very
 
 | Aspect | Requirement | Status |
 |---|---|---|
-| Split | Train/test split of the processed dataset | Ratio **TBC** |
-| Stratification | Stratified splitting is recommended so rare categories appear in both sets | **TBC** |
-| Leakage control | Clauses from one contract should be evaluated with leakage in mind (same-contract text in both train and test can inflate metrics) | Approach **TBC** |
-| Class imbalance | Category counts are expected to be uneven; per-class counts shall be reported | See RSK-01 |
-| Reproducibility | A fixed random seed shall be recorded | Value **TBC** |
+| Split | Train/test split of the processed dataset | 80/20 train/test ratio (Split A: 9,763 train / 2,441 test; Split B: 9,718 train / 2,486 test) |
+| Stratification | Stratified splitting so rare categories appear in both sets | IMPLEMENTED (StratifiedShuffleSplit, seed=42) |
+| Leakage control | Grouped splitting by contract_id so no contract appears in both train and test | IMPLEMENTED (StratifiedGroupKFold / GroupShuffleSplit, 408 train / 102 test contracts) |
+| Class imbalance | Category counts are uneven; balanced class weights used during training | IMPLEMENTED (`class_weight='balanced'`) |
+| Reproducibility | Fixed random seed recorded | `random_state=42` across all splits and models |
 
 ## 10.5 Model Artifacts
 
 | Artifact | Purpose | Notes |
 |---|---|---|
-| TF-IDF vectorizer | Converts preprocessed text to weighted vectors; reused for classification and search | Must be the vectorizer fitted on training data; same one used for queries |
-| Trained classifiers | Logistic Regression, Linear SVM, Multinomial Naive Bayes, Random Forest | Selected model for production use: **TBC** |
-| Label mapping | Maps numeric labels to category names | Format **TBC** |
-| Clause vectors for search | TF-IDF vectors of stored clauses used for Cosine Similarity | Whether computed on demand or cached: **TBC** |
+| TF-IDF vectorizer | Converts preprocessed text to weighted vectors (`artifacts/tfidf_vectorizer.joblib`) | Hybrid Word (25k) + Char_wb (15k) = 40,000 features |
+| Trained classifiers | Logistic Regression, Linear SVM, Multinomial Naive Bayes, Random Forest | Selected model: `LogisticRegression` (balanced weights, C=1.0) saved in `artifacts/best_model.joblib` |
+| Label mapping | Maps numeric labels to 41 category names (`artifacts/label_encoder.joblib`) | `LabelEncoder` saved with 41 classes |
+| Clause vectors for search | TF-IDF vectors of 12,204 corpus clauses | Pre-indexed in memory on startup for instant similarity computation |
+| Manifest | System metadata (`artifacts/manifest.json`) | Model name, feature dimensions, split hashes, date |
 
 ## 10.6 Database Schema (Supabase PostgreSQL)
 

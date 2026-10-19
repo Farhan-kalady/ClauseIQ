@@ -1,0 +1,1524 @@
+{
+  "document_name": "ClauseIQ_Synthetic_Company_Service_Agreement_Test.pdf",
+  "total_clauses": 69,
+  "clauses": [
+    {
+      "clause_index": 1,
+      "clause_text": "ClauseIQ Synthetic Test Document\nPage 1\nSYNTHETIC COMPANY SERVICE AGREEMENT\nClauseIQ Test Document | Fictional Parties | Version 1.0\nIMPORTANT TEST-DATA NOTICE: This document is fictional and was created solely to test ClauseIQ's PDF text extraction,\nclause segmentation, classification, and search features.",
+      "cleaned_text": "clauseiq synthetic test document page 1 synthetic company service agreement clauseiq test document fictional parties version 1.0 important test-data notice: this document is fictional and was created solely to test clauseiq s pdf text extraction, clause segmentation, classification, and search features.",
+      "predicted_category": "Parties",
+      "confidence": 0.09,
+      "confidence_score": 0.09,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0533
+        },
+        {
+          "category": "Ip Ownership Assignment",
+          "confidence": 0.0483
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0436
+        }
+      ]
+    },
+    {
+      "clause_index": 2,
+      "clause_text": "It is not a real contract, is not legal advice, and must not be signed or\nrelied upon.",
+      "cleaned_text": "it is not a real contract, is not legal advice, and must not be signed or relied upon.",
+      "predicted_category": "Non-Compete",
+      "confidence": 0.0582,
+      "confidence_score": 0.0582,
+      "alternatives": [
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Anti-Assignment",
+          "confidence": 0.054
+        },
+        {
+          "category": "Minimum Commitment",
+          "confidence": 0.0492
+        }
+      ]
+    },
+    {
+      "clause_index": 3,
+      "clause_text": "PARTIES AND BACKGROUND\nThis Synthetic Company Service Agreement (the \u201cAgreement\u201d) is made between Northstar Digital Solutions\nPrivate Limited, a fictional company incorporated in India with its fictional office at 14 Innovation Park, Bengaluru,\nKarnataka 560001 (the \u201cCompany\u201d), and BluePeak Analytics Private Limited, a fictional service provider with its\nfictional office at 22 Business Avenue, Kochi, Kerala 682030 (the \u201cService Provider\u201d).",
+      "cleaned_text": "parties and background this synthetic company service agreement (the agreement ) is made between northstar digital solutions private limited, a fictional company incorporated in india with its fictional office at 14 innovation park, bengaluru, karnataka 560001 (the company ), and bluepeak analytics private limited, a fictional service provider with its fictional office at 22 business avenue, kochi, kerala 682030 (the service provider ).",
+      "predicted_category": "Parties",
+      "confidence": 0.1294,
+      "confidence_score": 0.1294,
+      "alternatives": [
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0473
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0371
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0366
+        }
+      ]
+    },
+    {
+      "clause_index": 4,
+      "clause_text": "The parties wish to establish\nterms under which the Service Provider will provide software development, data processing, and technical support\nservices to the Company.",
+      "cleaned_text": "the parties wish to establish terms under which the service provider will provide software development, data processing, and technical support services to the company.",
+      "predicted_category": "Parties",
+      "confidence": 0.0607,
+      "confidence_score": 0.0607,
+      "alternatives": [
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0541
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0529
+        },
+        {
+          "category": "Exclusivity",
+          "confidence": 0.0501
+        }
+      ]
+    },
+    {
+      "clause_index": 5,
+      "clause_text": "1.",
+      "cleaned_text": "1.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 6,
+      "clause_text": "DEFINITIONS AND INTERPRETATION\n\u201cConfidential Information\u201d means non-public business, financial, technical, operational, customer, security,\nsource-code, product, and commercial information disclosed by or on behalf of a party. \u201cServices\u201d means the\nsoftware development, data processing, maintenance, and support services described in an agreed statement of\nwork.",
+      "cleaned_text": "definitions and interpretation confidential information means non-public business, financial, technical, operational, customer, security, source-code, product, and commercial information disclosed by or on behalf of a party. services means the software development, data processing, maintenance, and support services described in an agreed statement of work.",
+      "predicted_category": "Source Code Escrow",
+      "confidence": 0.1227,
+      "confidence_score": 0.1227,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0509
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0413
+        },
+        {
+          "category": "Non-Transferable License",
+          "confidence": 0.04
+        }
+      ]
+    },
+    {
+      "clause_index": 7,
+      "clause_text": "Headings are included for convenience and do not affect the interpretation of this Agreement.",
+      "cleaned_text": "headings are included for convenience and do not affect the interpretation of this agreement.",
+      "predicted_category": "Termination For Convenience",
+      "confidence": 0.0544,
+      "confidence_score": 0.0544,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0402
+        },
+        {
+          "category": "Non-Compete",
+          "confidence": 0.036
+        },
+        {
+          "category": "Non-Disparagement",
+          "confidence": 0.0343
+        }
+      ]
+    },
+    {
+      "clause_index": 8,
+      "clause_text": "2.",
+      "cleaned_text": "2.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 9,
+      "clause_text": "EFFECTIVE DATE AND TERM\nThis Agreement becomes effective on 1 October 2026 (the \u201cEffective Date\u201d) and, unless terminated earlier in\naccordance with this Agreement, will remain in force until 30 September 2027 (the \u201cExpiration Date\u201d).",
+      "cleaned_text": "effective date and term this agreement becomes effective on 1 october 2026 (the effective date ) and, unless terminated earlier in accordance with this agreement, will remain in force until 30 september 2027 (the expiration date ).",
+      "predicted_category": "Expiration Date",
+      "confidence": 0.8457,
+      "confidence_score": 0.8457,
+      "alternatives": [
+        {
+          "category": "Effective Date",
+          "confidence": 0.0656
+        },
+        {
+          "category": "Notice Period To Terminate Renewal",
+          "confidence": 0.01
+        },
+        {
+          "category": "Renewal Term",
+          "confidence": 0.0099
+        }
+      ]
+    },
+    {
+      "clause_index": 10,
+      "clause_text": "The parties\nmay extend the term by signing a written renewal document before the Expiration Date.",
+      "cleaned_text": "the parties may extend the term by signing a written renewal document before the expiration date.",
+      "predicted_category": "Renewal Term",
+      "confidence": 0.2655,
+      "confidence_score": 0.2655,
+      "alternatives": [
+        {
+          "category": "Notice Period To Terminate Renewal",
+          "confidence": 0.0792
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0456
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.045
+        }
+      ]
+    },
+    {
+      "clause_index": 11,
+      "clause_text": "3.",
+      "cleaned_text": "3.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 12,
+      "clause_text": "SERVICES AND DELIVERABLES\nThe Service Provider shall design, develop, test, and maintain the software modules listed in each statement of\nwork.",
+      "cleaned_text": "services and deliverables the service provider shall design, develop, test, and maintain the software modules listed in each statement of work.",
+      "predicted_category": "Competitive Restriction Exception",
+      "confidence": 0.0536,
+      "confidence_score": 0.0536,
+      "alternatives": [
+        {
+          "category": "Insurance",
+          "confidence": 0.0503
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0494
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0483
+        }
+      ]
+    },
+    {
+      "clause_index": 13,
+      "clause_text": "Deliverables may include source code, technical documentation, test reports, deployment instructions, and\nuser manuals.",
+      "cleaned_text": "deliverables may include source code, technical documentation, test reports, deployment instructions, and user manuals.",
+      "predicted_category": "Source Code Escrow",
+      "confidence": 0.3171,
+      "confidence_score": 0.3171,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0557
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0348
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0336
+        }
+      ]
+    },
+    {
+      "clause_index": 14,
+      "clause_text": "The Company shall review each deliverable within ten business days and shall provide written\nnotice describing any material non-conformity.",
+      "cleaned_text": "the company shall review each deliverable within ten business days and shall provide written notice describing any material non-conformity.",
+      "predicted_category": "Rofr/Rofo/Rofn",
+      "confidence": 0.1011,
+      "confidence_score": 0.1011,
+      "alternatives": [
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0994
+        },
+        {
+          "category": "Insurance",
+          "confidence": 0.0695
+        },
+        {
+          "category": "Warranty Duration",
+          "confidence": 0.0569
+        }
+      ]
+    },
+    {
+      "clause_index": 15,
+      "clause_text": "4.",
+      "cleaned_text": "4.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 16,
+      "clause_text": "FEES AND PAYMENT TERMS\nThe Company shall pay the Service Provider a fixed service fee of INR 4,50,000 per project milestone, subject to\nacceptance of the applicable deliverable.",
+      "cleaned_text": "fees and payment terms the company shall pay the service provider a fixed service fee of inr 4,50,000 per project milestone, subject to acceptance of the applicable deliverable.",
+      "predicted_category": "Revenue/Profit Sharing",
+      "confidence": 0.2503,
+      "confidence_score": 0.2503,
+      "alternatives": [
+        {
+          "category": "Liquidated Damages",
+          "confidence": 0.2181
+        },
+        {
+          "category": "Minimum Commitment",
+          "confidence": 0.0722
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0467
+        }
+      ]
+    },
+    {
+      "clause_index": 17,
+      "clause_text": "The Service Provider shall submit a valid invoice after milestone\nacceptance.",
+      "cleaned_text": "the service provider shall submit a valid invoice after milestone acceptance.",
+      "predicted_category": "Parties",
+      "confidence": 0.0818,
+      "confidence_score": 0.0818,
+      "alternatives": [
+        {
+          "category": "Warranty Duration",
+          "confidence": 0.0579
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0506
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 18,
+      "clause_text": "The Company shall pay undisputed invoices within thirty days of receipt.",
+      "cleaned_text": "the company shall pay undisputed invoices within thirty days of receipt.",
+      "predicted_category": "Warranty Duration",
+      "confidence": 0.1446,
+      "confidence_score": 0.1446,
+      "alternatives": [
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.1421
+        },
+        {
+          "category": "Liquidated Damages",
+          "confidence": 0.0662
+        },
+        {
+          "category": "Rofr/Rofo/Rofn",
+          "confidence": 0.0651
+        }
+      ]
+    },
+    {
+      "clause_index": 19,
+      "clause_text": "Any disputed amount shall\nbe notified in writing with reasonable details, and the parties shall work in good faith to resolve the dispute.",
+      "cleaned_text": "any disputed amount shall be notified in writing with reasonable details, and the parties shall work in good faith to resolve the dispute.",
+      "predicted_category": "Rofr/Rofo/Rofn",
+      "confidence": 0.0935,
+      "confidence_score": 0.0935,
+      "alternatives": [
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0616
+        },
+        {
+          "category": "Minimum Commitment",
+          "confidence": 0.0551
+        },
+        {
+          "category": "Joint Ip Ownership",
+          "confidence": 0.0488
+        }
+      ]
+    },
+    {
+      "clause_index": 20,
+      "clause_text": "5.",
+      "cleaned_text": "5.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 21,
+      "clause_text": "CONFIDENTIALITY\nEach receiving party shall protect the other party's Confidential Information using at least the same degree of care\nit uses to protect its own similar information, and in no event less than reasonable care.",
+      "cleaned_text": "confidentiality each receiving party shall protect the other party s confidential information using at least the same degree of care it uses to protect its own similar information, and in no event less than reasonable care.",
+      "predicted_category": "Audit Rights",
+      "confidence": 0.0924,
+      "confidence_score": 0.0924,
+      "alternatives": [
+        {
+          "category": "Minimum Commitment",
+          "confidence": 0.0859
+        },
+        {
+          "category": "Insurance",
+          "confidence": 0.0694
+        },
+        {
+          "category": "Most Favored Nation",
+          "confidence": 0.0543
+        }
+      ]
+    },
+    {
+      "clause_index": 22,
+      "clause_text": "The receiving party shall\nuse Confidential Information only to perform or receive the Services and shall not disclose it to any third party\nexcept to employees and professional advisers who need to know the information and are bound by confidentiality\nobligations.",
+      "cleaned_text": "the receiving party shall use confidential information only to perform or receive the services and shall not disclose it to any third party except to employees and professional advisers who need to know the information and are bound by confidentiality obligations.",
+      "predicted_category": "Non-Transferable License",
+      "confidence": 0.0637,
+      "confidence_score": 0.0637,
+      "alternatives": [
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0544
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0501
+        },
+        {
+          "category": "Anti-Assignment",
+          "confidence": 0.0448
+        }
+      ]
+    },
+    {
+      "clause_index": 23,
+      "clause_text": "These duties do not apply to information that is publicly available without breach, already lawfully\nknown, independently developed, or lawfully received from another source.",
+      "cleaned_text": "these duties do not apply to information that is publicly available without breach, already lawfully known, independently developed, or lawfully received from another source.",
+      "predicted_category": "Competitive Restriction Exception",
+      "confidence": 0.1116,
+      "confidence_score": 0.1116,
+      "alternatives": [
+        {
+          "category": "Non-Disparagement",
+          "confidence": 0.0477
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0439
+        },
+        {
+          "category": "Uncapped Liability",
+          "confidence": 0.0437
+        }
+      ]
+    },
+    {
+      "clause_index": 24,
+      "clause_text": "Upon written request or termination,\nthe receiving party shall return or securely destroy the Confidential Information, subject to lawful archival\nrequirements.",
+      "cleaned_text": "upon written request or termination, the receiving party shall return or securely destroy the confidential information, subject to lawful archival requirements.",
+      "predicted_category": "Post-Termination Services",
+      "confidence": 0.1139,
+      "confidence_score": 0.1139,
+      "alternatives": [
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0735
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0418
+        },
+        {
+          "category": "Ip Ownership Assignment",
+          "confidence": 0.0357
+        }
+      ]
+    },
+    {
+      "clause_index": 25,
+      "clause_text": "ClauseIQ Synthetic Test Document\nPage 2\n6.",
+      "cleaned_text": "clauseiq synthetic test document page 2 6.",
+      "predicted_category": "Parties",
+      "confidence": 0.1363,
+      "confidence_score": 0.1363,
+      "alternatives": [
+        {
+          "category": "Effective Date",
+          "confidence": 0.0734
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0514
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0454
+        }
+      ]
+    },
+    {
+      "clause_index": 26,
+      "clause_text": "DATA PROTECTION AND SECURITY\nThe Service Provider shall implement reasonable administrative, technical, and organisational safeguards to\nprotect personal data processed for the Company.",
+      "cleaned_text": "data protection and security the service provider shall implement reasonable administrative, technical, and organisational safeguards to protect personal data processed for the company.",
+      "predicted_category": "Volume Restriction",
+      "confidence": 0.0699,
+      "confidence_score": 0.0699,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0601
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0545
+        },
+        {
+          "category": "Ip Ownership Assignment",
+          "confidence": 0.0451
+        }
+      ]
+    },
+    {
+      "clause_index": 27,
+      "clause_text": "It shall restrict access to authorised personnel, maintain\nappropriate access controls, and notify the Company without undue delay after becoming aware of a confirmed\nsecurity incident affecting Company data.",
+      "cleaned_text": "it shall restrict access to authorised personnel, maintain appropriate access controls, and notify the company without undue delay after becoming aware of a confirmed security incident affecting company data.",
+      "predicted_category": "Audit Rights",
+      "confidence": 0.071,
+      "confidence_score": 0.071,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0709
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0583
+        },
+        {
+          "category": "Rofr/Rofo/Rofn",
+          "confidence": 0.0457
+        }
+      ]
+    },
+    {
+      "clause_index": 28,
+      "clause_text": "The parties shall document any additional data-processing obligations in\na separate written schedule.",
+      "cleaned_text": "the parties shall document any additional data-processing obligations in a separate written schedule.",
+      "predicted_category": "Joint Ip Ownership",
+      "confidence": 0.0882,
+      "confidence_score": 0.0882,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0707
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0406
+        },
+        {
+          "category": "Renewal Term",
+          "confidence": 0.0404
+        }
+      ]
+    },
+    {
+      "clause_index": 29,
+      "clause_text": "7.",
+      "cleaned_text": "7.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 30,
+      "clause_text": "INTELLECTUAL PROPERTY RIGHTS\nEach party retains ownership of intellectual property it owned or developed independently before this Agreement.",
+      "cleaned_text": "intellectual property rights each party retains ownership of intellectual property it owned or developed independently before this agreement.",
+      "predicted_category": "Joint Ip Ownership",
+      "confidence": 0.3301,
+      "confidence_score": 0.3301,
+      "alternatives": [
+        {
+          "category": "Covenant Not To Sue",
+          "confidence": 0.0961
+        },
+        {
+          "category": "Ip Ownership Assignment",
+          "confidence": 0.0906
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0599
+        }
+      ]
+    },
+    {
+      "clause_index": 31,
+      "clause_text": "Subject to full payment of the applicable fees, project-specific deliverables created exclusively for the Company\nunder a statement of work shall be assigned to the Company, excluding the Service Provider's pre-existing tools,\nlibraries, templates, and general know-how.",
+      "cleaned_text": "subject to full payment of the applicable fees, project-specific deliverables created exclusively for the company under a statement of work shall be assigned to the company, excluding the service provider s pre-existing tools, libraries, templates, and general know-how.",
+      "predicted_category": "Ip Ownership Assignment",
+      "confidence": 0.1427,
+      "confidence_score": 0.1427,
+      "alternatives": [
+        {
+          "category": "Exclusivity",
+          "confidence": 0.061
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0543
+        },
+        {
+          "category": "Liquidated Damages",
+          "confidence": 0.0396
+        }
+      ]
+    },
+    {
+      "clause_index": 32,
+      "clause_text": "The Service Provider grants the Company a perpetual, non-exclusive\nlicence to use any of its pre-existing materials embedded in the deliverables to the extent necessary to use those\ndeliverables.",
+      "cleaned_text": "the service provider grants the company a perpetual, non-exclusive licence to use any of its pre-existing materials embedded in the deliverables to the extent necessary to use those deliverables.",
+      "predicted_category": "License Grant",
+      "confidence": 0.2027,
+      "confidence_score": 0.2027,
+      "alternatives": [
+        {
+          "category": "Irrevocable Or Perpetual License",
+          "confidence": 0.1474
+        },
+        {
+          "category": "Affiliate License-Licensor",
+          "confidence": 0.0678
+        },
+        {
+          "category": "Affiliate License-Licensee",
+          "confidence": 0.0595
+        }
+      ]
+    },
+    {
+      "clause_index": 33,
+      "clause_text": "8.",
+      "cleaned_text": "8.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 34,
+      "clause_text": "REPRESENTATIONS AND WARRANTIES\nEach party represents that it has the authority to enter into this Agreement.",
+      "cleaned_text": "representations and warranties each party represents that it has the authority to enter into this agreement.",
+      "predicted_category": "Rofr/Rofo/Rofn",
+      "confidence": 0.0625,
+      "confidence_score": 0.0625,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0463
+        },
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0446
+        },
+        {
+          "category": "Most Favored Nation",
+          "confidence": 0.0443
+        }
+      ]
+    },
+    {
+      "clause_index": 35,
+      "clause_text": "The Service Provider warrants that it\nwill perform the Services with reasonable skill and care and in accordance with the agreed specifications.",
+      "cleaned_text": "the service provider warrants that it will perform the services with reasonable skill and care and in accordance with the agreed specifications.",
+      "predicted_category": "Warranty Duration",
+      "confidence": 0.124,
+      "confidence_score": 0.124,
+      "alternatives": [
+        {
+          "category": "Exclusivity",
+          "confidence": 0.072
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0528
+        },
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0491
+        }
+      ]
+    },
+    {
+      "clause_index": 36,
+      "clause_text": "Except\nas expressly stated in this Agreement, all other warranties are excluded to the maximum extent permitted by\napplicable law.",
+      "cleaned_text": "except as expressly stated in this agreement, all other warranties are excluded to the maximum extent permitted by applicable law.",
+      "predicted_category": "Ip Ownership Assignment",
+      "confidence": 0.0718,
+      "confidence_score": 0.0718,
+      "alternatives": [
+        {
+          "category": "Cap On Liability",
+          "confidence": 0.0529
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0454
+        },
+        {
+          "category": "Non-Transferable License",
+          "confidence": 0.0423
+        }
+      ]
+    },
+    {
+      "clause_index": 37,
+      "clause_text": "9.",
+      "cleaned_text": "9.",
+      "predicted_category": "Parties",
+      "confidence": 0.1373,
+      "confidence_score": 0.1373,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0572
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0516
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0494
+        }
+      ]
+    },
+    {
+      "clause_index": 38,
+      "clause_text": "INDEMNIFICATION\nThe Service Provider shall defend and indemnify the Company against third-party claims alleging that the\ndeliverables, as supplied by the Service Provider and used in accordance with this Agreement, infringe a third\nparty's intellectual property rights.",
+      "cleaned_text": "indemnification the service provider shall defend and indemnify the company against third-party claims alleging that the deliverables, as supplied by the service provider and used in accordance with this agreement, infringe a third party s intellectual property rights.",
+      "predicted_category": "Joint Ip Ownership",
+      "confidence": 0.0666,
+      "confidence_score": 0.0666,
+      "alternatives": [
+        {
+          "category": "Third Party Beneficiary",
+          "confidence": 0.0491
+        },
+        {
+          "category": "Uncapped Liability",
+          "confidence": 0.0435
+        },
+        {
+          "category": "Affiliate License-Licensee",
+          "confidence": 0.0431
+        }
+      ]
+    },
+    {
+      "clause_index": 39,
+      "clause_text": "The Company shall promptly notify the Service Provider of the claim and\nprovide reasonable cooperation.",
+      "cleaned_text": "the company shall promptly notify the service provider of the claim and provide reasonable cooperation.",
+      "predicted_category": "Parties",
+      "confidence": 0.0567,
+      "confidence_score": 0.0567,
+      "alternatives": [
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0524
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.052
+        },
+        {
+          "category": "Rofr/Rofo/Rofn",
+          "confidence": 0.0507
+        }
+      ]
+    },
+    {
+      "clause_index": 40,
+      "clause_text": "The indemnifying party shall not settle a claim in a manner that admits liability on\nbehalf of the other party or imposes non-monetary obligations without the other party's prior written consent.",
+      "cleaned_text": "the indemnifying party shall not settle a claim in a manner that admits liability on behalf of the other party or imposes non-monetary obligations without the other party s prior written consent.",
+      "predicted_category": "Anti-Assignment",
+      "confidence": 0.2718,
+      "confidence_score": 0.2718,
+      "alternatives": [
+        {
+          "category": "Uncapped Liability",
+          "confidence": 0.0689
+        },
+        {
+          "category": "Cap On Liability",
+          "confidence": 0.0569
+        },
+        {
+          "category": "No-Solicit Of Employees",
+          "confidence": 0.0511
+        }
+      ]
+    },
+    {
+      "clause_index": 41,
+      "clause_text": "10.",
+      "cleaned_text": "10.",
+      "predicted_category": "Effective Date",
+      "confidence": 0.1014,
+      "confidence_score": 0.1014,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0789
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0707
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0557
+        }
+      ]
+    },
+    {
+      "clause_index": 42,
+      "clause_text": "LIMITATION OF LIABILITY\nExcept for liability arising from fraud, wilful misconduct, breach of confidentiality, infringement of intellectual\nproperty rights, or payment obligations, neither party shall be liable for indirect, incidental, special, punitive, or\nconsequential loss, including loss of profits or anticipated savings.",
+      "cleaned_text": "limitation of liability except for liability arising from fraud, wilful misconduct, breach of confidentiality, infringement of intellectual property rights, or payment obligations, neither party shall be liable for indirect, incidental, special, punitive, or consequential loss, including loss of profits or anticipated savings.",
+      "predicted_category": "Uncapped Liability",
+      "confidence": 0.521,
+      "confidence_score": 0.521,
+      "alternatives": [
+        {
+          "category": "Cap On Liability",
+          "confidence": 0.3672
+        },
+        {
+          "category": "Joint Ip Ownership",
+          "confidence": 0.0074
+        },
+        {
+          "category": "Insurance",
+          "confidence": 0.0065
+        }
+      ]
+    },
+    {
+      "clause_index": 43,
+      "clause_text": "Subject to those exclusions, each party's\naggregate liability under this Agreement shall not exceed the total fees paid or payable under the relevant\nstatement of work during the twelve months preceding the event giving rise to the claim.",
+      "cleaned_text": "subject to those exclusions, each party s aggregate liability under this agreement shall not exceed the total fees paid or payable under the relevant statement of work during the twelve months preceding the event giving rise to the claim.",
+      "predicted_category": "Cap On Liability",
+      "confidence": 0.2759,
+      "confidence_score": 0.2759,
+      "alternatives": [
+        {
+          "category": "Uncapped Liability",
+          "confidence": 0.1379
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0334
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0302
+        }
+      ]
+    },
+    {
+      "clause_index": 44,
+      "clause_text": "11.",
+      "cleaned_text": "11.",
+      "predicted_category": "Parties",
+      "confidence": 0.1077,
+      "confidence_score": 0.1077,
+      "alternatives": [
+        {
+          "category": "Effective Date",
+          "confidence": 0.0906
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0902
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0454
+        }
+      ]
+    },
+    {
+      "clause_index": 45,
+      "clause_text": "ASSIGNMENT\nNeither party may assign or transfer this Agreement, in whole or in part, without the prior written consent of the\nother party, except that either party may assign this Agreement to an affiliate or to a successor in connection with a\nmerger, corporate reorganisation, or sale of substantially all of its relevant business, provided that the successor\nagrees in writing to be bound by this Agreement.",
+      "cleaned_text": "assignment neither party may assign or transfer this agreement, in whole or in part, without the prior written consent of the other party, except that either party may assign this agreement to an affiliate or to a successor in connection with a merger, corporate reorganisation, or sale of substantially all of its relevant business, provided that the successor agrees in writing to be bound by this agreement.",
+      "predicted_category": "Anti-Assignment",
+      "confidence": 0.8827,
+      "confidence_score": 0.8827,
+      "alternatives": [
+        {
+          "category": "Change Of Control",
+          "confidence": 0.0506
+        },
+        {
+          "category": "Non-Transferable License",
+          "confidence": 0.0045
+        },
+        {
+          "category": "Termination For Convenience",
+          "confidence": 0.0043
+        }
+      ]
+    },
+    {
+      "clause_index": 46,
+      "clause_text": "12.",
+      "cleaned_text": "12.",
+      "predicted_category": "Parties",
+      "confidence": 0.1009,
+      "confidence_score": 0.1009,
+      "alternatives": [
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0674
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0587
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.048
+        }
+      ]
+    },
+    {
+      "clause_index": 47,
+      "clause_text": "TERMINATION\nEither party may terminate this Agreement for convenience by giving the other party sixty days' prior written notice.",
+      "cleaned_text": "termination either party may terminate this agreement for convenience by giving the other party sixty days prior written notice.",
+      "predicted_category": "Termination For Convenience",
+      "confidence": 0.9617,
+      "confidence_score": 0.9617,
+      "alternatives": [
+        {
+          "category": "Notice Period To Terminate Renewal",
+          "confidence": 0.0085
+        },
+        {
+          "category": "Change Of Control",
+          "confidence": 0.006
+        },
+        {
+          "category": "Anti-Assignment",
+          "confidence": 0.0031
+        }
+      ]
+    },
+    {
+      "clause_index": 48,
+      "clause_text": "Either party may terminate immediately by written notice if the other party commits a material breach and fails to\nremedy that breach within thirty days after receiving written notice describing the breach.",
+      "cleaned_text": "either party may terminate immediately by written notice if the other party commits a material breach and fails to remedy that breach within thirty days after receiving written notice describing the breach.",
+      "predicted_category": "Termination For Convenience",
+      "confidence": 0.2488,
+      "confidence_score": 0.2488,
+      "alternatives": [
+        {
+          "category": "Rofr/Rofo/Rofn",
+          "confidence": 0.0836
+        },
+        {
+          "category": "Non-Disparagement",
+          "confidence": 0.0702
+        },
+        {
+          "category": "Change Of Control",
+          "confidence": 0.0519
+        }
+      ]
+    },
+    {
+      "clause_index": 49,
+      "clause_text": "On termination, the\nCompany shall pay for Services properly performed and accepted up to the effective termination date.",
+      "cleaned_text": "on termination, the company shall pay for services properly performed and accepted up to the effective termination date.",
+      "predicted_category": "Post-Termination Services",
+      "confidence": 0.1482,
+      "confidence_score": 0.1482,
+      "alternatives": [
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.1322
+        },
+        {
+          "category": "Liquidated Damages",
+          "confidence": 0.1036
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0803
+        }
+      ]
+    },
+    {
+      "clause_index": 50,
+      "clause_text": "Provisions\nwhich by their nature should survive termination shall continue to apply.",
+      "cleaned_text": "provisions which by their nature should survive termination shall continue to apply.",
+      "predicted_category": "Post-Termination Services",
+      "confidence": 0.2187,
+      "confidence_score": 0.2187,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0469
+        },
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0347
+        },
+        {
+          "category": "Expiration Date",
+          "confidence": 0.0346
+        }
+      ]
+    },
+    {
+      "clause_index": 51,
+      "clause_text": "ClauseIQ Synthetic Test Document\nPage 3\n13.",
+      "cleaned_text": "clauseiq synthetic test document page 3 13.",
+      "predicted_category": "Parties",
+      "confidence": 0.1199,
+      "confidence_score": 0.1199,
+      "alternatives": [
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0733
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0703
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0478
+        }
+      ]
+    },
+    {
+      "clause_index": 52,
+      "clause_text": "NOTICE\nAny notice under this Agreement must be in writing and delivered by recognised courier or email to the authorised\nrepresentatives designated by each party.",
+      "cleaned_text": "notice any notice under this agreement must be in writing and delivered by recognised courier or email to the authorised representatives designated by each party.",
+      "predicted_category": "Cap On Liability",
+      "confidence": 0.0626,
+      "confidence_score": 0.0626,
+      "alternatives": [
+        {
+          "category": "Termination For Convenience",
+          "confidence": 0.0626
+        },
+        {
+          "category": "Anti-Assignment",
+          "confidence": 0.0557
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0546
+        }
+      ]
+    },
+    {
+      "clause_index": 53,
+      "clause_text": "Notices are deemed received on delivery confirmation for courier\nnotices or, for email, when the sender receives no delivery failure notification and the email is sent before 5:00\np.m. on a business day.",
+      "cleaned_text": "notices are deemed received on delivery confirmation for courier notices or, for email, when the sender receives no delivery failure notification and the email is sent before 5:00 p.m. on a business day.",
+      "predicted_category": "Warranty Duration",
+      "confidence": 0.0699,
+      "confidence_score": 0.0699,
+      "alternatives": [
+        {
+          "category": "Minimum Commitment",
+          "confidence": 0.0663
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0514
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.044
+        }
+      ]
+    },
+    {
+      "clause_index": 54,
+      "clause_text": "14.",
+      "cleaned_text": "14.",
+      "predicted_category": "Agreement Date",
+      "confidence": 0.1769,
+      "confidence_score": 0.1769,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.0935
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0522
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0476
+        }
+      ]
+    },
+    {
+      "clause_index": 55,
+      "clause_text": "GOVERNING LAW AND JURISDICTION\nThis Agreement shall be governed by the laws of India, without regard to its conflict-of-law principles.",
+      "cleaned_text": "governing law and jurisdiction this agreement shall be governed by the laws of india, without regard to its conflict-of-law principles.",
+      "predicted_category": "Governing Law",
+      "confidence": 0.9242,
+      "confidence_score": 0.9242,
+      "alternatives": [
+        {
+          "category": "Anti-Assignment",
+          "confidence": 0.0039
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0031
+        },
+        {
+          "category": "Change Of Control",
+          "confidence": 0.003
+        }
+      ]
+    },
+    {
+      "clause_index": 56,
+      "clause_text": "The courts\nlocated in Bengaluru, Karnataka shall have exclusive jurisdiction over disputes arising out of or in connection with\nthis Agreement, subject to any mandatory statutory jurisdiction.",
+      "cleaned_text": "the courts located in bengaluru, karnataka shall have exclusive jurisdiction over disputes arising out of or in connection with this agreement, subject to any mandatory statutory jurisdiction.",
+      "predicted_category": "Cap On Liability",
+      "confidence": 0.0941,
+      "confidence_score": 0.0941,
+      "alternatives": [
+        {
+          "category": "Exclusivity",
+          "confidence": 0.0901
+        },
+        {
+          "category": "Governing Law",
+          "confidence": 0.0518
+        },
+        {
+          "category": "Uncapped Liability",
+          "confidence": 0.0437
+        }
+      ]
+    },
+    {
+      "clause_index": 57,
+      "clause_text": "15.",
+      "cleaned_text": "15.",
+      "predicted_category": "Parties",
+      "confidence": 0.091,
+      "confidence_score": 0.091,
+      "alternatives": [
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0884
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.062
+        },
+        {
+          "category": "Revenue/Profit Sharing",
+          "confidence": 0.0544
+        }
+      ]
+    },
+    {
+      "clause_index": 58,
+      "clause_text": "FORCE MAJEURE\nNeither party shall be responsible for delay or failure to perform caused by events beyond its reasonable control,\nincluding natural disasters, acts of government, widespread telecommunications failure, or civil disturbance,\nprovided that the affected party promptly notifies the other party and takes reasonable steps to reduce the impact.",
+      "cleaned_text": "force majeure neither party shall be responsible for delay or failure to perform caused by events beyond its reasonable control, including natural disasters, acts of government, widespread telecommunications failure, or civil disturbance, provided that the affected party promptly notifies the other party and takes reasonable steps to reduce the impact.",
+      "predicted_category": "Cap On Liability",
+      "confidence": 0.076,
+      "confidence_score": 0.076,
+      "alternatives": [
+        {
+          "category": "Change Of Control",
+          "confidence": 0.0559
+        },
+        {
+          "category": "Competitive Restriction Exception",
+          "confidence": 0.0543
+        },
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0537
+        }
+      ]
+    },
+    {
+      "clause_index": 59,
+      "clause_text": "If the event continues for more than sixty days, either party may terminate the affected statement of work by\nwritten notice.",
+      "cleaned_text": "if the event continues for more than sixty days, either party may terminate the affected statement of work by written notice.",
+      "predicted_category": "Termination For Convenience",
+      "confidence": 0.3053,
+      "confidence_score": 0.3053,
+      "alternatives": [
+        {
+          "category": "Change Of Control",
+          "confidence": 0.0763
+        },
+        {
+          "category": "Rofr/Rofo/Rofn",
+          "confidence": 0.048
+        },
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0326
+        }
+      ]
+    },
+    {
+      "clause_index": 60,
+      "clause_text": "16.",
+      "cleaned_text": "16.",
+      "predicted_category": "Parties",
+      "confidence": 0.1084,
+      "confidence_score": 0.1084,
+      "alternatives": [
+        {
+          "category": "Agreement Date",
+          "confidence": 0.104
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0587
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0483
+        }
+      ]
+    },
+    {
+      "clause_index": 61,
+      "clause_text": "ENTIRE AGREEMENT AND AMENDMENTS\nThis Agreement and its signed statements of work constitute the entire agreement between the parties concerning\nits subject matter and supersede prior discussions and understandings.",
+      "cleaned_text": "entire agreement and amendments this agreement and its signed statements of work constitute the entire agreement between the parties concerning its subject matter and supersede prior discussions and understandings.",
+      "predicted_category": "Document Name",
+      "confidence": 0.0769,
+      "confidence_score": 0.0769,
+      "alternatives": [
+        {
+          "category": "Audit Rights",
+          "confidence": 0.0443
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.044
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0387
+        }
+      ]
+    },
+    {
+      "clause_index": 62,
+      "clause_text": "Any amendment must be in writing and\nsigned by authorised representatives of both parties.",
+      "cleaned_text": "any amendment must be in writing and signed by authorised representatives of both parties.",
+      "predicted_category": "Minimum Commitment",
+      "confidence": 0.0566,
+      "confidence_score": 0.0566,
+      "alternatives": [
+        {
+          "category": "Effective Date",
+          "confidence": 0.0552
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0526
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0506
+        }
+      ]
+    },
+    {
+      "clause_index": 63,
+      "clause_text": "17.",
+      "cleaned_text": "17.",
+      "predicted_category": "Effective Date",
+      "confidence": 0.1151,
+      "confidence_score": 0.1151,
+      "alternatives": [
+        {
+          "category": "Parties",
+          "confidence": 0.1037
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0836
+        },
+        {
+          "category": "Document Name",
+          "confidence": 0.0472
+        }
+      ]
+    },
+    {
+      "clause_index": 64,
+      "clause_text": "SIGNATURES\nFor testing purposes only: Northstar Digital Solutions Private Limited \u2014 Authorised Signatory: A.",
+      "cleaned_text": "signatures for testing purposes only: northstar digital solutions private limited authorised signatory: a.",
+      "predicted_category": "Parties",
+      "confidence": 0.2162,
+      "confidence_score": 0.2162,
+      "alternatives": [
+        {
+          "category": "Volume Restriction",
+          "confidence": 0.0538
+        },
+        {
+          "category": "License Grant",
+          "confidence": 0.0434
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.035
+        }
+      ]
+    },
+    {
+      "clause_index": 65,
+      "clause_text": "Kumar; Title:\nDirector; Date: 1 October 2026.",
+      "cleaned_text": "kumar; title: director; date: 1 october 2026.",
+      "predicted_category": "Effective Date",
+      "confidence": 0.201,
+      "confidence_score": 0.201,
+      "alternatives": [
+        {
+          "category": "Agreement Date",
+          "confidence": 0.1324
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0629
+        },
+        {
+          "category": "Ip Ownership Assignment",
+          "confidence": 0.0426
+        }
+      ]
+    },
+    {
+      "clause_index": 66,
+      "clause_text": "BluePeak Analytics Private Limited \u2014 Authorised Signatory: R.",
+      "cleaned_text": "bluepeak analytics private limited authorised signatory: r.",
+      "predicted_category": "Parties",
+      "confidence": 0.3715,
+      "confidence_score": 0.3715,
+      "alternatives": [
+        {
+          "category": "Document Name",
+          "confidence": 0.0388
+        },
+        {
+          "category": "Effective Date",
+          "confidence": 0.0322
+        },
+        {
+          "category": "Agreement Date",
+          "confidence": 0.0312
+        }
+      ]
+    },
+    {
+      "clause_index": 67,
+      "clause_text": "Menon; Title:\nManaging Director; Date: 1 October 2026.",
+      "cleaned_text": "menon; title: managing director; date: 1 october 2026.",
+      "predicted_category": "Effective Date",
+      "confidence": 0.201,
+      "confidence_score": 0.201,
+      "alternatives": [
+        {
+          "category": "Agreement Date",
+          "confidence": 0.1324
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0629
+        },
+        {
+          "category": "Ip Ownership Assignment",
+          "confidence": 0.0426
+        }
+      ]
+    },
+    {
+      "clause_index": 68,
+      "clause_text": "These names and signatures are fictional and do not represent actual\npersons or companies.",
+      "cleaned_text": "these names and signatures are fictional and do not represent actual persons or companies.",
+      "predicted_category": "Parties",
+      "confidence": 0.0622,
+      "confidence_score": 0.0622,
+      "alternatives": [
+        {
+          "category": "Covenant Not To Sue",
+          "confidence": 0.06
+        },
+        {
+          "category": "Non-Compete",
+          "confidence": 0.0585
+        },
+        {
+          "category": "Insurance",
+          "confidence": 0.0391
+        }
+      ]
+    },
+    {
+      "clause_index": 69,
+      "clause_text": "END OF SYNTHETIC TEST DOCUMENT \u2014 Use only for software testing and demonstration.",
+      "cleaned_text": "end of synthetic test document use only for software testing and demonstration.",
+      "predicted_category": "License Grant",
+      "confidence": 0.0735,
+      "confidence_score": 0.0735,
+      "alternatives": [
+        {
+          "category": "Non-Transferable License",
+          "confidence": 0.0629
+        },
+        {
+          "category": "Parties",
+          "confidence": 0.0552
+        },
+        {
+          "category": "Warranty Duration",
+          "confidence": 0.0521
+        }
+      ]
+    }
+  ]
+}

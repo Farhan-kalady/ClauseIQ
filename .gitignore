@@ -13,6 +13,7 @@ ENV/
 .pytest_cache/
 models/random_forest*.pkl
 artifacts/tools/
+scratch/
 
 # Node / React
 node_modules/

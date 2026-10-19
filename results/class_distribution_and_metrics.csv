@@ -1,0 +1,42 @@
+Category,Train_Count,Test_Count,Total_Count,Precision,Recall,F1_Score
+Parties,1001,250,1251,0.9719,0.968,0.9699
+License Grant,619,155,774,0.6571,0.2968,0.4089
+Cap On Liability,537,135,672,0.7946,0.6593,0.7206
+Anti-Assignment,521,131,652,0.8607,0.8015,0.83
+Audit Rights,513,129,642,0.9173,0.9457,0.9313
+Insurance,447,112,559,0.9725,0.9464,0.9593
+Expiration Date,374,93,467,0.7619,0.6882,0.7232
+Governing Law,370,92,462,1.0,0.9674,0.9834
+Post-Termination Services,359,90,449,0.6907,0.7444,0.7166
+Agreement Date,341,85,426,0.5714,0.7059,0.6316
+Minimum Commitment,339,85,424,0.8625,0.8118,0.8364
+Effective Date,337,84,421,0.4576,0.3214,0.3776
+Revenue/Profit Sharing,334,83,417,0.828,0.9277,0.875
+Exclusivity,327,82,409,0.5077,0.4024,0.449
+Rofr/Rofo/Rofn,294,73,367,0.7284,0.8082,0.7662
+Ip Ownership Assignment,254,63,317,0.806,0.8571,0.8308
+Document Name,245,61,306,0.9683,1.0,0.9839
+Non-Transferable License,236,59,295,0.2812,0.3051,0.2927
+Non-Compete,206,51,257,0.5926,0.6275,0.6095
+Change Of Control,202,51,253,0.7037,0.7451,0.7238
+Termination For Convenience,197,49,246,0.7455,0.8367,0.7885
+Renewal Term,167,42,209,0.383,0.4286,0.4045
+Warranty Duration,140,35,175,0.7727,0.9714,0.8608
+Covenant Not To Sue,138,35,173,0.8529,0.8286,0.8406
+Volume Restriction,136,34,170,0.7692,0.8824,0.8219
+Uncapped Liability,134,33,167,0.3585,0.5758,0.4419
+Irrevocable Or Perpetual License,132,33,165,0.2,0.2727,0.2308
+Competitive Restriction Exception,99,25,124,0.234,0.44,0.3056
+Liquidated Damages,97,24,121,0.6842,0.5417,0.6047
+Notice Period To Terminate Renewal,97,24,121,0.2414,0.2917,0.2642
+Affiliate License-Licensee,92,23,115,0.2195,0.3913,0.2812
+Joint Ip Ownership,92,23,115,0.7391,0.7391,0.7391
+No-Solicit Of Employees,73,18,91,0.7778,0.7778,0.7778
+Affiliate License-Licensor,55,14,69,0.1111,0.2143,0.1463
+Source Code Escrow,52,13,65,0.6923,0.6923,0.6923
+Non-Disparagement,51,13,64,0.6875,0.8462,0.7586
+No-Solicit Of Customers,46,12,58,0.5,0.5833,0.5385
+Third Party Beneficiary,31,8,39,0.875,0.875,0.875
+Most Favored Nation,30,8,38,0.5714,0.5,0.5333
+Unlimited/All-You-Can-Eat-License,26,6,32,0.2222,0.3333,0.2667
+Price Restrictions,22,5,27,1.0,0.6,0.75
