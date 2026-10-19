@@ -1,40 +1,40 @@
 {
   "synthetic_test_contract": {
     "document_name": "ClauseIQ_Synthetic_Company_Service_Agreement_Test.pdf",
-    "total_clauses_extracted": 18,
-    "compared_against_reference": 18,
-    "agreement_count": 1,
-    "agreement_rate": 0.0556,
-    "discrepancies_count": 17,
+    "total_clauses_extracted": 69,
+    "compared_against_reference": 69,
+    "agreement_count": 44,
+    "agreement_rate": 0.6377,
+    "discrepancies_count": 25,
     "first_5_predictions": [
       {
         "idx": 1,
-        "category": "Parties",
-        "confidence": 0.2714,
-        "status": "Moderate confidence"
+        "category": "Ip Ownership Assignment",
+        "confidence": 0.1816,
+        "status": "Low confidence \u2013 Review Required"
       },
       {
         "idx": 2,
-        "category": "Source Code Escrow",
-        "confidence": 0.1667,
+        "category": "Anti-Assignment",
+        "confidence": 0.2107,
         "status": "Low confidence \u2013 Review Required"
       },
       {
         "idx": 3,
-        "category": "Expiration Date",
-        "confidence": 0.7172,
-        "status": "High confidence"
+        "category": "Parties",
+        "confidence": 0.4476,
+        "status": "Moderate confidence"
       },
       {
         "idx": 4,
-        "category": "Source Code Escrow",
-        "confidence": 0.2418,
+        "category": "License Grant",
+        "confidence": 0.2323,
         "status": "Low confidence \u2013 Review Required"
       },
       {
         "idx": 5,
-        "category": "Revenue/Profit Sharing",
-        "confidence": 0.571,
+        "category": "Parties",
+        "confidence": 0.8459,
         "status": "High confidence"
       }
     ],
@@ -42,26 +42,44 @@
   },
   "sample_contract": {
     "document_name": "sample_contract.pdf",
-    "total_clauses_extracted": 2,
+    "total_clauses_extracted": 29,
     "first_5_predictions": [
       {
         "idx": 1,
-        "category": "Cap On Liability",
-        "confidence": 0.5302,
+        "category": "Document Name",
+        "confidence": 0.6179,
         "status": "High confidence"
       },
       {
         "idx": 2,
         "category": "Parties",
-        "confidence": 0.8335,
+        "confidence": 0.8885,
         "status": "High confidence"
+      },
+      {
+        "idx": 3,
+        "category": "Parties",
+        "confidence": 0.8111,
+        "status": "High confidence"
+      },
+      {
+        "idx": 4,
+        "category": "Parties",
+        "confidence": 0.8459,
+        "status": "High confidence"
+      },
+      {
+        "idx": 5,
+        "category": "Audit Rights",
+        "confidence": 0.216,
+        "status": "Low confidence \u2013 Review Required"
       }
     ],
     "status_distribution": {
-      "high": 2,
-      "moderate": 0,
-      "low": 0,
-      "out_of_scope": 0
+      "high": 22,
+      "moderate": 4,
+      "low": 2,
+      "out_of_scope": 1
     }
   }
 }
