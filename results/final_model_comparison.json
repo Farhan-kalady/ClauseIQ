@@ -1,0 +1,32 @@
+[
+  {
+    "Model": "Selected Logistic Regression (Hybrid Word+Char)",
+    "Split": "Split A (Stratified)",
+    "Accuracy": 0.7231,
+    "Macro F1": 0.6591,
+    "Weighted F1": 0.7265,
+    "Macro Precision": 0.6607,
+    "Macro Recall": 0.6696,
+    "ECE": 0.1545,
+    "High Conf Precision": 0.8195,
+    "Mod Conf Precision": 0.6344,
+    "Low Conf Precision": 0.522,
+    "Out of Scope Precision": 0.2778,
+    "High Conf Sample Share": 58.09
+  },
+  {
+    "Model": "Selected Logistic Regression (Hybrid Word+Char)",
+    "Split": "Split B (Grouped)",
+    "Accuracy": 0.7393,
+    "Macro F1": 0.6947,
+    "Weighted F1": 0.7371,
+    "Macro Precision": 0.6976,
+    "Macro Recall": 0.7123,
+    "ECE": 0.2005,
+    "High Conf Precision": 0.8655,
+    "Mod Conf Precision": 0.669,
+    "Low Conf Precision": 0.5038,
+    "Out of Scope Precision": 0.283,
+    "High Conf Sample Share": 53.22
+  }
+]

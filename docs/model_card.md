@@ -1,92 +1,101 @@
-# ClauseIQ Model Card: Best Clause Classification Model
+# ClauseIQ Model Card: Best Legal Clause Classification Model
 
 ## 1. Model Details
-- **Model Name**: ClauseIQ Legal Clause Classifier
-- **Selected Architecture**: Logistic Regression (`sklearn.linear_model.LogisticRegression`)
-- **Selection Criterion**: **Macro-F1** (Primary: 0.6474) and **Accuracy** (Secondary: 0.7190). Macro-F1 was designated as the primary selection criterion because the contract clause dataset contains 41 highly imbalanced classes; Macro-F1 assigns equal weight to rare legal obligations without allowing high-frequency categories to dominate.
+- **Model Name**: ClauseIQ Legal Clause Classifier (`LogisticRegression-HybridWordChar`)
+- **Selected Architecture**: Multi-class Multinomial Logistic Regression (`sklearn.linear_model.LogisticRegression`) with L2 regularization and balanced class weighting.
+- **Selection Criterion**: **Cross-Validated Macro-F1 on Grouped Splits (5-Fold StratifiedGroupKFold on Training Contracts)**. Macro-F1 was designated as the primary selection criterion because the contract clause dataset contains 41 highly imbalanced classes; Macro-F1 weights rare legal obligations equally without allowing high-frequency categories to dominate.
 - **Artifact Locations**:
-  - Model: `artifacts/best_model.joblib` (and `models/logistic_regression.pkl`)
-  - Feature Vectorizer: `artifacts/tfidf_vectorizer.joblib` (and `models/tfidf_vectorizer.pkl`)
-  - Label Encoder: `artifacts/label_encoder.joblib` (and `models/label_encoder.pkl`)
+  - Model: `artifacts/best_model.joblib`
+  - Feature Vectorizer: `artifacts/tfidf_vectorizer.joblib` (FeatureUnion: Word + Character n-grams)
+  - Label Encoder: `artifacts/label_encoder.joblib`
+  - Manifest: `artifacts/manifest.json`
 - **Probability Support**: Supported natively via multinomial softmax (`predict_proba`).
 
 ---
 
 ## 2. Hyperparameters & Configuration
 - **Penalty / Regularization**: L2 regularization
-- **Inverse Regularization Strength ($C$)**: 1.0 (default)
-- **Class Weight**: `"balanced"` (inversely proportional to class frequencies $n\_samples / (n\_classes \times \text{bincount}(y))$)
+- **Inverse Regularization Strength ($C$)**: 1.0
+- **Class Weight**: `"balanced"` (inversely proportional to class frequencies: $n\_samples / (n\_classes \times \text{bincount}(y))$)
 - **Solver**: `"lbfgs"`
-- **Maximum Iterations**: `2000` (converged without convergence warnings)
+- **Maximum Iterations**: `2000` (converged without warnings)
 - **Random State**: `42` (ensuring deterministic reproducibility)
-- **Multi-Class Strategy**: Multinomial (`multinomial` / softmax formulation)
+- **Multi-Class Strategy**: Multinomial softmax (`predict_proba`)
 
 ---
 
 ## 3. Training & Feature Representation
-- **Dataset**: Contract Understanding Atticus Dataset (CUAD v1)
-- **Corpus Dimension**:
+- **Dataset**: Contract Understanding Atticus Dataset (CUAD v1 derived)
   - Total Validated Clauses: 12,204 rows
   - Source Contracts: 510 unique commercial contracts
   - Unique Classes: 41 legal clause categories
-- **Train/Test Split Methodology**:
-  - Split: Stratified 80% train / 20% test split (`random_state=42`, `stratify=y`)
-  - Training Set Size: **9,763 samples**
-  - Held-out Test Set Size: **2,441 samples**
-- **Feature Extraction Pipeline**:
-  - Vectorizer: `TfidfVectorizer` (scikit-learn)
-  - Vocabulary Size: 10,000 features
-  - N-gram Range: `(1, 2)` (unigrams and bigrams)
-  - Document Frequency Bounds: `min_df=2`, `max_df=0.95`
-  - Sublinear TF Scaling: Enabled (`sublinear_tf=True`, using $1 + \log(\text{tf})$)
-  - Data Leakage Prevention: Fitted strictly on the training partition ($N=9,763$); the test partition ($N=2,441$) was strictly transformed.
+- **NLP Preprocessing**:
+  - Lowercasing, URL/email removal, legal punctuation preservation
+  - NLTK WordNet Lemmatization (`clean_text_lemmatized`)
+- **Feature Extraction Pipeline (FeatureUnion)**:
+  - **Sub-pipe 1 (Word n-grams)**: `TfidfVectorizer(max_features=25000, ngram_range=(1, 2), min_df=2, max_df=0.95, sublinear_tf=True)`
+  - **Sub-pipe 2 (Character n-grams inside word boundaries)**: `TfidfVectorizer(max_features=15000, analyzer='char_wb', ngram_range=(3, 5), min_df=3, sublinear_tf=True)`
+  - **Total Dimensionality**: 40,000 features
+  - **Data Leakage Prevention**: Vectorizer fitted strictly on training partition ($N=9,763$ for Split A; $N=9,718$ for Split B); the test partition was strictly transformed.
 
 ---
 
-## 4. Evaluation Metrics on Held-Out Test Set (N=2,441)
+## 4. Evaluation Metrics on Held-Out Test Partitions
 
-All metrics were computed by scikit-learn from actual model predictions on the held-out test split:
+All metrics were computed by scikit-learn from actual model predictions on the held-out test splits without manual adjustment:
 
-| Metric | Score (Decimal) | Score (Percentage) |
-| :--- | :---: | :---: |
-| **Accuracy** | 0.7190 | 71.90% |
-| **Macro Precision** | 0.6481 | 64.81% |
-| **Macro Recall** | 0.6622 | 66.22% |
-| **Macro F1 (Primary Metric)** | **0.6474** | **64.74%** |
-| **Weighted Precision** | 0.7354 | 73.54% |
-| **Weighted Recall** | 0.7190 | 71.90% |
-| **Weighted F1** | 0.7196 | 71.96% |
+### 4.1 Split A: Comparable Stratified 80/20 ($N=2,441$)
 
-### Benchmark Comparison Against Other Evaluated Models
+| Metric | Baseline Score | Improved Model Score | Improvement |
+| :--- | :---: | :---: | :---: |
+| **Accuracy** | 0.7190 (71.90%) | **0.7231 (72.31%)** | +0.41% |
+| **Macro Precision** | 0.6481 (64.81%) | **0.6607 (66.07%)** | +1.26% |
+| **Macro Recall** | 0.6622 (66.22%) | **0.6696 (66.96%)** | +0.74% |
+| **Macro F1 (Primary Metric)** | 0.6474 (64.74%) | **0.6591 (65.91%)** | **+1.17%** |
+| **Weighted Precision** | 0.7354 (73.54%) | **0.7381 (73.81%)** | +0.27% |
+| **Weighted Recall** | 0.7190 (71.90%) | **0.7231 (72.31%)** | +0.41% |
+| **Weighted F1** | 0.7196 (71.96%) | **0.7265 (72.65%)** | +0.69% |
+| **Expected Calibration Error (ECE)** | 0.2822 | **0.1545** | **-0.1277** (improved calibration) |
 
-| Rank | Model | Macro F1 | Accuracy | Weighted F1 | Selection Rationale |
-| :---: | :--- | :---: | :---: | :---: | :--- |
-| **1** | **Logistic Regression** | **0.6474** | **0.7190** | **0.7196** | **Selected**: Highest Macro-F1 across 41 classes; natively outputs calibrated confidence probabilities. |
-| 2 | Linear SVM (C=0.1) | 0.6418 | 0.7263 | 0.7226 | Slightly higher accuracy (+0.73%), but lower Macro-F1 (-0.56%) and no native calibrated probabilities. |
-| 3 | Multinomial Naive Bayes (alpha=0.01) | 0.5853 | 0.6927 | 0.6903 | Fast inference, but lacks class weighting; suppressed recall on rare categories. |
-| 4 | Random Forest (200 trees, depth 50) | 0.5634 | 0.6546 | 0.6496 | Sub-optimal partitioning on high-dimensional sparse TF-IDF (10,000 features). |
+### 4.2 Split B: Leakage-Safe Grouped Split by `contract_id` ($N=2,486$, 102 contracts)
 
----
-
-## 5. Per-Class Performance Highlights
-
-- **High-Performing Classes (F1 > 0.85)**:
-  - *Audit Rights*: Precision 0.88, Recall 0.94, F1 0.91
-  - *Anti-Assignment*: Precision 0.81, Recall 0.88, F1 0.84
-  - *Governing Law*: Precision 0.86, Recall 0.93, F1 0.89
-  - *Termination For Convenience*: Precision 0.83, Recall 0.87, F1 0.85
-  - *Insurance*: Precision 0.85, Recall 0.90, F1 0.87
-- **Challenging Classes (Low Support, F1 < 0.40)**:
-  - *Price Restrictions* (Support: 5 in test): Precision 0.33, Recall 0.40, F1 0.36
-  - *Most Favored Nation* (Support: 8 in test): Precision 0.44, Recall 0.50, F1 0.47
-  - *Affiliate License-Licensor* (Support: 14 in test): Precision 0.38, Recall 0.36, F1 0.37
+| Metric | Baseline Score | Improved Model Score | Improvement |
+| :--- | :---: | :---: | :---: |
+| **Accuracy** | 0.7305 (73.05%) | **0.7393 (73.93%)** | +0.88% |
+| **Macro Precision** | 0.6726 (67.26%) | **0.6976 (69.76%)** | +2.50% |
+| **Macro Recall** | 0.6971 (69.71%) | **0.7123 (71.23%)** | +1.52% |
+| **Macro F1 (Primary Metric)** | 0.6691 (66.91%) | **0.6947 (69.47%)** | **+2.56%** |
+| **Weighted F1** | 0.7269 (72.69%) | **0.7371 (73.71%)** | +1.02% |
+| **High Confidence Precision (≥ 0.50)** | 0.9024 | **0.8655** | Evaluated on 53.22% of all clauses |
+| **Expected Calibration Error (ECE)** | 0.3115 | **0.2005** | **-0.1110** (improved calibration) |
 
 ---
 
-## 6. Limitations & Known Class Imbalance Issues
-1. **Extreme Class Imbalance**:
-   The CUAD dataset spans from 1,251 clauses for majority categories (*Parties*) down to only 27 clauses for minority categories (*Price Restrictions*). Although `class_weight='balanced'` boosts gradient updates for minority classes, rare categories still suffer from high variance due to small sample size.
-2. **Contract-Level Overlap**:
-   Because the dataset is partitioned via clause-level stratified splitting, clauses from the same parent contract may appear in both train and test partitions. Real-world contract drafting styles may have slight stylistic correlation across clauses within a single agreement.
-3. **Lexical Boundary Sensitivity**:
-   Classification relies on classical n-gram TF-IDF representations. Novel paraphrasing, unconventional legal vocabulary, or heavily obfuscated clauses not captured in the 10,000 feature vocabulary may see reduced confidence.
+## 5. Summary of Model Experimentation Rounds
+
+Extensive cross-validation experiments were conducted on the training data only (recorded in `results/experiments.csv`):
+
+| Round ID | Hypothesis / Change | CV Macro F1 | CV Accuracy | Key Takeaway |
+| :--- | :--- | :---: | :---: | :--- |
+| **EXP-00** | Baseline: regex cleaning + 10k word TF-IDF + LogReg | 0.6614 | 0.7430 | Initial baseline reference |
+| **EXP-01C** | NLTK Stopword Removal | 0.6567 | 0.7388 | **Hurt** performance (-0.47% F1); legal modals ("shall", "may", "unless") are informative |
+| **EXP-01D** | NLTK WordNet Lemmatization | 0.6662 | 0.7467 | **Helped** (+0.48% F1); normalizes inflected legal verbs |
+| **EXP-02D** | Hybrid Word (25k) + Char_wb (15k) TF-IDF | **0.6865** | **0.7618** | **Major improvement** (+2.51% F1); character n-grams capture morphological subwords |
+| **EXP-03A** | LinearSVC ($C=0.1$, balanced) | 0.6834 | 0.7624 | Strong accuracy, but no native probabilities |
+| **EXP-03E** | ComplementNB ($\alpha=0.1$) | 0.5136 | 0.6968 | Poor performance on high-dimensional hybrid features |
+| **EXP-04B** | Unweighted LogReg (`class_weight=None`) | 0.6213 | 0.7592 | Severe degradation (-6.52% F1) on rare categories |
+| **EXP-05-SIG** | Post-hoc CalibratedClassifierCV | 0.6333 | 0.7561 | Platt scaling on 41 classes distorted multiclass argmax ranking |
+
+**Chosen Model:** `LogisticRegression` ($C=1.0$, `class_weight='balanced'`) with Hybrid Word + Character TF-IDF (40,000 features) and NLTK Lemmatization.
+
+---
+
+## 6. Known Limitations & Error Boundaries
+
+1. **Inherently Ambiguous Category Pairs**:
+   - `Agreement Date` vs `Effective Date`: Frequently contained within the exact same introductory recitals.
+   - `Cap On Liability` vs `Uncapped Liability`: Exception carve-outs inside limitation sections create co-occurrence noise.
+2. **Extreme Class Imbalance**:
+   - Categories with $<20$ total occurrences in CUAD (`Price Restrictions`, `Volume Restriction`, `Affiliate License-Licensor`) show lower F1 due to small support.
+3. **Out-of-Scope Detection**:
+   - Clauses with maximum predicted probability $<0.10$ exhibit lower precision (~28-32%) and are appropriately flagged by the API as "Out of supported category scope".

@@ -1,0 +1,21 @@
+round_id,hypothesis_and_change,cv_macro_f1,cv_accuracy,cv_weighted_f1,macro_f1_std,notes,logged_at
+EXP-00,"Baseline: regex clean_text + word TF-IDF 10k (1,2) + LogReg balanced",0.6614,0.743,0.7391,0.0156,Reference baseline on 5-fold grouped CV,2026-10-19 05:50:56
+EXP-01A,Text Ablation: Raw text lowercased without regex cleaning,0.6619,0.7426,0.7389,0.0156,Checks if regex cleaning helps or hurts,2026-10-19 05:51:11
+EXP-01B,"Text Ablation: Preserve section numbers (§, #, /, -) and clauses",0.6614,0.743,0.7391,0.0156,Tests if keeping numbering tokens aids legal boundary distinction,2026-10-19 05:51:25
+EXP-01C,"Text Ablation: NLTK stopwords removed (preserving shall, may, not, unless)",0.6567,0.7388,0.7352,0.0121,Checks if standard stopword removal aids legal classification,2026-10-19 05:51:38
+EXP-01D,Text Ablation: NLTK WordNet Lemmatization,0.6662,0.7467,0.7432,0.0138,Checks if lemmatizing inflected forms improves generalization,2026-10-19 05:51:56
+EXP-02A,"Features: Vocab size expanded to 25,000 unigrams+bigrams",0.6656,0.75,0.7449,0.0189,Tests if larger legal vocabulary captures specific terminology,2026-10-19 05:52:21
+EXP-02B,"Features: Vocab size expanded to 50,000 unigrams+bigrams",0.6636,0.7503,0.7446,0.0196,Tests if 50k vocabulary improves rare clause recognition,2026-10-19 05:53:31
+EXP-02C,"Features: Trigram extension (1, 3) with 35,000 features",0.66,0.7489,0.7438,0.0143,Tests multi-word legal boilerplate matching (e.g. 'governed by laws of'),2026-10-19 05:54:35
+EXP-02D,"Features: Hybrid Word TF-IDF (25k) + Char_wb (3-5, 15k)",0.6865,0.7618,0.7589,0.0121,"Tests character n-gram robustness on subwords, prefixes, and punctuation patterns",2026-10-19 05:56:37
+EXP-03A,"Model: LinearSVC (C=0.1, balanced) with hybrid_word_char",0.6834,0.7624,0.7561,0.0086,Evaluates margin-based linear separation on improved features,2026-10-19 05:57:56
+EXP-03B,"Model: LinearSVC (C=0.5, balanced) with hybrid_word_char",0.6818,0.7657,0.7589,0.0106,Tests higher margin penalty for tighter boundaries,2026-10-19 05:58:48
+EXP-03C,"Model: LogisticRegression (C=2.0, balanced) with hybrid_word_char",0.6852,0.7636,0.7601,0.0158,Tests lower L2 penalty to let strong weights activate,2026-10-19 06:00:34
+EXP-03D,"Model: LogisticRegression (C=5.0, balanced) with hybrid_word_char",0.6837,0.7664,0.7618,0.0106,Tests C=5.0 for high fidelity on sparse legal vocabulary,2026-10-19 06:02:47
+EXP-03E,Model: ComplementNB (alpha=0.1) with hybrid_word_char,0.5136,0.6968,0.6469,0.0093,Naive Bayes variant designed specifically for imbalanced class distributions,2026-10-19 06:03:03
+EXP-03F,"Model: SGDClassifier (modified_huber, alpha=1e-4, balanced) with hybrid_word_char",0.6281,0.7485,0.7366,0.0077,Smooth hinge loss that outputs calibrated margin probabilities,2026-10-19 06:03:34
+EXP-03G,Model: Soft Voting Ensemble (LogReg C=2 + Calibrated SVC + SGD),0.6471,0.7573,0.7467,0.0096,Combines diverse linear models using soft probability averaging,2026-10-19 06:05:58
+EXP-04A,Imbalance: In-fold random oversampling of classes < 30 samples,0.6842,0.7637,0.7603,0.0142,Assesses if synthesizing rare-class instances within training folds boosts macro recall,2026-10-19 06:08:16
+EXP-04B,Imbalance: Unweighted Logistic Regression (class_weight=None),0.6213,0.7592,0.7413,0.0093,Ablation verifying that class_weight='balanced' is necessary for macro F1,2026-10-19 06:10:14
+EXP-05-SIG,Calibration: CalibratedClassifierCV (sigmoid) on LogReg C=2.0,0.6333,0.7561,0.7346,0.008,Tests post-hoc probability calibration (sigmoid) across validation folds,2026-10-19 06:13:58
+EXP-05-ISO,Calibration: CalibratedClassifierCV (isotonic) on LogReg C=2.0,0.6306,0.7562,0.7312,0.0088,Tests post-hoc probability calibration (isotonic) across validation folds,2026-10-19 06:17:24

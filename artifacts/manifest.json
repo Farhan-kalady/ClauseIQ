@@ -1,51 +1,51 @@
 {
-  "manifest_version": "1.0",
-  "created_at_utc": "2026-10-19T05:43:25.767998+00:00",
-  "model_name": "LogisticRegression",
+  "manifest_version": "2.0",
+  "created_at_utc": "2026-10-19T06:21:43.860304+00:00",
+  "model_name": "LogisticRegression-HybridWordChar",
   "model_class": "LogisticRegression",
   "model_parameters": {
-    "max_iter": 2000,
+    "C": 1.0,
     "class_weight": "balanced",
+    "max_iter": 2000,
     "random_state": 42,
     "solver": "lbfgs"
   },
-  "calibrated_model_present": true,
-  "vectorizer": {
-    "type": "TfidfVectorizer",
-    "max_features": 10000,
-    "ngram_range": [
+  "preprocessing": {
+    "cleaner": "clean_text_lemmatized",
+    "lemmatizer": "NLTK WordNetLemmatizer",
+    "regex_normalization": true
+  },
+  "feature_union": {
+    "word_features": 25000,
+    "word_ngram_range": [
       1,
       2
     ],
-    "min_df": 2,
-    "max_df": 0.95,
-    "sublinear_tf": true,
-    "vocabulary_size": 10000
-  },
-  "dataset": {
-    "source": "CUAD v1 derived",
-    "total_samples": 12204,
-    "contracts_count": 510,
-    "num_classes": 41,
-    "train_samples": 9763,
-    "test_samples": 2441,
-    "split_method": "stratified_80_20",
-    "split_random_state": 42
+    "char_features": 15000,
+    "char_analyzer": "char_wb",
+    "char_ngram_range": [
+      3,
+      5
+    ],
+    "total_features": 40000,
+    "sublinear_tf": true
   },
   "metrics_held_out_test_split_a": {
-    "accuracy": 0.719,
-    "macro_precision": 0.6481,
-    "macro_recall": 0.6622,
-    "macro_f1": 0.6474,
-    "weighted_precision": 0.7354,
-    "weighted_recall": 0.719,
-    "weighted_f1": 0.7196
+    "accuracy": 0.7231,
+    "macro_f1": 0.6591,
+    "weighted_f1": 0.7265,
+    "macro_precision": 0.6607,
+    "macro_recall": 0.6696,
+    "ece": 0.1545,
+    "high_conf_precision": 0.8195
   },
-  "environment": {
-    "python_version": "3.14.6",
-    "scikit_learn_version": "1.9.0",
-    "joblib_version": "1.5.3",
-    "numpy_version": "2.5.2",
-    "pandas_version": "3.0.5"
+  "metrics_held_out_test_split_b": {
+    "accuracy": 0.7393,
+    "macro_f1": 0.6947,
+    "weighted_f1": 0.7371,
+    "macro_precision": 0.6976,
+    "macro_recall": 0.7123,
+    "ece": 0.2005,
+    "high_conf_precision": 0.8655
   }
 }
