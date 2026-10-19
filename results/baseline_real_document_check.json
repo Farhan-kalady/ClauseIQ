@@ -1,0 +1,67 @@
+{
+  "synthetic_test_contract": {
+    "document_name": "ClauseIQ_Synthetic_Company_Service_Agreement_Test.pdf",
+    "total_clauses_extracted": 18,
+    "compared_against_reference": 18,
+    "agreement_count": 1,
+    "agreement_rate": 0.0556,
+    "discrepancies_count": 17,
+    "first_5_predictions": [
+      {
+        "idx": 1,
+        "category": "Parties",
+        "confidence": 0.2714,
+        "status": "Moderate confidence"
+      },
+      {
+        "idx": 2,
+        "category": "Source Code Escrow",
+        "confidence": 0.1667,
+        "status": "Low confidence \u2013 Review Required"
+      },
+      {
+        "idx": 3,
+        "category": "Expiration Date",
+        "confidence": 0.7172,
+        "status": "High confidence"
+      },
+      {
+        "idx": 4,
+        "category": "Source Code Escrow",
+        "confidence": 0.2418,
+        "status": "Low confidence \u2013 Review Required"
+      },
+      {
+        "idx": 5,
+        "category": "Revenue/Profit Sharing",
+        "confidence": 0.571,
+        "status": "High confidence"
+      }
+    ],
+    "evaluation_note": "Synthetic contract check evaluates pipeline extraction & segmentation on a small 69-clause contract."
+  },
+  "sample_contract": {
+    "document_name": "sample_contract.pdf",
+    "total_clauses_extracted": 2,
+    "first_5_predictions": [
+      {
+        "idx": 1,
+        "category": "Cap On Liability",
+        "confidence": 0.5302,
+        "status": "High confidence"
+      },
+      {
+        "idx": 2,
+        "category": "Parties",
+        "confidence": 0.8335,
+        "status": "High confidence"
+      }
+    ],
+    "status_distribution": {
+      "high": 2,
+      "moderate": 0,
+      "low": 0,
+      "out_of_scope": 0
+    }
+  }
+}

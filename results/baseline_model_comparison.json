@@ -1,0 +1,1432 @@
+[
+  {
+    "model": "Logistic Regression",
+    "split": "Split A (Stratified)",
+    "accuracy": 0.719,
+    "macro_precision": 0.6481,
+    "macro_recall": 0.6622,
+    "macro_f1": 0.6474,
+    "weighted_precision": 0.7354,
+    "weighted_recall": 0.719,
+    "weighted_f1": 0.7196,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 44
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 33
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Uncapped Liability",
+        "count": 32
+      },
+      {
+        "true_category": "Agreement Date",
+        "predicted_category": "Effective Date",
+        "count": 23
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 18
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 17
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Exclusivity",
+        "count": 16
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 15
+      },
+      {
+        "true_category": "Expiration Date",
+        "predicted_category": "Renewal Term",
+        "count": 13
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 13
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 11
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Affiliate License-Licensee",
+        "count": 11
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "Competitive Restriction Exception",
+        "count": 9
+      },
+      {
+        "true_category": "Expiration Date",
+        "predicted_category": "Effective Date",
+        "count": 8
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Affiliate License-Licensor",
+        "count": 8
+      }
+    ],
+    "calibration": {
+      "expected_calibration_error": 0.2822,
+      "reliability_bins": [
+        {
+          "bin_index": 1,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "sample_count": 125,
+          "mean_confidence": 0.0809,
+          "empirical_accuracy": 0.32,
+          "calibration_gap": 0.2391
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "sample_count": 394,
+          "mean_confidence": 0.1485,
+          "empirical_accuracy": 0.5914,
+          "calibration_gap": 0.4429
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.2,
+          "bin_upper": 0.3,
+          "sample_count": 345,
+          "mean_confidence": 0.2485,
+          "empirical_accuracy": 0.7014,
+          "calibration_gap": 0.4529
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.3,
+          "bin_upper": 0.4,
+          "sample_count": 348,
+          "mean_confidence": 0.3498,
+          "empirical_accuracy": 0.6897,
+          "calibration_gap": 0.3398
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "sample_count": 303,
+          "mean_confidence": 0.4476,
+          "empirical_accuracy": 0.6799,
+          "calibration_gap": 0.2323
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6,
+          "sample_count": 261,
+          "mean_confidence": 0.5487,
+          "empirical_accuracy": 0.7625,
+          "calibration_gap": 0.2138
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.6,
+          "bin_upper": 0.7,
+          "sample_count": 223,
+          "mean_confidence": 0.6454,
+          "empirical_accuracy": 0.7848,
+          "calibration_gap": 0.1393
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.7,
+          "bin_upper": 0.8,
+          "sample_count": 197,
+          "mean_confidence": 0.7477,
+          "empirical_accuracy": 0.934,
+          "calibration_gap": 0.1863
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "sample_count": 127,
+          "mean_confidence": 0.8474,
+          "empirical_accuracy": 0.9291,
+          "calibration_gap": 0.0818
+        },
+        {
+          "bin_index": 10,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "sample_count": 118,
+          "mean_confidence": 0.9517,
+          "empirical_accuracy": 1.0,
+          "calibration_gap": 0.0483
+        }
+      ],
+      "confidence_status_precision": {
+        "High confidence": {
+          "count": 926,
+          "percentage_of_total": 37.94,
+          "precision": 0.8575,
+          "mean_confidence": 0.7066
+        },
+        "Moderate confidence": {
+          "count": 819,
+          "percentage_of_total": 33.55,
+          "precision": 0.6874,
+          "mean_confidence": 0.3706
+        },
+        "Low confidence": {
+          "count": 571,
+          "percentage_of_total": 23.39,
+          "precision": 0.627,
+          "mean_confidence": 0.1717
+        },
+        "Out of scope": {
+          "count": 125,
+          "percentage_of_total": 5.12,
+          "precision": 0.32,
+          "mean_confidence": 0.0809
+        }
+      }
+    }
+  },
+  {
+    "model": "Linear SVM",
+    "split": "Split A (Stratified)",
+    "accuracy": 0.7263,
+    "macro_precision": 0.6323,
+    "macro_recall": 0.6665,
+    "macro_f1": 0.6418,
+    "weighted_precision": 0.7331,
+    "weighted_recall": 0.7263,
+    "weighted_f1": 0.7226,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 48
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 32
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Uncapped Liability",
+        "count": 24
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 23
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 18
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 17
+      },
+      {
+        "true_category": "Agreement Date",
+        "predicted_category": "Effective Date",
+        "count": 16
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 13
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 13
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 13
+      },
+      {
+        "true_category": "Expiration Date",
+        "predicted_category": "Renewal Term",
+        "count": 11
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Exclusivity",
+        "count": 10
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Affiliate License-Licensee",
+        "count": 9
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "License Grant",
+        "count": 8
+      },
+      {
+        "true_category": "Irrevocable Or Perpetual License",
+        "predicted_category": "Affiliate License-Licensor",
+        "count": 8
+      }
+    ]
+  },
+  {
+    "model": "Multinomial Naive Bayes",
+    "split": "Split A (Stratified)",
+    "accuracy": 0.6927,
+    "macro_precision": 0.6024,
+    "macro_recall": 0.5867,
+    "macro_f1": 0.5853,
+    "weighted_precision": 0.6996,
+    "weighted_recall": 0.6927,
+    "weighted_f1": 0.6903,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 47
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 33
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Uncapped Liability",
+        "count": 25
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 25
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 22
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Exclusivity",
+        "count": 19
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 17
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "License Grant",
+        "count": 16
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 15
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 15
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 14
+      },
+      {
+        "true_category": "Irrevocable Or Perpetual License",
+        "predicted_category": "License Grant",
+        "count": 11
+      },
+      {
+        "true_category": "Expiration Date",
+        "predicted_category": "Effective Date",
+        "count": 9
+      },
+      {
+        "true_category": "Expiration Date",
+        "predicted_category": "Renewal Term",
+        "count": 9
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Affiliate License-Licensor",
+        "count": 8
+      }
+    ],
+    "calibration": {
+      "expected_calibration_error": 0.158,
+      "reliability_bins": [
+        {
+          "bin_index": 1,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "sample_count": 0,
+          "mean_confidence": 0.0,
+          "empirical_accuracy": 0.0,
+          "calibration_gap": 0.0
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "sample_count": 7,
+          "mean_confidence": 0.1393,
+          "empirical_accuracy": 0.7143,
+          "calibration_gap": 0.575
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.2,
+          "bin_upper": 0.3,
+          "sample_count": 42,
+          "mean_confidence": 0.2594,
+          "empirical_accuracy": 0.119,
+          "calibration_gap": 0.1403
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.3,
+          "bin_upper": 0.4,
+          "sample_count": 56,
+          "mean_confidence": 0.3498,
+          "empirical_accuracy": 0.3214,
+          "calibration_gap": 0.0284
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "sample_count": 95,
+          "mean_confidence": 0.4553,
+          "empirical_accuracy": 0.4316,
+          "calibration_gap": 0.0237
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6,
+          "sample_count": 140,
+          "mean_confidence": 0.5539,
+          "empirical_accuracy": 0.4357,
+          "calibration_gap": 0.1182
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.6,
+          "bin_upper": 0.7,
+          "sample_count": 189,
+          "mean_confidence": 0.6485,
+          "empirical_accuracy": 0.5344,
+          "calibration_gap": 0.1141
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.7,
+          "bin_upper": 0.8,
+          "sample_count": 214,
+          "mean_confidence": 0.7488,
+          "empirical_accuracy": 0.5374,
+          "calibration_gap": 0.2114
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "sample_count": 259,
+          "mean_confidence": 0.8541,
+          "empirical_accuracy": 0.5405,
+          "calibration_gap": 0.3136
+        },
+        {
+          "bin_index": 10,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "sample_count": 1439,
+          "mean_confidence": 0.9815,
+          "empirical_accuracy": 0.8374,
+          "calibration_gap": 0.1442
+        }
+      ],
+      "confidence_status_precision": {
+        "High confidence": {
+          "count": 2241,
+          "percentage_of_total": 91.81,
+          "precision": 0.7238,
+          "mean_confidence": 0.8898
+        },
+        "Moderate confidence": {
+          "count": 180,
+          "percentage_of_total": 7.37,
+          "precision": 0.35,
+          "mean_confidence": 0.3934
+        },
+        "Low confidence": {
+          "count": 20,
+          "percentage_of_total": 0.82,
+          "precision": 0.3,
+          "mean_confidence": 0.1952
+        },
+        "Out of scope": {
+          "count": 0,
+          "percentage_of_total": 0.0,
+          "precision": 0.0,
+          "mean_confidence": 0.0
+        }
+      }
+    }
+  },
+  {
+    "model": "Random Forest",
+    "split": "Split A (Stratified)",
+    "accuracy": 0.6436,
+    "macro_precision": 0.5403,
+    "macro_recall": 0.5666,
+    "macro_f1": 0.5486,
+    "weighted_precision": 0.642,
+    "weighted_recall": 0.6436,
+    "weighted_f1": 0.6392,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 49
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 37
+      },
+      {
+        "true_category": "Agreement Date",
+        "predicted_category": "Effective Date",
+        "count": 32
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Uncapped Liability",
+        "count": 31
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 23
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 20
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 16
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 16
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 14
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 14
+      },
+      {
+        "true_category": "Irrevocable Or Perpetual License",
+        "predicted_category": "License Grant",
+        "count": 13
+      },
+      {
+        "true_category": "Expiration Date",
+        "predicted_category": "Effective Date",
+        "count": 12
+      },
+      {
+        "true_category": "Post-Termination Services",
+        "predicted_category": "Audit Rights",
+        "count": 11
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "License Grant",
+        "count": 10
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Affiliate License-Licensor",
+        "count": 9
+      }
+    ],
+    "calibration": {
+      "expected_calibration_error": 0.2911,
+      "reliability_bins": [
+        {
+          "bin_index": 1,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "sample_count": 155,
+          "mean_confidence": 0.0797,
+          "empirical_accuracy": 0.2774,
+          "calibration_gap": 0.1977
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "sample_count": 401,
+          "mean_confidence": 0.1501,
+          "empirical_accuracy": 0.5561,
+          "calibration_gap": 0.406
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.2,
+          "bin_upper": 0.3,
+          "sample_count": 426,
+          "mean_confidence": 0.2497,
+          "empirical_accuracy": 0.6831,
+          "calibration_gap": 0.4334
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.3,
+          "bin_upper": 0.4,
+          "sample_count": 332,
+          "mean_confidence": 0.3474,
+          "empirical_accuracy": 0.744,
+          "calibration_gap": 0.3966
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "sample_count": 364,
+          "mean_confidence": 0.4484,
+          "empirical_accuracy": 0.7115,
+          "calibration_gap": 0.2631
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6,
+          "sample_count": 291,
+          "mean_confidence": 0.542,
+          "empirical_accuracy": 0.6838,
+          "calibration_gap": 0.1418
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.6,
+          "bin_upper": 0.7,
+          "sample_count": 154,
+          "mean_confidence": 0.6423,
+          "empirical_accuracy": 0.6623,
+          "calibration_gap": 0.0201
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.7,
+          "bin_upper": 0.8,
+          "sample_count": 123,
+          "mean_confidence": 0.7525,
+          "empirical_accuracy": 0.5691,
+          "calibration_gap": 0.1834
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "sample_count": 102,
+          "mean_confidence": 0.8399,
+          "empirical_accuracy": 0.6569,
+          "calibration_gap": 0.183
+        },
+        {
+          "bin_index": 10,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "sample_count": 93,
+          "mean_confidence": 0.9621,
+          "empirical_accuracy": 0.7527,
+          "calibration_gap": 0.2094
+        }
+      ],
+      "confidence_status_precision": {
+        "High confidence": {
+          "count": 763,
+          "percentage_of_total": 31.26,
+          "precision": 0.6658,
+          "mean_confidence": 0.6872
+        },
+        "Moderate confidence": {
+          "count": 896,
+          "percentage_of_total": 36.71,
+          "precision": 0.7065,
+          "mean_confidence": 0.3723
+        },
+        "Low confidence": {
+          "count": 627,
+          "percentage_of_total": 25.69,
+          "precision": 0.6172,
+          "mean_confidence": 0.1779
+        },
+        "Out of scope": {
+          "count": 155,
+          "percentage_of_total": 6.35,
+          "precision": 0.2774,
+          "mean_confidence": 0.0797
+        }
+      }
+    }
+  },
+  {
+    "model": "Logistic Regression",
+    "split": "Split B (Grouped)",
+    "accuracy": 0.7305,
+    "macro_precision": 0.6726,
+    "macro_recall": 0.6971,
+    "macro_f1": 0.6691,
+    "weighted_precision": 0.7444,
+    "weighted_recall": 0.7305,
+    "weighted_f1": 0.7269,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 53
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 44
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 23
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 18
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Uncapped Liability",
+        "count": 16
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "Non-Compete",
+        "count": 14
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 14
+      },
+      {
+        "true_category": "Post-Termination Services",
+        "predicted_category": "Liquidated Damages",
+        "count": 12
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 12
+      },
+      {
+        "true_category": "Affiliate License-Licensee",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 11
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Warranty Duration",
+        "count": 10
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 10
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 10
+      },
+      {
+        "true_category": "Agreement Date",
+        "predicted_category": "Effective Date",
+        "count": 9
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Exclusivity",
+        "count": 8
+      }
+    ],
+    "calibration": {
+      "expected_calibration_error": 0.3115,
+      "reliability_bins": [
+        {
+          "bin_index": 1,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "sample_count": 195,
+          "mean_confidence": 0.0807,
+          "empirical_accuracy": 0.3897,
+          "calibration_gap": 0.309
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "sample_count": 398,
+          "mean_confidence": 0.1476,
+          "empirical_accuracy": 0.598,
+          "calibration_gap": 0.4504
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.2,
+          "bin_upper": 0.3,
+          "sample_count": 392,
+          "mean_confidence": 0.2495,
+          "empirical_accuracy": 0.6913,
+          "calibration_gap": 0.4419
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.3,
+          "bin_upper": 0.4,
+          "sample_count": 356,
+          "mean_confidence": 0.3484,
+          "empirical_accuracy": 0.6826,
+          "calibration_gap": 0.3342
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "sample_count": 295,
+          "mean_confidence": 0.4456,
+          "empirical_accuracy": 0.7492,
+          "calibration_gap": 0.3035
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6,
+          "sample_count": 206,
+          "mean_confidence": 0.5508,
+          "empirical_accuracy": 0.8495,
+          "calibration_gap": 0.2987
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.6,
+          "bin_upper": 0.7,
+          "sample_count": 221,
+          "mean_confidence": 0.6476,
+          "empirical_accuracy": 0.7828,
+          "calibration_gap": 0.1352
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.7,
+          "bin_upper": 0.8,
+          "sample_count": 156,
+          "mean_confidence": 0.7519,
+          "empirical_accuracy": 0.9808,
+          "calibration_gap": 0.2289
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "sample_count": 138,
+          "mean_confidence": 0.8499,
+          "empirical_accuracy": 0.9928,
+          "calibration_gap": 0.1429
+        },
+        {
+          "bin_index": 10,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "sample_count": 129,
+          "mean_confidence": 0.9508,
+          "empirical_accuracy": 1.0,
+          "calibration_gap": 0.0492
+        }
+      ],
+      "confidence_status_precision": {
+        "High confidence": {
+          "count": 850,
+          "percentage_of_total": 34.19,
+          "precision": 0.9024,
+          "mean_confidence": 0.7222
+        },
+        "Moderate confidence": {
+          "count": 841,
+          "percentage_of_total": 33.83,
+          "precision": 0.7182,
+          "mean_confidence": 0.366
+        },
+        "Low confidence": {
+          "count": 600,
+          "percentage_of_total": 24.14,
+          "precision": 0.615,
+          "mean_confidence": 0.1736
+        },
+        "Out of scope": {
+          "count": 195,
+          "percentage_of_total": 7.84,
+          "precision": 0.3897,
+          "mean_confidence": 0.0807
+        }
+      }
+    }
+  },
+  {
+    "model": "Linear SVM",
+    "split": "Split B (Grouped)",
+    "accuracy": 0.7385,
+    "macro_precision": 0.6575,
+    "macro_recall": 0.7045,
+    "macro_f1": 0.6635,
+    "weighted_precision": 0.745,
+    "weighted_recall": 0.7385,
+    "weighted_f1": 0.7283,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 54
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 43
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 22
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 21
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 17
+      },
+      {
+        "true_category": "Affiliate License-Licensee",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 11
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 11
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 11
+      },
+      {
+        "true_category": "Post-Termination Services",
+        "predicted_category": "Liquidated Damages",
+        "count": 11
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Warranty Duration",
+        "count": 10
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 10
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "Non-Compete",
+        "count": 9
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 9
+      },
+      {
+        "true_category": "Agreement Date",
+        "predicted_category": "Effective Date",
+        "count": 8
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Affiliate License-Licensor",
+        "count": 8
+      }
+    ]
+  },
+  {
+    "model": "Multinomial Naive Bayes",
+    "split": "Split B (Grouped)",
+    "accuracy": 0.7076,
+    "macro_precision": 0.6431,
+    "macro_recall": 0.5895,
+    "macro_f1": 0.594,
+    "weighted_precision": 0.7093,
+    "weighted_recall": 0.7076,
+    "weighted_f1": 0.6899,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 57
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 51
+      },
+      {
+        "true_category": "Irrevocable Or Perpetual License",
+        "predicted_category": "License Grant",
+        "count": 42
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 27
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "License Grant",
+        "count": 23
+      },
+      {
+        "true_category": "Affiliate License-Licensee",
+        "predicted_category": "License Grant",
+        "count": 16
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "Non-Compete",
+        "count": 15
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 13
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 13
+      },
+      {
+        "true_category": "Affiliate License-Licensor",
+        "predicted_category": "License Grant",
+        "count": 11
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 11
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 9
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Warranty Duration",
+        "count": 6
+      },
+      {
+        "true_category": "Change Of Control",
+        "predicted_category": "Anti-Assignment",
+        "count": 6
+      },
+      {
+        "true_category": "Insurance",
+        "predicted_category": "Post-Termination Services",
+        "count": 6
+      }
+    ],
+    "calibration": {
+      "expected_calibration_error": 0.118,
+      "reliability_bins": [
+        {
+          "bin_index": 1,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "sample_count": 1,
+          "mean_confidence": 0.0772,
+          "empirical_accuracy": 0.0,
+          "calibration_gap": 0.0772
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "sample_count": 13,
+          "mean_confidence": 0.1441,
+          "empirical_accuracy": 0.5385,
+          "calibration_gap": 0.3944
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.2,
+          "bin_upper": 0.3,
+          "sample_count": 33,
+          "mean_confidence": 0.2493,
+          "empirical_accuracy": 0.2121,
+          "calibration_gap": 0.0372
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.3,
+          "bin_upper": 0.4,
+          "sample_count": 94,
+          "mean_confidence": 0.3566,
+          "empirical_accuracy": 0.2766,
+          "calibration_gap": 0.08
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "sample_count": 130,
+          "mean_confidence": 0.4495,
+          "empirical_accuracy": 0.3615,
+          "calibration_gap": 0.088
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6,
+          "sample_count": 161,
+          "mean_confidence": 0.5493,
+          "empirical_accuracy": 0.4907,
+          "calibration_gap": 0.0586
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.6,
+          "bin_upper": 0.7,
+          "sample_count": 215,
+          "mean_confidence": 0.6552,
+          "empirical_accuracy": 0.4884,
+          "calibration_gap": 0.1668
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.7,
+          "bin_upper": 0.8,
+          "sample_count": 220,
+          "mean_confidence": 0.7505,
+          "empirical_accuracy": 0.5818,
+          "calibration_gap": 0.1687
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "sample_count": 319,
+          "mean_confidence": 0.8517,
+          "empirical_accuracy": 0.6458,
+          "calibration_gap": 0.2059
+        },
+        {
+          "bin_index": 10,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "sample_count": 1300,
+          "mean_confidence": 0.9799,
+          "empirical_accuracy": 0.8877,
+          "calibration_gap": 0.0922
+        }
+      ],
+      "confidence_status_precision": {
+        "High confidence": {
+          "count": 2215,
+          "percentage_of_total": 89.1,
+          "precision": 0.7549,
+          "mean_confidence": 0.8758
+        },
+        "Moderate confidence": {
+          "count": 241,
+          "percentage_of_total": 9.69,
+          "precision": 0.3278,
+          "mean_confidence": 0.4008
+        },
+        "Low confidence": {
+          "count": 29,
+          "percentage_of_total": 1.17,
+          "precision": 0.2759,
+          "mean_confidence": 0.1888
+        },
+        "Out of scope": {
+          "count": 1,
+          "percentage_of_total": 0.04,
+          "precision": 0.0,
+          "mean_confidence": 0.0772
+        }
+      }
+    }
+  },
+  {
+    "model": "Random Forest",
+    "split": "Split B (Grouped)",
+    "accuracy": 0.6866,
+    "macro_precision": 0.6225,
+    "macro_recall": 0.6258,
+    "macro_f1": 0.6055,
+    "weighted_precision": 0.6917,
+    "weighted_recall": 0.6866,
+    "weighted_f1": 0.6734,
+    "top_15_confused_pairs": [
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Agreement Date",
+        "count": 55
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 41
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Non-Transferable License",
+        "count": 29
+      },
+      {
+        "true_category": "Uncapped Liability",
+        "predicted_category": "Cap On Liability",
+        "count": 18
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "Non-Compete",
+        "count": 15
+      },
+      {
+        "true_category": "Non-Transferable License",
+        "predicted_category": "License Grant",
+        "count": 13
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Uncapped Liability",
+        "count": 12
+      },
+      {
+        "true_category": "Notice Period To Terminate Renewal",
+        "predicted_category": "Renewal Term",
+        "count": 11
+      },
+      {
+        "true_category": "Renewal Term",
+        "predicted_category": "Notice Period To Terminate Renewal",
+        "count": 11
+      },
+      {
+        "true_category": "Effective Date",
+        "predicted_category": "Expiration Date",
+        "count": 10
+      },
+      {
+        "true_category": "Cap On Liability",
+        "predicted_category": "Warranty Duration",
+        "count": 9
+      },
+      {
+        "true_category": "Affiliate License-Licensee",
+        "predicted_category": "Irrevocable Or Perpetual License",
+        "count": 8
+      },
+      {
+        "true_category": "Exclusivity",
+        "predicted_category": "License Grant",
+        "count": 8
+      },
+      {
+        "true_category": "Irrevocable Or Perpetual License",
+        "predicted_category": "Non-Transferable License",
+        "count": 8
+      },
+      {
+        "true_category": "License Grant",
+        "predicted_category": "Exclusivity",
+        "count": 8
+      }
+    ],
+    "calibration": {
+      "expected_calibration_error": 0.3251,
+      "reliability_bins": [
+        {
+          "bin_index": 1,
+          "bin_lower": 0.0,
+          "bin_upper": 0.1,
+          "sample_count": 216,
+          "mean_confidence": 0.0777,
+          "empirical_accuracy": 0.2546,
+          "calibration_gap": 0.1769
+        },
+        {
+          "bin_index": 2,
+          "bin_lower": 0.1,
+          "bin_upper": 0.2,
+          "sample_count": 423,
+          "mean_confidence": 0.1507,
+          "empirical_accuracy": 0.5083,
+          "calibration_gap": 0.3576
+        },
+        {
+          "bin_index": 3,
+          "bin_lower": 0.2,
+          "bin_upper": 0.3,
+          "sample_count": 575,
+          "mean_confidence": 0.2522,
+          "empirical_accuracy": 0.6539,
+          "calibration_gap": 0.4017
+        },
+        {
+          "bin_index": 4,
+          "bin_lower": 0.3,
+          "bin_upper": 0.4,
+          "sample_count": 373,
+          "mean_confidence": 0.3456,
+          "empirical_accuracy": 0.7775,
+          "calibration_gap": 0.4319
+        },
+        {
+          "bin_index": 5,
+          "bin_lower": 0.4,
+          "bin_upper": 0.5,
+          "sample_count": 274,
+          "mean_confidence": 0.4462,
+          "empirical_accuracy": 0.7628,
+          "calibration_gap": 0.3166
+        },
+        {
+          "bin_index": 6,
+          "bin_lower": 0.5,
+          "bin_upper": 0.6,
+          "sample_count": 278,
+          "mean_confidence": 0.5504,
+          "empirical_accuracy": 0.8777,
+          "calibration_gap": 0.3273
+        },
+        {
+          "bin_index": 7,
+          "bin_lower": 0.6,
+          "bin_upper": 0.7,
+          "sample_count": 130,
+          "mean_confidence": 0.6426,
+          "empirical_accuracy": 0.8769,
+          "calibration_gap": 0.2343
+        },
+        {
+          "bin_index": 8,
+          "bin_lower": 0.7,
+          "bin_upper": 0.8,
+          "sample_count": 72,
+          "mean_confidence": 0.7544,
+          "empirical_accuracy": 0.9444,
+          "calibration_gap": 0.1901
+        },
+        {
+          "bin_index": 9,
+          "bin_lower": 0.8,
+          "bin_upper": 0.9,
+          "sample_count": 68,
+          "mean_confidence": 0.8408,
+          "empirical_accuracy": 0.8676,
+          "calibration_gap": 0.0268
+        },
+        {
+          "bin_index": 10,
+          "bin_lower": 0.9,
+          "bin_upper": 1.0,
+          "sample_count": 77,
+          "mean_confidence": 0.9609,
+          "empirical_accuracy": 1.0,
+          "calibration_gap": 0.0391
+        }
+      ],
+      "confidence_status_precision": {
+        "High confidence": {
+          "count": 625,
+          "percentage_of_total": 25.14,
+          "precision": 0.8992,
+          "mean_confidence": 0.6753
+        },
+        "Moderate confidence": {
+          "count": 951,
+          "percentage_of_total": 38.25,
+          "precision": 0.7392,
+          "mean_confidence": 0.3518
+        },
+        "Low confidence": {
+          "count": 694,
+          "percentage_of_total": 27.92,
+          "precision": 0.5576,
+          "mean_confidence": 0.1806
+        },
+        "Out of scope": {
+          "count": 216,
+          "percentage_of_total": 8.69,
+          "precision": 0.2546,
+          "mean_confidence": 0.0777
+        }
+      }
+    }
+  }
+]
