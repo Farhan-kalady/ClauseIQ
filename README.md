@@ -105,12 +105,14 @@ ClauseIQ uses the **Contract Understanding Atticus Dataset (CUAD)**.
 
 ### Example Categories
 
-* Confidentiality
-* Termination
-* Payment Terms
-* Liability
 * Governing Law
-* And other legal clause categories
+* Termination For Convenience
+* Cap On Liability
+* Non-Compete
+* Audit Rights
+* And 36 other CUAD categories (see `GET /categories`)
+
+Note: CUAD targets due-diligence risk clauses. General boilerplate such as *Confidentiality*, *Indemnification*, *Force Majeure* and *Payment Terms* is **not** among the 41 categories, so such clauses receive low confidence by design.
 
 Dataset source:
 
@@ -518,7 +520,7 @@ npm run dev
 #### A. Single Clause Classification
 1. Open `http://localhost:5173/` in your browser.
 2. Under **Contract Clause Classification**, select the **Paste Clause Text** tab.
-3. Paste any contract clause (or click one of the quick sample chips: *Governing Law*, *Confidentiality*, *Termination*, *Non-Compete*).
+3. Paste any contract clause (or click one of the quick sample chips: *Governing Law*, *Cap On Liability*, *Termination*, *Non-Compete*).
 4. Click **Classify Clause** to view the predicted category, calibrated confidence bar, and top-3 alternative classes.
 
 #### B. Upload and Classify a PDF Document

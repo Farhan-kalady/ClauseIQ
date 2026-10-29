@@ -59,12 +59,13 @@ export async function classifyFile(file) {
 /**
  * Semantic Cosine Similarity Clause Search
  */
-export async function searchClauses(query, topK = 5, categoryFilter = null, minScore = 0.0) {
+export async function searchClauses(query, topK = 5, categoryFilter = null, minScore = 0.0, contractId = null) {
   const payload = {
     query,
     top_k: Number(topK),
     category_filter: categoryFilter || null,
     min_score: Number(minScore),
+    contract_id: contractId || null,
   };
 
   const res = await fetch(`${API_BASE_URL}/search`, {
@@ -78,4 +79,13 @@ export async function searchClauses(query, topK = 5, categoryFilter = null, minS
     throw new Error(data.detail || 'Search query failed.');
   }
   return data;
+}
+
+/**
+ * List uploaded contracts (Supabase, or in-memory fallback)
+ */
+export async function getContracts() {
+  const res = await fetch(`${API_BASE_URL}/contracts`);
+  if (!res.ok) throw new Error(`Failed to fetch contracts: ${res.status}`);
+  return await res.json();
 }

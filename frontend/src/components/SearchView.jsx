@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { searchClauses, getCategories } from '../api';
+import { searchClauses, getCategories, getContracts } from '../api';
 import { getCategoryClass } from '../utils/categoryColors';
+import ConfidenceRing from './ConfidenceRing';
+import StatusBadge from './StatusBadge';
+
+const STOP_WORDS = new Set(['the', 'and', 'for', 'with', 'from', 'that', 'this', 'any', 'are', 'all', 'shall', 'will', 'who', 'what', 'which']);
 
 const SAMPLE_QUERIES = [
   'governing law of new york',
@@ -44,11 +48,13 @@ function HighlightedClause({ text, query }) {
   );
 }
 
-export default function SearchView() {
+export default function SearchView({ defaultContract = null, onBack }) {
   const [query, setQuery] = useState('');
   const [topK, setTopK] = useState(5);
   const [categoryFilter, setCategoryFilter] = useState('');
   const [categories, setCategories] = useState([]);
+  const [contracts, setContracts] = useState(defaultContract ? [defaultContract] : []);
+  const [contractId, setContractId] = useState(defaultContract?.id || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchResults, setSearchResults] = useState(null);
@@ -58,7 +64,18 @@ export default function SearchView() {
     getCategories()
       .then((data) => setCategories(data.categories || []))
       .catch((err) => console.warn('Could not load categories:', err));
+    getContracts()
+      .then((data) => {
+        const list = Array.isArray(data) ? data : [];
+        // Keep the just-uploaded contract selectable even if it isn't persisted yet
+        if (defaultContract && !list.some((c) => c.id === defaultContract.id)) list.push(defaultContract);
+        list.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+        setContracts(list);
+      })
+      .catch((err) => console.warn('Could not load contracts:', err));
   }, []);
+
+  const selectedContract = contracts.find((c) => c.id === contractId);
 
   const handleSearch = async (e) => {
     e?.preventDefault();
@@ -68,7 +85,7 @@ export default function SearchView() {
     setError(null);
 
     try {
-      const data = await searchClauses(query, topK, categoryFilter || null);
+      const data = await searchClauses(query, topK, categoryFilter || null, 0.0, contractId || null);
       setSearchResults(data);
     } catch (err) {
       setError(err.message || 'Search failed. Please try again.');
@@ -87,24 +104,49 @@ export default function SearchView() {
     setTimeout(() => setCopiedIdx(null), 2000);
   };
 
-  // Relevance tier word
-  const getRelevanceLabel = (sim) => {
-    if (sim >= 0.30) return { label: 'Strong match', className: 'rel-strong' };
-    if (sim >= 0.15) return { label: 'Fair match', className: 'rel-fair' };
+  // Relevance tier word. Cosine scores stay low for short queries against long clauses,
+  // so a clause containing every query keyword counts as strong regardless of the score.
+  const getRelevanceLabel = (sim, text) => {
+    const terms = query
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((w) => w.length >= 3 && !STOP_WORDS.has(w));
+    const lowerText = (text || '').toLowerCase();
+    const covered = terms.filter((t) => lowerText.includes(t.replace(/s$/, ''))).length;
+    const coverage = terms.length ? covered / terms.length : 0;
+
+    if (sim >= 0.30 || coverage === 1) return { label: 'Strong match', className: 'rel-strong' };
+    if (sim >= 0.15 || coverage >= 0.5) return { label: 'Fair match', className: 'rel-fair' };
     return { label: 'Weak match', className: 'rel-weak' };
   };
 
   return (
     <div className="view-container">
       {/* Hero Section */}
+      {onBack && (
+        <button type="button" className="back-link-btn" onClick={onBack}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
+          <span>{defaultContract ? `Back to ${defaultContract.document_name} results` : 'Back to Classify'}</span>
+        </button>
+      )}
+
       <div className="hero-section">
-        <h1 className="hero-title">Search the CUAD clause library</h1>
+        <h1 className="hero-title">
+          {selectedContract ? 'Search your contract' : 'Search the CUAD clause library'}
+        </h1>
         <p className="hero-subtitle">
           Ask in your own words. Results are ranked by similarity.
         </p>
         <div className="search-scope-pill">
           <span className="scope-dot"></span>
-          <span>Scope: 12,204 curated CUAD training clauses</span>
+          <span>
+            {selectedContract
+              ? `Scope: ${selectedContract.document_name} (${selectedContract.total_clauses} clauses)`
+              : 'Scope: 12,204 curated CUAD training clauses'}
+          </span>
         </div>
       </div>
 
@@ -174,6 +216,28 @@ export default function SearchView() {
 
           {/* Filters Row */}
           <div className="search-filters-row">
+            <div className="filter-item">
+              <label htmlFor="search-contract-scope" className="filter-label">
+                Search In
+              </label>
+              <select
+                id="search-contract-scope"
+                className="select-input"
+                value={contractId}
+                onChange={(e) => {
+                  setContractId(e.target.value);
+                  setSearchResults(null);
+                }}
+              >
+                <option value="">CUAD clause library</option>
+                {contracts.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.document_name} · {c.total_clauses} clauses · {String(c.created_at).slice(0, 16).replace('T', ' ')}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             <div className="filter-item">
               <label htmlFor="search-cat-filter" className="filter-label">
                 Category Filter
@@ -251,7 +315,7 @@ export default function SearchView() {
               Search Results
             </h3>
             <span className="results-count-badge">
-              {searchResults.results?.length || 0} clauses found
+              {searchResults.results?.length || 0} {searchResults.results?.length === 1 ? 'clause' : 'clauses'} found
             </span>
           </div>
 
@@ -275,30 +339,26 @@ export default function SearchView() {
               {searchResults.results.map((item, idx) => {
                 const sim = Number(item.similarity_score) || 0;
                 const simPct = (sim * 100).toFixed(1);
-                const rel = getRelevanceLabel(sim);
+                const rel = getRelevanceLabel(sim, item.clause_text);
+                const modelConf = item.classification_confidence;
 
                 return (
                   <div key={idx} className="result-card-item">
                     <div className="result-item-header">
                       <div className="result-item-tags">
                         <span className="rank-tag">#{item.rank || idx + 1}</span>
-                        <span className={`category-tag ${getCategoryClass(item.category)}`}>
-                          {item.category}
+                        <span className={`category-tag ${getCategoryClass(item.predicted_category)}`}>
+                          {item.predicted_category}
                         </span>
+                        {item.confidence_status && <StatusBadge status={item.confidence_status} />}
                       </div>
 
-                      <div className="similarity-score-pill">
-                        <span className={`relevance-badge ${rel.className}`}>
-                          {rel.label}
-                        </span>
-                        <span className="similarity-value">{simPct}%</span>
-                        <div className="progress-track sm" style={{ width: 60 }}>
-                          <div
-                            className="progress-fill fill-gradient"
-                            style={{ width: `${Math.min(sim * 100, 100)}%` }}
-                          ></div>
+                      {modelConf != null && (
+                        <div className="clause-row-right" title="Model confidence: the same score shown on the Classify page">
+                          <ConfidenceRing score={Number(modelConf)} status={item.confidence_status} size="sm" />
+                          <span className="clause-row-pct">{(Number(modelConf) * 100).toFixed(1)}%</span>
                         </div>
-                      </div>
+                      )}
                     </div>
 
                     <div className="result-item-body">
@@ -307,7 +367,11 @@ export default function SearchView() {
 
                     <div className="result-item-footer">
                       <span className="source-contract-name">
-                        Source contract: <code>{item.contract_id || 'CUAD Document'}</code>
+                        Source contract: <code>{item.source_contract || 'CUAD Document'}</code>
+                        <span className="query-match-note" title="Cosine similarity between your query and this clause; used to rank results">
+                          <span className={`relevance-badge ${rel.className}`}>{rel.label}</span>
+                          Query match {simPct}%
+                        </span>
                       </span>
                       <button
                         type="button"

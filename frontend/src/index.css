@@ -896,6 +896,10 @@ body {
   line-height: 1.4;
 }
 
+.confidence-honesty-note.scope-hint {
+  margin-top: 0.4rem;
+}
+
 /* Alternatives */
 .alternatives-wrapper {
   margin-top: 1.25rem;
@@ -1678,7 +1682,18 @@ body {
 .result-item-tags {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.query-match-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
 }
 
 .rank-tag {
@@ -1932,4 +1947,32 @@ body {
     flex-direction: column;
     align-items: center;
   }
+}
+
+/* Back link on the Search page */
+.back-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.back-link-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.back-link-btn:hover {
+  color: var(--primary);
+  border-color: var(--primary);
 }

@@ -10,6 +10,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('classify'); // 'classify' | 'search'
   const [healthInfo, setHealthInfo] = useState(null);
   const [isRetrying, setIsRetrying] = useState(false);
+  const [lastUpload, setLastUpload] = useState(null); // most recent uploaded contract, used to scope search
 
   // Theme Management
   const [theme, setTheme] = useState(() => {
@@ -68,8 +69,13 @@ export default function App() {
       )}
 
       <main className="main-content" id="main-content">
-        {activeTab === 'classify' && <ClassifierView />}
-        {activeTab === 'search' && <SearchView />}
+        {/* Classify stays mounted so its results survive a trip to Search and back */}
+        <div hidden={activeTab !== 'classify'}>
+          <ClassifierView onContractUploaded={setLastUpload} />
+        </div>
+        {activeTab === 'search' && (
+          <SearchView defaultContract={lastUpload} onBack={() => setActiveTab('classify')} />
+        )}
       </main>
 
       {/* Mobile Bottom Tab Bar */}

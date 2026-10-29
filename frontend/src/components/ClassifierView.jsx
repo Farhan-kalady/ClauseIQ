@@ -10,8 +10,8 @@ const SAMPLE_CLAUSES = [
     text: 'This Agreement and any dispute arising from the performance hereof shall be governed by and construed in accordance with the laws of the State of Delaware.',
   },
   {
-    label: 'Confidentiality',
-    text: 'Each party agrees that all Confidential Information received from the disclosing party will be kept in strict confidence and not disclosed to any third party for five (5) years.',
+    label: 'Cap On Liability',
+    text: "In no event shall either party's aggregate liability arising out of or relating to this Agreement exceed the total fees paid by Customer during the twelve (12) months preceding the claim.",
   },
   {
     label: 'Termination',
@@ -19,13 +19,13 @@ const SAMPLE_CLAUSES = [
   },
   {
     label: 'Non-Compete',
-    text: 'During the term of this Agreement and for a period of twelve (12) months thereafter, Employee shall not directly or indirectly engage in any competitive business activity.',
+    text: 'Neither party shall, during the term of this Agreement and for one (1) year after its termination, directly or indirectly engage in or own any interest in any business that competes with the other party in the Territory.',
   },
 ];
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
-export default function ClassifierView() {
+export default function ClassifierView({ onContractUploaded }) {
   const [inputMode, setInputMode] = useState('text'); // 'text' | 'file'
   const [clauseText, setClauseText] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -43,7 +43,7 @@ export default function ClassifierView() {
   const [docResult, setDocResult] = useState(null);
   const [processingStep, setProcessingStep] = useState(1); // 1: Reading file, 2: Finding clauses, 3: Classifying
   const [categoryFilter, setCategoryFilter] = useState('ALL');
-  const [sortOrder, setSortOrder] = useState('original'); // 'original' | 'highest' | 'lowest'
+  const [sortOrder, setSortOrder] = useState('highest'); // 'highest' | 'original' | 'lowest'
   const [currentPage, setCurrentPage] = useState(1);
   const [expandedClauses, setExpandedClauses] = useState({});
   const clausesPerPage = 6;
@@ -91,12 +91,18 @@ export default function ClassifierView() {
     setError(null);
     setDocResult(null);
     setCategoryFilter('ALL');
-    setSortOrder('original');
+    setSortOrder('highest');
     setCurrentPage(1);
 
     try {
       const data = await classifyFile(selectedFile);
       setDocResult(data);
+      onContractUploaded?.({
+        id: data.contract_id,
+        document_name: data.document_name,
+        total_clauses: data.total_clauses,
+        created_at: new Date().toISOString(),
+      });
     } catch (err) {
       setError(err.message || 'Document classification failed.');
     } finally {
@@ -408,6 +414,13 @@ export default function ClassifierView() {
                       <p className="confidence-honesty-note">
                         Estimate from the model – not a guarantee of correctness.
                       </p>
+                      {(textResult.confidence ?? 0) < 0.25 && (
+                        <p className="confidence-honesty-note scope-hint">
+                          Low confidence usually means this clause type is not one of the 41 CUAD
+                          categories (e.g. Confidentiality, Indemnification, Force Majeure, Payment
+                          Terms are not included), so no category fits well.
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -677,8 +690,8 @@ export default function ClassifierView() {
                       setCurrentPage(1);
                     }}
                   >
-                    <option value="original">Document order</option>
                     <option value="highest">Highest confidence</option>
+                    <option value="original">Document order</option>
                     <option value="lowest">Lowest confidence</option>
                   </select>
                 </div>
