@@ -76,6 +76,21 @@ def get_hybrid_vectorizer(word_max=25000, char_max=15000):
     ])
 
 
+def write_confidence_tiers(calibration_by_split):
+    rows = []
+    for split_name, cal in calibration_by_split.items():
+        for tier, stats in cal["confidence_status_precision"].items():
+            rows.append({
+                "Split": split_name,
+                "Tier": tier,
+                "Count": stats["count"],
+                "Share (%)": stats["percentage_of_total"],
+                "Precision": stats["precision"],
+                "Mean Confidence": stats["mean_confidence"],
+            })
+    pd.DataFrame(rows).to_csv(RESULTS_DIR / "final_confidence_tiers.csv", index=False)
+
+
 def evaluate_final():
     data_path = BASE_DIR / "data" / "clauseiq_dataset_clean.csv"
     df = pd.read_csv(data_path)
@@ -199,6 +214,9 @@ def evaluate_final():
     df_res.to_csv(RESULTS_DIR / "final_model_comparison.csv", index=False)
     with open(RESULTS_DIR / "final_model_comparison.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
+
+    # Save confidence tier breakdown (count, share, precision per tier)
+    write_confidence_tiers({"Split A (Stratified)": cal_a, "Split B (Grouped)": cal_b})
 
     # Save detailed classification reports
     with open(RESULTS_DIR / "final_classification_report_split_a.json", "w", encoding="utf-8") as f:

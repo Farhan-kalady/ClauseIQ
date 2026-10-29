@@ -49,3 +49,48 @@ Updated the test assertion in `tests/test_sprint3.py` to match the exact canonic
 
 **Verification:**  
 Executed `python -m pytest tests/test_sprint3.py::test_categories_endpoint`, which passed immediately and confirmed all 41 CUAD classes are served accurately.
+
+---
+
+## Bug 4
+**Symptom:**  
+Sending punctuation-only or non-word symbols (e.g. `"!@#$%^&*()_+{}[]:;<>/?"`) to `POST /classify` returned `HTTP 200 OK` with an uncalibrated prediction on an all-zero TF-IDF feature vector instead of a validation error.
+
+**Cause:**  
+`clean_text()` stripped non-alphanumeric noise while intentionally preserving punctuation characters `.,;:()-`. Consequently, `cleaned` contained punctuation characters (`": ; ( )"`), which passed the `if not cleaned:` check despite having zero alphanumeric or legal word tokens.
+
+**Fix:**  
+Updated `classify_clause` in `api/services/ml_service.py` to check `if not cleaned or not any(c.isalnum() for c in cleaned): raise ValueError("Clause text contains no valid alphanumeric or legal tokens.")`.
+
+**Verification:**  
+Executed `tests/test_sprint3.py::test_classify_gibberish_input`, which passed and confirmed `HTTP 400 Bad Request` is returned with a clear error message.
+
+---
+
+## Bug 5
+**Symptom:**  
+Uploading corrupted or unparseable PDF byte streams to `POST /classify/file` raised an unhandled `pymupdf.FileDataError`, causing the server to return `HTTP 500 Internal Server Error`.
+
+**Cause:**  
+`classify_document` opened the PDF byte stream without a guarded `try...except` block to intercept PyMuPDF document parsing exceptions.
+
+**Fix:**  
+Wrapped `pymupdf.open()` in a `try...except` block in `api/services/ml_service.py`, converting parsing errors into a structured client-safe `ValueError(f"Corrupted or invalid PDF file '{filename}': {str(e)}")` which FastAPI returns as `HTTP 400 Bad Request`.
+
+**Verification:**  
+Executed `tests/test_sprint3.py::test_classify_corrupted_pdf_upload`, returning `HTTP 400 Bad Request`.
+
+---
+
+## Bug 6
+**Symptom:**  
+Uploading unsupported binary file formats (e.g., `.png`, `.exe`) to `POST /classify/file` caused the backend to attempt fallback plain text decoding (`latin-1`), passing binary noise into the NLP pipeline.
+
+**Cause:**  
+The file upload endpoint did not validate file extensions, assuming any non-PDF was plain text.
+
+**Fix:**  
+Added file extension validation in `classify_document` (`api/services/ml_service.py`) ensuring only `.pdf` and `.txt` files are accepted, raising a `ValueError` for unsupported extensions.
+
+**Verification:**  
+Executed `tests/test_sprint3.py::test_classify_unsupported_file_upload`, confirming `HTTP 400 Bad Request`.
