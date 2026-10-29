@@ -29,7 +29,8 @@ def split_into_clauses(text: str) -> list[str]:
     if len(raw_clauses) <= 1:
         raw_clauses = re.split(r"(?<=[.!?])\s+", clean_input)
 
-    return [c.strip() for c in raw_clauses if len(c.strip()) > 0]
+    # Drop fragments with no real words, e.g. bare section numbers like "1." or "(a)"
+    return [c.strip() for c in raw_clauses if re.search(r"[A-Za-z]{2,}", c)]
 
 
 if __name__ == "__main__":

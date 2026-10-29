@@ -20,6 +20,7 @@ if src_path not in sys.path:
 
 from text_cleaner import clean_text
 from clause_splitter import split_into_clauses
+from pdf_extractor import strip_headers_footers
 
 # Global artifacts holders (loaded once at startup)
 _model = None
@@ -255,8 +256,8 @@ def classify_document(file_content: bytes, filename: str) -> Dict[str, Any]:
             with pymupdf.open(stream=file_content, filetype="pdf") as doc:
                 if len(doc) > 100:
                     raise ValueError(f"PDF document '{filename}' exceeds the maximum limit of 100 pages (found {len(doc)} pages).")
-                for page in doc:
-                    extracted_text += page.get_text() + "\n"
+                pages = [page.get_text() for page in doc]
+            extracted_text = "\n".join(strip_headers_footers(pages))
         except ValueError:
             raise
         except Exception as e:

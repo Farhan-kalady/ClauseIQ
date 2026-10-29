@@ -50,6 +50,22 @@ class TestSprint1Pipeline(unittest.TestCase):
         self.assertEqual(len(clauses), 3)
         self.assertTrue(all(len(c) > 0 for c in clauses))
 
+    def test_clause_splitting_drops_bare_section_numbers(self):
+        sample_doc = "1. DEFINITIONS The Agreement means this document. 2. Payment shall be made within 30 days."
+        clauses = split_into_clauses(sample_doc)
+        self.assertNotIn("1.", clauses)
+        self.assertNotIn("2.", clauses)
+        self.assertTrue(all(any(ch.isalpha() for ch in c) for c in clauses))
+
+    def test_strip_headers_footers(self):
+        from pdf_extractor import strip_headers_footers
+        pages = [
+            "Acme Contract\nPage 1\nThe Supplier shall deliver goods.\nConfidential",
+            "Acme Contract\nPage 2\nThe Buyer shall pay invoices.\nConfidential",
+        ]
+        cleaned = strip_headers_footers(pages)
+        self.assertEqual(cleaned, ["The Supplier shall deliver goods.", "The Buyer shall pay invoices."])
+
     def test_clause_splitting_empty_and_invalid_input(self):
         self.assertEqual(split_into_clauses(""), [])
         self.assertEqual(split_into_clauses("   "), [])

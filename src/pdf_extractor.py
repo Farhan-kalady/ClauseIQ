@@ -1,7 +1,38 @@
+from collections import Counter
 from pathlib import Path
+import re
 import pymupdf
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+_PAGE_NUMBER_RE = re.compile(r"^(page\s*)?\d+(\s*(of|/)\s*\d+)?$", re.IGNORECASE)
+
+
+def strip_headers_footers(pages: list[str], edge_lines: int = 3) -> list[str]:
+    """Remove page-number lines and header/footer lines repeated across pages.
+
+    Only the first and last `edge_lines` lines of each page are considered, so
+    repeated phrases in the contract body are never touched.
+    """
+    split_pages = [p.splitlines() for p in pages]
+
+    edge_counts = Counter()
+    for lines in split_pages:
+        edges = {l.strip() for l in lines[:edge_lines] + lines[-edge_lines:] if l.strip()}
+        edge_counts.update(edges)
+    repeated = {line for line, n in edge_counts.items() if len(pages) > 1 and n > 1}
+
+    cleaned = []
+    for lines in split_pages:
+        kept = []
+        for i, line in enumerate(lines):
+            s = line.strip()
+            at_edge = i < edge_lines or i >= len(lines) - edge_lines
+            if at_edge and (s in repeated or _PAGE_NUMBER_RE.match(s)):
+                continue
+            kept.append(line)
+        cleaned.append("\n".join(kept))
+    return cleaned
 
 
 def extract_text_from_pdf(pdf_path: str | Path) -> str:
@@ -14,12 +45,10 @@ def extract_text_from_pdf(pdf_path: str | Path) -> str:
         else:
             raise FileNotFoundError(f"PDF file not found at '{pdf_path}' or '{candidate}'")
 
-    full_text = []
     with pymupdf.open(path) as doc:
-        for page in doc:
-            full_text.append(page.get_text())
+        pages = [page.get_text() for page in doc]
 
-    return "".join(full_text)
+    return "\n".join(strip_headers_footers(pages))
 
 
 if __name__ == "__main__":
