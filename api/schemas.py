@@ -77,6 +77,8 @@ class SearchResultItem(BaseModel):
     true_category: Optional[str] = None
     similarity_score: float
     source_contract: str
+    classification_confidence: Optional[float] = None
+    confidence_status: Optional[str] = None
 
 
 class SearchResponse(BaseModel):

@@ -3,7 +3,7 @@ import sys
 from typing import Any, Dict, List, Optional, Tuple
 from api.config import settings
 from api.services.supabase_service import log_search, get_supabase_client
-from api.services.ml_service import get_uploaded_contract
+from api.services.ml_service import classify_clause, get_uploaded_contract
 
 # Ensure src/ is in sys.path
 src_path = str(settings.SRC_DIR)
@@ -106,6 +106,17 @@ def execute_search(
             min_score=score_threshold,
         )
         scope = "CUAD Clause Library (12,204 clauses)"
+
+    # Attach the classifier's verdict for each result using the same model call as /classify,
+    # so a clause shows the identical category and confidence on both pages.
+    for r in results:
+        try:
+            verdict = classify_clause(r["clause_text"])
+        except ValueError:
+            continue
+        r["predicted_category"] = verdict["predicted_category"]
+        r["classification_confidence"] = verdict["confidence"]
+        r["confidence_status"] = verdict["confidence_status"]
 
     # Asynchronously / best-effort log search event to Supabase
     log_search(

@@ -138,20 +138,18 @@ def fetch_contracts(limit: int = 50) -> List[Dict[str, Any]]:
     client = get_supabase_client()
     if client:
         try:
-            res = client.table("contracts").select("id, document_name, created_at").order("created_at", desc=True).limit(limit).execute()
+            # Embedded aggregate returns clause counts in the same request (no per-contract queries)
+            res = client.table("contracts").select("id, document_name, created_at, clauses(count)").order("created_at", desc=True).limit(limit).execute()
             if res.data:
-                # Also fetch clause counts
-                contracts = []
-                for row in res.data:
-                    c_id = row["id"]
-                    count_res = client.table("clauses").select("id", count="exact").eq("contract_id", c_id).execute()
-                    contracts.append({
-                        "id": c_id,
+                return [
+                    {
+                        "id": row["id"],
                         "document_name": row["document_name"],
-                        "total_clauses": count_res.count or 0,
+                        "total_clauses": (row.get("clauses") or [{}])[0].get("count", 0),
                         "created_at": row["created_at"],
-                    })
-                return contracts
+                    }
+                    for row in res.data
+                ]
         except Exception as e:
             logger.warning(f"Failed to query contracts from Supabase: {e}")
 

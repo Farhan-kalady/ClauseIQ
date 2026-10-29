@@ -1,9 +1,12 @@
 from pathlib import Path
+import re
 import sys
 from typing import Any, Dict, List, Optional
 import joblib
 import numpy as np
 import pandas as pd
+from nltk.stem import PorterStemmer
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS, TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,6 +17,14 @@ if src_dir not in sys.path:
     sys.path.insert(0, src_dir)
 
 from text_cleaner import clean_text
+
+_stemmer = PorterStemmer()
+
+
+def _stem_tokens(text: str) -> List[str]:
+    """Tokenize, drop stop words, and stem so 'governing'/'governed' and 'law'/'laws' match."""
+    return [_stemmer.stem(t) for t in re.findall(r"[a-z0-9]+", clean_text(text))
+            if t not in ENGLISH_STOP_WORDS]
 
 
 class ClauseSearchEngine:
@@ -74,6 +85,18 @@ class ClauseSearchEngine:
         # Precompute predicted categories for all corpus items for fast retrieval
         preds_idx = self.classifier.predict(self.corpus_tfidf)
         self.df["predicted_category"] = self.label_encoder.inverse_transform(preds_idx)
+
+        # Retrieval uses its own word-level TF-IDF index: the classifier's character
+        # n-grams match fragments of short keyword queries against unrelated clauses.
+        self.search_vectorizer = TfidfVectorizer(
+            max_features=10000,
+            ngram_range=(1, 2),
+            min_df=2,
+            max_df=0.95,
+            sublinear_tf=True,
+        )
+        self.search_tfidf = self.search_vectorizer.fit_transform(self.df["clean_text"].fillna("").astype(str))
+        print(f"Search index built: {self.search_tfidf.shape[1]} word features.")
         print("Corpus search engine initialization complete.")
 
     def search(
@@ -103,13 +126,8 @@ class ClauseSearchEngine:
         if not cleaned_query:
             return []
 
-        query_vec = self.vectorizer.transform([cleaned_query])
-
-        if hasattr(self.vectorizer, "transformer_list"):
-            word_vec = self.vectorizer.transformer_list[0][1].transform([cleaned_query])
-            if word_vec.nnz == 0:
-                return []
-        elif query_vec.nnz == 0:
+        query_vec = self.search_vectorizer.transform([cleaned_query])
+        if query_vec.nnz == 0:
             return []
 
         # Filter by contract_id if specified in CUAD corpus
@@ -134,11 +152,11 @@ class ClauseSearchEngine:
             return []
 
         # Compute cosine similarity
-        candidate_tfidf = self.corpus_tfidf[candidate_indices]
+        candidate_tfidf = self.search_tfidf[candidate_indices]
         sim_scores = cosine_similarity(query_vec, candidate_tfidf).flatten()
 
-        # Filter by min_score
-        valid_mask = sim_scores >= min_score
+        # Filter by min_score; a zero score means no shared terms, so it is never a match
+        valid_mask = (sim_scores >= min_score) & (sim_scores > 0)
         if not np.any(valid_mask):
             return []
 
@@ -182,12 +200,7 @@ class ClauseSearchEngine:
         if not query or not isinstance(query, str) or not query.strip() or not clauses:
             return []
 
-        cleaned_query = clean_text(query)
-        if not cleaned_query:
-            return []
-
-        query_vec = self.vectorizer.transform([cleaned_query])
-        if query_vec.nnz == 0:
+        if not _stem_tokens(query):
             return []
 
         # Filter by category if requested
@@ -200,14 +213,30 @@ class ClauseSearchEngine:
         if not filtered_clauses:
             return []
 
-        clause_texts = [c.get("cleaned_text") or clean_text(c.get("clause_text", "")) for c in filtered_clauses]
-        clause_vecs = self.vectorizer.transform(clause_texts)
+        # A single contract gets its own stemmed index: the CUAD vocabulary has no stemming,
+        # so 'governing law' would miss 'governed by the laws', and CUAD-wide IDF
+        # under-weights terms that are distinctive within this one document.
+        clause_texts = [c.get("clause_text", "") for c in filtered_clauses]
+        doc_vectorizer = TfidfVectorizer(
+            tokenizer=_stem_tokens,
+            lowercase=False,
+            token_pattern=None,
+            ngram_range=(1, 2),
+            sublinear_tf=True,
+        )
+        try:
+            clause_vecs = doc_vectorizer.fit_transform(clause_texts)
+        except ValueError:  # every clause was empty after stop-word removal
+            return []
+        query_vec = doc_vectorizer.transform([query])
+        if query_vec.nnz == 0:
+            return []
 
         sim_scores = cosine_similarity(query_vec, clause_vecs).flatten()
 
         valid_items = []
         for c, score in zip(filtered_clauses, sim_scores):
-            if score >= min_score:
+            if score >= min_score and score > 0:
                 valid_items.append((c, float(score)))
 
         if not valid_items:
@@ -225,6 +254,7 @@ class ClauseSearchEngine:
                 "true_category": None,
                 "similarity_score": round(float(score), 4),
                 "source_contract": document_name,
+                "classification_confidence": c.get("confidence"),
             })
 
         return results

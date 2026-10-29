@@ -36,6 +36,8 @@ def search_clauses(payload: SearchRequest):
             true_category=r.get("true_category"),
             similarity_score=r["similarity_score"],
             source_contract=r["source_contract"],
+            classification_confidence=r.get("classification_confidence"),
+            confidence_status=r.get("confidence_status"),
         )
         for r in results
     ]
