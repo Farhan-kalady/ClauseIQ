@@ -1,0 +1,24 @@
+\chapter{Conclusions}
+\label{ch:conclusions}
+
+This project successfully researched, designed, evaluated, and deployed ClauseIQ---an end-to-end, machine learning-based contract clause classification and intelligent search prototype system engineered to assist in the triage of complex commercial agreements. By leveraging the expert-annotated Contract Understanding Atticus Dataset (CUAD), the project established a reliable, deterministic, and privacy-preserving legal technology pipeline.
+
+\paragraph*{Summary of technical achievements}
+The core technical milestones achieved in this project comprise:
+\begin{enumerate}
+    \item Comprehensive corpus validation: Processed, cleaned, and validated \TotalClauses{} clause instances originating across \TotalContracts{} SEC EDGAR commercial contracts, preserving all \NumClasses{} standardized legal categories without discarding low-frequency classes.
+    \item Domain-specific feature engineering: Empirically demonstrated that standard stopword removal degrades legal text classification, while NLTK WordNet lemmatization and hybrid representation (uniting 25,000 word n-grams with 15,000 character-within-word-boundary n-grams) elevate discriminative capability, achieving a 5-fold cross-validation Macro-F1 of 0.6865.
+    \item Rigorous leakage-aware benchmarking: Evaluated four classical architectures across two distinct partitioning protocols. On the standard stratified split (Split~A), the final Multinomial Logistic Regression model achieved \FinalSplitAAcc{} Accuracy, \FinalSplitAMacroFScore{} Macro-F1, and \FinalSplitAWeightedFScore{} Weighted-F1. On the contract-grouped split with zero parent agreement overlap (Split~B), the model achieved \FinalSplitBAcc{} Accuracy and \FinalSplitBMacroFScore{} Macro-F1, demonstrating robust cross-contract generalization.
+    \item Empirical probability calibration: Reduced Expected Calibration Error (ECE) from 0.2822 down to \FinalSplitAECE{}. Over 53\% of predictions achieved High Confidence ($\ge 0.50$), delivering an empirical precision of \FinalSplitBHighConfPrec{} on unseen agreements.
+    \item High-precision semantic retrieval: Constructed a TF-IDF and Cosine Similarity search engine achieving Precision@1 of 0.80 and Precision@5 of 0.88 across benchmark legal queries, operating with measured mean retrieval latency of approximately 100~ms across 12,204 clauses.
+    \item Full-stack production delivery: Encapsulated the machine learning models within an asynchronous FastAPI service, integrated a Supabase PostgreSQL persistence schema prototype for audit logging, and developed an intuitive React.js single-page interface verified through 45 passing automated tests.
+\end{enumerate}
+
+\paragraph*{System boundaries and operational truthfulness}
+To maintain ethical and technical transparency, the operational boundaries of ClauseIQ are emphasized:
+\begin{itemize}
+    \item Classical statistical paradigm: ClauseIQ is deliberately built upon classical machine learning algorithms. The deployed system does not utilize deep neural networks, transformer architectures, or generative Large Language Models. This design ensures rapid execution (mean single-clause inference latency of 6.58~ms), deterministic reproducibility, low compute overhead, and complete data privacy.
+    \item Decision-support scope: ClauseIQ functions solely as an assistive legal technology prototype. It does not provide legal advice, generate binding legal opinions, or replace qualified legal counsel.
+    \item Semantic ambiguity ceilings: Error analysis revealed that misclassifications are concentrated within reciprocal category pairs (such as Agreement Date vs Effective Date, and Cap On Liability vs Uncapped Liability) where conflicting legal concepts appear within the same sentence. Legal human-in-the-loop oversight remains essential for these provisions.
+    \item Authentication and hosting: In its present implementation, ClauseIQ executes locally or within private networks; user authentication and cloud hosting are not configured.
+\end{itemize}

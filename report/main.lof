@@ -1,0 +1,44 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Class frequency distribution across all 41 legal clause categories in the CUAD dataset}}{14}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Distribution of annotated clause density per commercial contract ($N = 510$ contracts)}}{15}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Histogram and kernel density estimate of clause token counts across the corpus}}{15}{figure.caption.17}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Cumulative class share demonstrating categorical concentration across the 41 CUAD legal categories}}{16}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Distribution of the top 20 most frequent bigrams extracted from the cleaned contract corpus}}{16}{figure.caption.19}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Median clause token count across the top 15 legal categories}}{17}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Flow diagram of the hybrid word and character feature extraction pipeline}}{19}{figure.caption.21}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Flow diagram of the multinomial logistic regression inference architecture}}{20}{figure.caption.22}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Flow diagram of the linear support vector machine (LinearSVC) decision pipeline}}{20}{figure.caption.23}%
+\contentsline {figure}{\numberline {3.10}{\ignorespaces Flow diagram of the multinomial naive bayes classification pipeline}}{21}{figure.caption.24}%
+\contentsline {figure}{\numberline {3.11}{\ignorespaces Flow diagram of the random forest bagging ensemble classification pipeline}}{22}{figure.caption.25}%
+\contentsline {figure}{\numberline {3.12}{\ignorespaces Flow diagram of the TF-IDF cosine similarity intelligent search retrieval engine}}{23}{figure.caption.26}%
+\contentsline {figure}{\numberline {3.13}{\ignorespaces End-to-end architectural pipeline of the operationalized ClauseIQ system}}{23}{figure.caption.27}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Performance comparison of evaluated machine learning classifiers on held-out test data}}{37}{figure.caption.32}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Reliability diagram comparing predicted confidence vs empirical accuracy across 10 probability bins}}{38}{figure.caption.33}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Empirical precision across operational confidence tiers on Split A and Split B}}{39}{figure.caption.35}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Complete 41 $\times $ 41 confusion matrix on Split A ($N = 2,441$ held-out test clauses)}}{40}{figure.caption.36}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Complete 41 $\times $ 41 confusion matrix on Split B ($N = 2,486$ grouped test clauses)}}{41}{figure.caption.37}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Per-class F1-scores across all 41 legal categories evaluated on Split A and Split B}}{42}{figure.caption.38}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Top 10 most frequently confused legal category pairs on held-out test data (Split A)}}{44}{figure.caption.41}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Top 11 most frequently confused legal category pairs on grouped test contracts (Split B); three pairs tie at 11 misclassifications}}{44}{figure.caption.42}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Precision @ k retrieval performance across benchmark legal queries}}{55}{figure.caption.44}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces Deployment topology and service interaction diagram of ClauseIQ}}{56}{figure.caption.45}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Sequence diagram illustrating the end-to-end document classification request flow}}{57}{figure.caption.46}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces User interface: Single clause classification console with confidence ring and alternative predictions}}{61}{figure.caption.50}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces User interface: PDF document upload dropzone with drag-and-drop ingestion support}}{62}{figure.caption.51}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces User interface: Multi-clause document extraction results table with triage breakdown and filters}}{62}{figure.caption.52}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces User interface: Intelligent semantic search console with category filter and highlighted terms}}{63}{figure.caption.53}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces User interface: Dark mode theme aesthetic optimized for extended review sessions}}{63}{figure.caption.54}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces User interface: Responsive mobile layout (390 px width) with mobile bottom navigation bar}}{64}{figure.caption.55}%
+\contentsline {figure}{\numberline {6.9}{\ignorespaces User interface: Offline banner alerting the user when the backend API service is disconnected}}{65}{figure.caption.56}%
+\contentsline {figure}{\numberline {6.10}{\ignorespaces User interface: Interactive FastAPI Swagger documentation (\texttt {/docs}) detailing all REST endpoints}}{65}{figure.caption.57}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Verified GitHub repository commit history for ClauseIQ}}{68}{figure.caption.58}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

@@ -1,0 +1,23 @@
+\chapter{Introduction}
+\label{ch:introduction}
+
+Commercial contracts form the operational, financial, and legal foundation of corporate enterprise commerce. Organizations negotiate, execute, and administer hundreds of bilateral agreements annually, including non-disclosure agreements, master service agreements, software licenses, intellectual property assignments, and supplier contracts. Each agreement establishes binding rights, duties, indemnification covenants, and financial liability allocations. Despite their criticality, contract review and compliance auditing remain largely manual, labor-intensive, and vulnerable to reviewer fatigue and subjective inconsistencies across distributed legal teams. Furthermore, conventional keyword searching and regular expressions fail to provide adequate discovery due to the syntactic complexity and extreme lexical diversity of legal drafting, where semantically equivalent covenants are routinely drafted with divergent terminology.
+
+Natural Language Processing (NLP) and statistical Machine Learning (ML) provide automated, data-driven methodologies to overcome these operational bottlenecks. By transforming unstructured contractual prose into structured mathematical feature spaces, computational algorithms can analyze lexical distributions, capture n-gram co-occurrence patterns, and learn discriminative boundaries between contractual covenants. In legal informatics, these techniques enable two core capabilities: supervised clause classification, which maps provisions into standardized legal categories with probabilistic confidence estimates, and semantic information retrieval, which ranks clauses by geometric similarity to satisfy open-ended queries without requiring exact keyword matches.
+
+ClauseIQ is an automated, machine learning-based contract clause classification and intelligent search system designed to streamline the categorization, exploration, and auditing of commercial provisions. Built upon the Contract Understanding Atticus Dataset (CUAD v1)~\cite{hendrycks2021cuad}---a peer-reviewed benchmark comprising \TotalContracts{} SEC EDGAR agreements---the system processes a verified corpus of \TotalClauses{} clauses spanning \NumClasses{} standardized legal categories. ClauseIQ operationalizes a 41-category supervised classification engine with automated confidence triage alongside a sublinear TF-IDF cosine-similarity retrieval engine. The complete solution is delivered as an asynchronous FastAPI backend service integrated with a responsive React user interface and relational audit logging.
+
+
+The primary technical and engineering objectives of the ClauseIQ project are:
+\begin{enumerate}\itemsep 1pt \parskip 0pt \parsep 0pt
+    \item Curate, clean, and analyze the \TotalClauses{}-clause CUAD benchmark across \NumClasses{} categories.
+    \item Engineer specialized legal text representations combining sublinear TF-IDF and hybrid n-grams.
+    \item Benchmark four classical classifiers under stratified (Split~A) and grouped (Split~B) protocols.
+    \item Calibrate output probabilities via Expected Calibration Error (ECE) for operational triage.
+    \item Construct a high-throughput information retrieval engine supporting top-$k$ semantic search.
+    \item Deliver an end-to-end prototype integrating an asynchronous REST API, web UI, and test suites.
+\end{enumerate}
+
+ClauseIQ is engineered exclusively with classical statistical machine learning algorithms (linear classifiers and tree ensembles) to ensure deterministic reproducibility, sub-10~ms inference latency, and a compact memory footprint under 500~MB executable on commodity enterprise CPUs without GPU acceleration. The system serves strictly as an assistive decision-support tool for legal practitioners, ingesting text-layer PDF and TXT documents in a local prototype environment.
+
+The remainder of this report is organized as follows: Chapter~2 reviews supporting Legal NLP literature and benchmarks; Chapter~3 details system analysis, dataset statistics, and mathematical formulations; Chapter~4 presents system design and experimental optimization; Chapter~5 analyzes empirical classification and search results; Chapter~6 describes FastAPI deployment and UI implementation; Chapter~7 records repository version control; Chapters~8 and~9 provide conclusions and future scope; and Chapter~10 documents minimum hardware and software specifications.

@@ -1,0 +1,256 @@
+\chapter{System design}
+\label{ch:system_design}
+
+\section{Model(s) building}
+\label{sec:models_building}
+
+This section details the software architecture, modular implementation code, experimental train/test partitioning designs, hyperparameter optimization strategies, and testing protocols governing the ClauseIQ classification and search engines.
+
+\subsection{Implementation code}
+\label{subsec:implementation_code}
+
+The implementation of ClauseIQ is organized into distinct, modular Python modules within \texttt{src/} and \texttt{api/}. All code snippets reproduced below represent authentic, verified excerpts from the active codebase.
+
+\paragraph*{Baseline feature extraction pipeline}
+Listing~\ref{lst:feature_extraction_baseline} displays the baseline feature extraction routine implemented in \path{src/feature_extraction.py}, responsible for dataset loading, fitting the \texttt{LabelEncoder}, executing stratified 80/20 partitioning, and initial 10,000-feature TF-IDF vectorization.
+
+\begin{lstlisting}[language=Python, caption={Baseline 10,000-feature word-level TF-IDF vectorizer (\texttt{src/feature\_extraction.py}, abridged)}, label={lst:feature_extraction_baseline}]
+from pathlib import Path
+import joblib
+import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+
+def extract_features(data_path, models_dir):
+    df = pd.read_csv(data_path)
+    text_col = "clean_text" if "clean_text" in df.columns else "clause_text"
+    target_col = "category"
+
+    X_raw = df[text_col].fillna("").astype(str)
+    y_raw = df[target_col].astype(str)
+
+    # 1. Label Encoding across all 41 categories
+    le = LabelEncoder()
+    y_encoded = le.fit_transform(y_raw)
+    joblib.dump(le, models_dir / "label_encoder.pkl")
+
+    # 2. Stratified 80/20 train/test split to prevent leakage
+    X_train_text, X_test_text, y_train, y_test = train_test_split(
+        X_raw, y_encoded, test_size=0.20, random_state=42, stratify=y_encoded
+    )
+
+    # 3. Baseline Word TF-IDF Feature Extraction (Fit ONLY on training split)
+    vectorizer = TfidfVectorizer(
+        ngram_range=(1, 2), max_features=10000,
+        sublinear_tf=True, min_df=2, max_df=0.95
+    )
+    X_train = vectorizer.fit_transform(X_train_text)
+    X_test = vectorizer.transform(X_test_text)
+
+    joblib.dump((X_train, X_test, y_train, y_test), models_dir / "train_test_split.pkl")
+    joblib.dump(vectorizer, models_dir / "tfidf_vectorizer.pkl")
+    return X_train, X_test, y_train, y_test, vectorizer, le
+\end{lstlisting}
+
+\paragraph*{Final production hybrid feature union}
+Listing~\ref{lst:feature_extraction_final} displays the production feature extraction pipeline in \path{src/build_artifacts.py}, which constructs a \texttt{FeatureUnion} combining 25,000 word n-grams with 15,000 character n-grams (\texttt{char\_wb}) to yield a 40,000-dimensional sparse representation.
+
+\begin{lstlisting}[language=Python, caption={Final 40,000-feature hybrid word-plus-character vectorizer (\texttt{src/build\_artifacts.py})}, label={lst:feature_extraction_final}]
+from sklearn.pipeline import FeatureUnion
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+def get_hybrid_vectorizer(word_max=25000, char_max=15000):
+    """Constructs the final production FeatureUnion combining word and subword features."""
+    return FeatureUnion([
+        (
+            "word",
+            TfidfVectorizer(
+                max_features=word_max,
+                ngram_range=(1, 2),
+                min_df=2,
+                max_df=0.95,
+                sublinear_tf=True,
+            ),
+        ),
+        (
+            "char",
+            TfidfVectorizer(
+                max_features=char_max,
+                analyzer="char_wb",
+                ngram_range=(3, 5),
+                min_df=3,
+                sublinear_tf=True,
+            ),
+        ),
+    ])
+\end{lstlisting}
+
+\paragraph*{Contract clause segmentation engine}
+Listing~\ref{lst:clause_splitter} illustrates the regex-based clause segmentation engine in \path{src/clause_splitter.py}. The boundary tokenizer splits contract documents on sentence and clause terminations followed by capitalized tokens, numbers, or quotation marks, preventing fragmenting within legal parentheticals.
+
+\begin{lstlisting}[language=Python, caption={Contract clause boundary segmentation (\texttt{src/clause\_splitter.py})}, label={lst:clause_splitter}]
+import re
+
+def split_into_clauses(text: str) -> list[str]:
+    """Split input contract text into sentence-level clauses using regex boundary detection.
+    Splits on sentence and clause boundaries (periods, exclamation marks, question marks 
+    followed by whitespace and a capital letter, digit, or quote), preserving contractual clause structures.
+    """
+    if not text or not isinstance(text, str):
+        return []
+
+    clean_input = text.strip()
+    if not clean_input:
+        return []
+
+    # High-precision sentence/clause boundary tokenizer for legal contracts
+    raw_clauses = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"'(\[])", clean_input)
+    if len(raw_clauses) <= 1:
+        raw_clauses = re.split(r"(?<=[.!?])\s+", clean_input)
+
+    return [c.strip() for c in raw_clauses if len(c.strip()) > 0]
+\end{lstlisting}
+
+\paragraph*{Final training and serialization workflow}
+Listing~\ref{lst:build_artifacts} presents the production artifact compilation workflow in \path{src/build_artifacts.py}, which fits the final multinomial logistic regression classifier on the complete dataset with balanced class weights and exports joblib bundles.
+
+\begin{lstlisting}[language=Python, caption={Production artifact compilation and packaging workflow (\texttt{src/build\_artifacts.py}, abridged)}, label={lst:build_artifacts}]
+def build_artifacts(data_path, artifacts_dir, use_hybrid_features=True):
+    df = pd.read_csv(data_path)
+    X_raw = df["clause_text"].fillna("").astype(str).tolist()
+    y_raw = df["category"].astype(str).tolist()
+
+    # Preprocessing with NLTK WordNet Lemmatization
+    X_cleaned = [clean_text_pipeline(t) for t in X_raw]
+
+    # Label Encoder fitting across all 41 categories
+    le = LabelEncoder()
+    y_encoded = le.fit_transform(y_raw)
+
+    # Feature vectorization
+    vectorizer = get_hybrid_vectorizer()
+    X_mat = vectorizer.fit_transform(X_cleaned)
+
+    # Train Multinomial Logistic Regression with balanced weighting
+    model = LogisticRegression(
+        C=1.0,
+        max_iter=2000,
+        class_weight="balanced",
+        solver="lbfgs",
+        random_state=42
+    )
+    model.fit(X_mat, y_encoded)
+
+    # Save finalized deployable runtime artifacts
+    joblib.dump(model, artifacts_dir / "best_model.joblib")
+    joblib.dump(vectorizer, artifacts_dir / "tfidf_vectorizer.joblib")
+    joblib.dump(le, artifacts_dir / "label_encoder.joblib")
+\end{lstlisting}
+\newpage
+\paragraph*{Evaluation protocol for Split B grouped benchmarking}
+Listing~\ref{lst:eval_protocol} presents the leakage-safe grouped evaluation routine. Implemented in \path{src/evaluation_protocol.py}, this protocol partitions contracts via \texttt{GroupShuffleSplit} and computes comprehensive performance metrics.
+
+\begin{lstlisting}[language=Python, caption={Leakage-safe grouped contract evaluation protocol (\texttt{src/evaluation\_protocol.py}, abridged)}, label={lst:eval_protocol}]
+def evaluate_split_b(df, X_text, y_encoded, groups):
+    """Executes leakage-safe evaluation with zero parent contract overlap."""
+    gss = GroupShuffleSplit(n_splits=1, test_size=0.20, random_state=42)
+    train_idx, test_idx = next(gss.split(X_text, y_encoded, groups=groups))
+
+    X_train_raw = X_text.iloc[train_idx]
+    X_test_raw = X_text.iloc[test_idx]
+    y_train = y_encoded[train_idx]
+    y_test = y_encoded[test_idx]
+
+    # Fit vectorizer strictly on training partition
+    vec = get_hybrid_vectorizer()
+    X_train = vec.fit_transform(X_train_raw)
+    X_test = vec.transform(X_test_raw)
+
+    clf = LogisticRegression(C=1.0, max_iter=2000, class_weight="balanced", random_state=42)
+    clf.fit(X_train, y_train)
+
+    probs = clf.predict_proba(X_test)
+    preds = np.argmax(probs, axis=1)
+
+    acc = accuracy_score(y_test, preds)
+    macro_f1 = f1_score(y_test, preds, average="macro", zero_division=0)
+    calib = compute_calibration_metrics(y_test, probs)
+    return acc, macro_f1, calib
+\end{lstlisting}
+
+\paragraph*{Production REST API router}
+Listing~\ref{lst:api_router} displays the FastAPI route handlers in \path{api/routers/classify.py} servicing single-clause and document-level classification requests.
+
+\begin{lstlisting}[language=Python, caption={FastAPI classification route handlers (\texttt{api/routers/classify.py}, abridged)}, label={lst:api_router}]
+from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from api.schemas import ClassifyRequest, ClassifyResponse, DocumentClassifyResponse
+from api.services.ml_service import classify_clause, classify_document
+from api.services.supabase_service import log_classification
+
+router = APIRouter(tags=["Classification"])
+
+@router.post("/classify", response_model=ClassifyResponse, status_code=status.HTTP_200_OK)
+def classify_single(payload: ClassifyRequest):
+    res = classify_clause(payload.clause_text)
+    log_classification(
+        input_text=payload.clause_text,
+        predicted_category=res["predicted_category"],
+        confidence_score=res["confidence"],
+    )
+    return ClassifyResponse(**res)
+
+@router.post("/classify/file", response_model=DocumentClassifyResponse, status_code=status.HTTP_200_OK)
+async def classify_file_upload(file: UploadFile = File(...)):
+    content = await file.read()
+    result = classify_document(content, file.filename)
+    return DocumentClassifyResponse(**result)
+\end{lstlisting}
+
+\subsection{Model planning (training/testing split of the dataset)}
+\label{subsec:model_planning}
+
+A common flaw in published legal text classification experiments is data leakage caused by random, clause-level partitioning. Commercial contracts often share consistent boilerplate terminology, identical corporate party names, and standardized formatting across their internal clauses. If clauses originating from the same parent commercial contract appear simultaneously in both training and testing partitions, the evaluation metric measures memorization of contract-specific style rather than generalization to new legal agreements.
+
+To provide transparent, honest benchmarking, ClauseIQ plans and evaluates two distinct dataset partitioning strategies:
+
+\begin{enumerate}
+    \item Split A (clause-level stratified 80/20 partition):
+    \begin{itemize}
+        \item Design: Clauses are partitioned uniformly across all \TotalClauses{} records using scikit-learn's \path{train_test_split} with parameters \texttt{stratify=y} and \texttt{random\_state=42}.
+
+        \item Sample allocation: \SplitATrainClauses{} clauses (80.0\%) in the training set; \SplitATestClauses{} clauses (20.0\%) in the held-out test set.
+        \item Purpose: Direct historical continuity and comparability with standard literature benchmarks, ensuring identical class distribution across training and testing partitions.
+        \item Known limitation: Allows potential leakage across parent commercial contracts.
+    \end{itemize}
+    
+    \item Split B (grouped leakage-safe partition by contract ID):
+    \begin{itemize}
+        \item Design: Clauses are grouped strictly by their parent commercial contract using \texttt{GroupShuffleSplit} (\texttt{n\_splits=1}, \texttt{test\_size=0.20}, \texttt{random\_state=42}) keyed on \texttt{contract\_id}.
+        \item Sample allocation: \SplitBTrainClauses{} clauses across \SplitBTrainContracts{} commercial contracts in the training partition; \SplitBTestClauses{} clauses across \SplitBTestContracts{} commercial contracts in the held-out test partition.
+        \item Guaranteed property: Exactly zero contract overlap. No clause in the test partition originates from any commercial agreement represented in the training partition. All \NumClasses{} legal categories remain populated in both partitions.
+        \item Purpose: Rigorously tests the model's ability to classify clauses extracted from completely unseen commercial agreements drafted by unfamiliar legal counsels.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Training}
+\label{subsec:training}
+
+Model training is governed by a strict selection rule: Cross-validated Macro-F1 on grouped splits (5-fold StratifiedGroupKFold on training contracts). In a 41-class problem exhibiting a \ImbalanceRatio{} class imbalance ratio, overall accuracy is deceptive. A trivial majority classifier could achieve over 30\% accuracy while failing entirely on the 30 rarest categories. Macro-F1 calculates the arithmetic mean of per-class F1-scores without weighting by support, ensuring that low-frequency legal obligations receive equal optimization priority.
+
+During the model exploration and tuning phases, the primary classical learning algorithms were trained and configured as follows:
+\begin{itemize}
+    \item Multinomial Logistic Regression: Implemented in \path{src/train_baseline.py} and finalized in \path{src/build_artifacts.py}. Parameterized with inverse regularization strength $C = 1.0$, balanced class weighting (\texttt{class\_weight='balanced'}) to counteract class imbalance, and the L-BFGS optimization solver (\texttt{solver='lbfgs'}, \texttt{max\_iter=2000}).
+    \item Linear Support Vector Machine: Implemented in \path{src/train_svm.py}. Parameterized with squared hinge loss (\texttt{LinearSVC}), $C = 1.0$, and balanced class weighting for linear margin separation.
+    \item Multinomial Naive Bayes: Implemented in \path{src/train_nb.py}. Configured with Laplace additive smoothing parameter $\alpha = 0.01$ to prevent zero-probability assignments on sparse legal vocabulary.
+    \item Random Forest classifier: Implemented in \path{src/train_random_forest.py}. Configured with an ensemble of 200 estimator decision trees and balanced subsample weighting.
+\end{itemize}
+
+Model training confirmed that incorporating word-plus-character hybrid n-grams along with balanced class weighting provided the most robust discriminative boundaries across imbalanced legal categories.
+
+\subsection{Testing}
+\label{subsec:testing}
+
+To maintain strict scientific integrity, the held-out test partitions (the \SplitATestClauses{} samples of Split~A and the \SplitBTestClauses{} samples of Split~B) were strictly sealed during all feature engineering, vocabulary pruning, and hyperparameter tuning phases. Cross-validation was conducted exclusively within the training partitions.
+
+The held-out test datasets were unsealed and evaluated exactly once for final reporting. All evaluation metrics---including Accuracy, Macro-Precision, Macro-Recall, Macro-F1, Weighted-F1, Expected Calibration Error (ECE), and per-class confusion metrics---were computed programmatically by scikit-learn from raw model output arrays, without threshold manipulation.

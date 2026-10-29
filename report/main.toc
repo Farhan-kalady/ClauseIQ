@@ -1,0 +1,48 @@
+\contentsline {chapter}{Acknowledgement}{i}{section*.1}%
+\contentsline {chapter}{Abstract}{ii}{section*.3}%
+\contentsline {chapter}{List of tables}{iii}{section*.5}%
+\contentsline {chapter}{List of figures}{iv}{section*.7}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Supporting literature}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Literature review}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Literature review summary}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Findings and proposals}{7}{section.2.3}%
+\contentsline {chapter}{\numberline {3}System analysis}{9}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Analysis of the dataset}{9}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}About the dataset}{9}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Explore the dataset}{10}{subsection.3.1.2}%
+\contentsline {section}{\numberline {3.2}Data preprocessing}{12}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Data cleaning}{12}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Analysis of feature variables}{12}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Analysis of class variables}{13}{subsection.3.2.3}%
+\contentsline {section}{\numberline {3.3}Data visualization}{14}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Analysis of architecture and algorithms}{18}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Detailed study report of the proposed algorithm(s)}{18}{subsection.3.4.1}%
+\contentsline {section}{\numberline {3.5}Project pipeline}{23}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Feasibility analysis}{24}{section.3.6}%
+\contentsline {section}{\numberline {3.7}System environment}{25}{section.3.7}%
+\contentsline {subsection}{\numberline {3.7.1}Software environment}{25}{subsection.3.7.1}%
+\contentsline {subsection}{\numberline {3.7.2}Hardware environment}{25}{subsection.3.7.2}%
+\contentsline {chapter}{\numberline {4}System design}{27}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Model(s) building}{27}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Implementation code}{27}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Model planning (training/testing split of the dataset)}{32}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Training}{33}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Testing}{34}{subsection.4.1.4}%
+\contentsline {chapter}{\numberline {5}Results and discussion}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Comparison of models}{35}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Evaluation metrics}{37}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Confusion matrix}{39}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Relevant metrics calculated from the confusion matrix}{45}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Prediction statistics of unseen data}{50}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Discussion of findings and conclusions}{54}{section.5.6}%
+\contentsline {chapter}{\numberline {6}Model deployment}{56}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Model implementation}{56}{section.6.1}%
+\contentsline {section}{\numberline {6.2}UI design}{59}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Git history}{66}{chapter.7}%
+\contentsline {chapter}{\numberline {8}Conclusions}{69}{chapter.8}%
+\contentsline {chapter}{\numberline {9}Future scope}{71}{chapter.9}%
+\contentsline {chapter}{\numberline {10}Appendix}{73}{chapter.10}%
+\contentsline {section}{\numberline {10.1}Minimum software requirements}{73}{section.10.1}%
+\contentsline {section}{\numberline {10.2}Minimum hardware requirements}{73}{section.10.2}%
+\contentsline {chapter}{\numberline {11}References}{74}{chapter.11}%

@@ -1,0 +1,32 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces Systematic literature analysis: Quevedo Caballero et al. (2024)}}{4}{table.caption.10}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces Systematic literature analysis: Siino et al. (2025)}}{5}{table.caption.11}%
+\contentsline {table}{\numberline {2.3}{\ignorespaces Empirical literature analysis: Kutbi (2023)}}{6}{table.caption.12}%
+\contentsline {table}{\numberline {2.4}{\ignorespaces Comprehensive synthesis of reviewed supporting literature}}{7}{table.caption.13}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces Descriptive statistical summary of the validated CUAD clause dataset}}{10}{table.caption.14}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces Complete 41-category legal clause distribution in the cleaned CUAD corpus}}{11}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces Software environment and library versions verified from the active virtual environment}}{25}{table.caption.28}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Host hardware environment specifications verified on active execution platform}}{26}{table.caption.29}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Baseline performance benchmark across four classical machine learning models on Split A and Split B}}{35}{table.caption.30}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Evaluation of the final model}}{36}{table.caption.31}%
+\contentsline {table}{\numberline {5.3}{\ignorespaces Operational confidence tier distribution and empirical precision (Split B, $N = 2,486$)}}{38}{table.caption.34}%
+\contentsline {table}{\numberline {5.4}{\ignorespaces Top systematically confused category pairs identified in held-out test predictions}}{43}{table.caption.39}%
+\contentsline {table}{\numberline {5.5}{\ignorespaces Top systematically confused category pairs on Split B (Grouped Contract-Held-out Partition)}}{43}{table.caption.40}%
+\contentsline {table}{\numberline {5.6}{\ignorespaces Comprehensive per-class classification metrics calculated from the 41$\times $41 confusion matrix on Split A (Stratified 80/20 held-out test, $N=2,441$)}}{46}{table.5.6}%
+\contentsline {table}{\numberline {5.7}{\ignorespaces Clause-level parsing and classification audit for unseen sample contract PDF}}{49}{table.5.7}%
+\contentsline {table}{\numberline {5.8}{\ignorespaces Information retrieval evaluation for TF-IDF and Cosine Similarity search across benchmark legal queries}}{50}{table.caption.43}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces REST API endpoint specifications of the active ClauseIQ backend}}{55}{table.caption.47}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Relational audit database schema defined in Supabase PostgreSQL}}{55}{table.caption.48}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Automated verification regression test suite execution summary (45 passing tests)}}{56}{table.caption.49}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {10.1}{\ignorespaces Minimum software requirements}}{68}{table.caption.59}%
+\contentsline {table}{\numberline {10.2}{\ignorespaces Minimum hardware requirements}}{68}{table.caption.60}%
+\addvspace {10\p@ }

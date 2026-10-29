@@ -1,0 +1,31 @@
+\chapter{Future scope}
+\label{ch:future_scope}
+
+While the current ClauseIQ implementation provides a robust, validated, and low-latency classical machine learning platform, several valuable avenues for architectural enhancement and functional expansion have been identified for future research and development cycles.
+
+\paragraph*{Optical character recognition (OCR) for scanned agreements}
+The current document ingestion pipeline utilizes PyMuPDF, which requires uploaded PDF contracts to contain embedded digital text layers. In enterprise legal archives, a substantial fraction of legacy agreements exist solely as scanned raster images or degraded facsimile copies. Integrating an upstream, open-source Optical Character Recognition (OCR) engine---such as Tesseract OCR or EasyOCR---would allow ClauseIQ to process scanned contracts seamlessly. Future engineering would focus on combining high-speed image binarization, skew correction, and noise removal prior to text extraction.
+
+\paragraph*{Hierarchical two-stage classification}
+As evidenced by the error analysis in Chapter~\ref{ch:results_and_discussion}, the majority of classification errors occur between closely related, semantically entangled category pairs (for instance, \textit{Cap On Liability} versus \textit{Uncapped Liability}, or \textit{License Grant} versus \textit{Non-Transferable License}). A flat 41-class softmax classifier must distribute probability mass across all categories simultaneously.
+
+A promising future direction is the design of a hierarchical two-stage classification framework:
+\begin{enumerate}
+    \item Stage 1 (macro-level covenant routing): A coarse-grained linear classifier maps the clause into one of 8 broad legal families (e.g., \textit{Liability Allocation}, \textit{Intellectual Property Rights}, \textit{Term and Termination}, \textit{Restrictive Covenants}, \textit{Jurisdiction and Dispute Resolution}).
+    \item Stage 2 (fine-grained subtype specialization): A dedicated, specialized binary or multi-class discriminator trained specifically on targeted discriminative tokens distinguishes between confusable subtypes within that specific family.
+\end{enumerate}
+
+\paragraph*{Domain-adapted deep learning and hybrid embeddings}
+\textit{Explicit Scope Boundary:} Deep neural networks and Large Language Models are explicitly out of scope for the current ClauseIQ release. However, as an avenue of future academic inquiry, exploring hybrid architectures offers substantial potential:
+\begin{itemize}
+    \item Domain-specific transformer representations: Evaluating pre-trained legal encoders---such as LegalBERT~\cite{chalkidis2020legal}---fine-tuned specifically on the CUAD corpus to capture contextual dependencies that extend beyond n-gram windows.
+    \item Hybrid dense-sparse information retrieval: Combining the lexical precision of BM25 / TF-IDF sparse vectors with dense vector embeddings (e.g., dense passage retrieval) to capture both exact statutory phrasing and conceptual paraphrasing.
+\end{itemize}
+
+\paragraph*{Enterprise security and deployment scaling}
+To facilitate commercial deployment within multi-tenant enterprise environments, future engineering milestones include:
+\begin{itemize}
+    \item Authentication and role-based access control (RBAC): Implementing OAuth2 / OpenID Connect single sign-on (SSO) with fine-grained access permissions, ensuring segregation between corporate legal entities.
+    \item Containerization and cloud orchestration: Packaging the FastAPI backend and React frontend into standardized Docker container images orchestrated via Kubernetes or serverless container platforms.
+    \item Active learning feedback loop: Implementing an attorney review interface where legal practitioners can correct borderline or low-confidence classifications, feeding anonymized verified samples back into periodic retraining pipelines.
+\end{itemize}
